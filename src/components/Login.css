@@ -1,0 +1,51 @@
+:root {
+    --lh-green: #1f6b34;
+}
+.login-page {
+    background-color: #f5f5f5; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+.card {
+    max-width: 420px;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+.login-hero {
+    height: 160px;
+}
+.login-hero h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 1.5rem;
+}
+.btn-success,
+.btn-success:disabled {
+    background-color: var(--lh-green);
+    border-color: var(--lh-green);
+}
+.btn-success:hover,
+.btn-success:focus {
+    filter: brightness(0.95);
+}
+.link-success {
+    color: var(--lh-green);
+}
+.object-fit-cover {
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 2rem 2rem 2.5rem;
+}
+.form-label {
+    text-align: left;
+    display: block; 
+    width: 100%;
+    margin-bottom: 0.3rem; 
+}
