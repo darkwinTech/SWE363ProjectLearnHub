@@ -1,5 +1,6 @@
 import {useState} from "react";
 import "./Login.css"
+import LoginIcon from "@mui/icons-material/Login"
 
 export default function Login() {
     const [form, setForm] = useState({username: "", password: ""});
@@ -25,7 +26,7 @@ export default function Login() {
         setTouched({ username: true, password: true });
         if (Object.keys(errors).length) return;
         await new Promise((r) => setTimeout(r, 800));
-        alert(`Logged in as ${form.usernaem}`);
+        alert(`Logged in as ${form.username}`);
     };
     return (
         <div className="login-page">
