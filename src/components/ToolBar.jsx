@@ -16,7 +16,6 @@ export default function ToolBar({openSideBar,sideBarState}) {
                  return <li key={key} className="toolRow">
                      <span className="icon">{val.icon}</span>
                      <span className="title">{val.title}</span>
-
                   </li>
                  })}
                 </ul>

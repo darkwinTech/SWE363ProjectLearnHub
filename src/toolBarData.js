@@ -12,7 +12,7 @@ export const toolBarData = [
   {
     title: "My profile",
     icon:<AccountCircleIcon/>,
-    link:"h"
+    link:"/profile"
   },
   {
     title: "Make Announcements",
@@ -22,31 +22,31 @@ export const toolBarData = [
     {
    title: "Analytics",
     icon:<AssessmentIcon/>,
-    link:"h"
+    link:"/profile"
  
   },
   {
    title: "Support",
     icon:<ContactSupportIcon/>,
-    link:"h"
+    link:"/profile"
  
   },
    {
    title: "Calendar",
     icon:<CalendarTodayIcon/>,
-    link:"h"
+    link:"/profile"
  
   },
   {
    title: "View applacations",
     icon:<AssignmentIcon/>,
-    link:"h"
+    link:"/profile"
  
   },
   {
    title: "log out",
     icon:<LogoutIcon/>,
-    link:"h"
+    link:"/profile"
  
   },
 ];
