@@ -1,3 +1,16 @@
+# Project title and description.
+## Learn Hub
+# Setup and installation instructions.
+## write here 
+## Usage instructions and examples.
+## write here 
+## Team member names and roles.
+- Aleen
+- Hayat 
+- Ghada
+- fatima 
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
