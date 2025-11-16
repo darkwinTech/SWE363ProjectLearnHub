@@ -7,6 +7,8 @@ import TotorFav from './pages/Profiles/Totor_favarite.jsx';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import ToolBar from './components/ToolBar';
+import Login from './pages/Login/Login.jsx';
+import Notification from "./pages/Notifications/Notification.jsx";
 
 function App() {
   const [sideBar,setsideBar]=useState(false)
@@ -20,7 +22,8 @@ function App() {
         sideBarState={sideBar}
         />
       <Routes>
-       <Route path="/" element={<Main />} />
+       <Route path="/" element={<Login />} />
+       <Route path="/notifications" element={<Notification />} />
        <Route path="/profile" element={<Admin />} />
       </Routes>
     </BrowserRouter>
