@@ -1,4 +1,4 @@
-import "./App.css"
+import "../../App.css"
 import ToolBar from "../../components/ToolBar";
 import { useState } from "react";
 import React from "react";

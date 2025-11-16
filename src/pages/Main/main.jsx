@@ -4,8 +4,8 @@ import { sampleSessions} from "../../data/data2";
 import CourseCard from "../../components/CourseCard";
 import ToturSesions from "../Sessions/ToturSesions";
 import ToolBar from "../../components/ToolBar";
-import "./index.css";
-import "./App.css"
+import "../../index.css";
+import "../../App.css"
 import SearchIcon from '@mui/icons-material/Search';
 
 

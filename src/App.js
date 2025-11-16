@@ -1,12 +1,12 @@
 import './App.css';
-import Main from "./main.jsx";
-import Admin from "./Admin_Profile.jsx"
-import User from './User_Profile.jsx';
-import Totor from './Totar_Profile.jsx';
-import TotorFav from './Totor_favarite.jsx';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
-import ToolBar from "./components/ToolBar";
+import Main from './pages/Main/main.jsx';
+import Admin from './pages/Profiles/Admin_Profile.jsx';
+import User from './pages/Profiles/User_Profile.jsx';
+import Totor from './pages/Profiles/Totar_Profile.jsx';
+import TotorFav from './pages/Profiles/Totor_favarite.jsx';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
+import ToolBar from './components/ToolBar';
 
 function App() {
   const [sideBar,setsideBar]=useState(false)
