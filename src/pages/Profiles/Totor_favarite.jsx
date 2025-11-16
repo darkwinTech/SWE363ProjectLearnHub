@@ -1,5 +1,5 @@
 import "./App.css"
-import ToolBar from "./components/ToolBar";
+import ToolBar from "../../components/ToolBar";
 import { useState } from "react";
 import React from "react";
 import Person2Icon from '@mui/icons-material/Person2';
