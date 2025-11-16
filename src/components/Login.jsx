@@ -1,9 +1,11 @@
 import {useState} from "react";
 import "./Login.css"
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
     const [form, setForm] = useState({username: "", password: ""});
     const [touched, setTouched] = useState({});
+    const navigate = useNavigate(); 
 
     const onChange = (e) => {
         const {name, value} = e.target;
@@ -25,7 +27,7 @@ export default function Login() {
         setTouched({ username: true, password: true });
         if (Object.keys(errors).length) return;
         await new Promise((r) => setTimeout(r, 800));
-        alert(`Logged in as ${form.usernaem}`);
+        navigate("/notifications");
     };
     return (
         <div className="login-page">
@@ -62,7 +64,7 @@ export default function Login() {
                                 className={`form-control ${
                                     touched.username && errors.username ? "is-invalid" : ""
                                 }`}
-                                value={form.usernaem}
+                                value={form.username}
                                 onChange={onChange}
                                 onBlur={onBlur}
                                 autoComplete="username"
