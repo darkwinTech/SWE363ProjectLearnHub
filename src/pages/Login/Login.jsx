@@ -27,7 +27,7 @@ export default function Login() {
         setTouched({ username: true, password: true });
         if (Object.keys(errors).length) return;
         await new Promise((r) => setTimeout(r, 800));
-        navigate("/notifications");
+        navigate("/main");
     };
     return (
         <div className="login-page">
