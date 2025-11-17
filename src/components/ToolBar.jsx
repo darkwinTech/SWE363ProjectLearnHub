@@ -27,6 +27,9 @@ export default function ToolBar({openSideBar,sideBarState}) {
                 </ul>
              </div>
              <div className={sideBarState?"pageShadow pageShadow--open":"pageShadow"}></div>
+             <div
+        className={sideBarState ? "pageShadow pageShadow--open" : "pageShadow"}
+        onClick={openSideBar}></div>
         </div>
     )
 
