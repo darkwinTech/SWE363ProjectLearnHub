@@ -36,7 +36,7 @@ export default function Admin() {
               </div>
               </section>
               <div className="home">
-              <button className="homeBtn"><Link to="/"><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
+              <button className="homeBtn"><Link to="/main"><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
               </div>
     </main>    
   );

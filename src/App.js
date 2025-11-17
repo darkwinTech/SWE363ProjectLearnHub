@@ -11,6 +11,8 @@ import Login from './pages/Login/Login.jsx';
 import Notification from "./pages/Notifications/Notification.jsx";
 import AdminAnalyticsPage from "./pages/Analytics/AdminAnalyticsPage.jsx";
 import TutorAnalyticsPage from "./pages/Analytics/TutorAnalyticsPage.jsx";
+import Main from './pages/Main/main.jsx';
+import Courses from './pages/Courses/Courses.jsx';
 
 function App() {
   const [sideBar,setsideBar]=useState(false)
@@ -19,16 +21,14 @@ function App() {
   }
   return (
     <BrowserRouter>
-      <ToolBar 
-        openSideBar={clike_sideBr}
-        sideBarState={sideBar}
-        />
       <Routes>
        <Route path="/" element={<Login />} />
+        <Route path="/main" element={<Main />} />
        <Route path="/notifications" element={<Notification />} />
        <Route path="/profile" element={<Admin />} />
        <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
        <Route path="/tutor/analytics" element={<TutorAnalyticsPage />} />
+       <Route path="/courses" element={<Courses />} />
       </Routes>
     </BrowserRouter>
   );
