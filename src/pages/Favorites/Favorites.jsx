@@ -1,0 +1,103 @@
+import React, { useMemo } from "react";
+import "./Favorites.css";
+
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
+import { courses } from "../../data/courses";
+import { useFavorites } from "../../data/state/useFavorites"; //
+
+// Example tutors data. Replace with your real data source if you have one.
+const tutors = [
+  { id: "tutor_ahmad", name: "Ahmad Alghamdi" },
+  { id: "tutor_2", name: "Tutor 2" },
+  { id: "tutor_3", name: "Tutor 3" },
+  { id: "tutor_4", name: "Tutor 4" },
+];
+
+export default function Favorites() {
+  const courseFav = useFavorites("courses");
+  const tutorFav = useFavorites("tutors");
+
+  const favoriteCourses = useMemo(
+    () => courses.filter((c) => courseFav.isFav(c.id)),
+    [courseFav, courses]
+  );
+
+  const favoriteTutors = useMemo(
+    () => tutors.filter((t) => tutorFav.isFav(t.id)),
+    [tutorFav]
+  );
+
+  return (
+    <main className="fav-wrap">
+      <header className="fav-top">
+        <h2 className="fav-title">Hi, User</h2>
+      </header>
+
+      {/* Favorite Courses */}
+      <section className="fav-section">
+        <div className="fav-rowhead">
+          <h3>Favorite Courses</h3>
+          <button className="fav-link">see all</button>
+        </div>
+
+        <div className="fav-grid">
+          {favoriteCourses.length === 0 && (
+            <div className="fav-empty">You haven’t added any favorite courses yet.</div>
+          )}
+
+          {favoriteCourses.map((course) => {
+            const fav = courseFav.isFav(course.id);
+            return (
+              <article key={course.id} className="fav-card">
+                <div className="fav-card-icon">{course.icon}</div>
+                <div className="fav-card-id">{course.id}</div>
+                <div className="fav-card-title">{course.title}</div>
+                <button
+                  className={`fav-heart ${fav ? "is-active" : ""}`}
+                  onClick={() => courseFav.toggleFav(course.id)}
+                  title={fav ? "Unfavorite" : "Favorite"}
+                >
+                  {fav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                </button>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Favorite Tutors */}
+      <section className="fav-section">
+        <div className="fav-rowhead">
+          <h3>Favorite Tutors</h3>
+          <button className="fav-more">
+            <span className="fav-more-dots">•••</span> More
+          </button>
+        </div>
+
+        <div className="fav-grid">
+          {favoriteTutors.length === 0 && (
+            <div className="fav-empty">You haven’t added any favorite tutors yet.</div>
+          )}
+
+          {favoriteTutors.map((tutor) => {
+            const fav = tutorFav.isFav(tutor.id);
+            return (
+              <article key={tutor.id} className="fav-card">
+                <div className="fav-card-id">{tutor.name}</div>
+                <button
+                  className={`fav-heart ${fav ? "is-active" : ""}`}
+                  onClick={() => tutorFav.toggleFav(tutor.id)}
+                  title={fav ? "Unfavorite" : "Favorite"}
+                >
+                  {fav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                </button>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    </main>
+  );
+}

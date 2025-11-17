@@ -13,6 +13,10 @@ import AdminAnalyticsPage from "./pages/Analytics/AdminAnalyticsPage.jsx";
 import TutorAnalyticsPage from "./pages/Analytics/TutorAnalyticsPage.jsx";
 import Main from './pages/Main/main.jsx';
 import Courses from './pages/Courses/Courses.jsx';
+import Favorites from './pages/Favorites/Favorites.jsx';
+
+
+
 
 function App() {
   const [sideBar,setsideBar]=useState(false)
@@ -29,6 +33,7 @@ function App() {
        <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
        <Route path="/tutor/analytics" element={<TutorAnalyticsPage />} />
        <Route path="/courses" element={<Courses />} />
+       <Route path="/favorites" element={<Favorites />} />
       </Routes>
     </BrowserRouter>
   );
