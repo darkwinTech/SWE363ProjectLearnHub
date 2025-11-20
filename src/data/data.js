@@ -5,7 +5,7 @@ export const sampleCourses = [
     id: "SWE 353",
     title: "Web Engineering",
     icon: <CalculateIcon/>,
-    link:"/h"
+    link:"/"
   },
   {
     id: "ICS 104",

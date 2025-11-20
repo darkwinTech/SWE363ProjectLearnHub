@@ -18,7 +18,7 @@ export const toolBarData = [
   {
     title: "Favorites",
     icon:<FavoriteBorderIcon/>,
-    link:"h"
+    link:"/fava"
   },
   {
    title: "Calendar",

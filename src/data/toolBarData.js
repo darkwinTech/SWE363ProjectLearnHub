@@ -17,7 +17,7 @@ export const toolBarData = [
   {
     title: "Make Announcements",
     icon:<AssignmentAddIcon/>,
-    link:"h"
+    link:"/"
   },
     {
    title: "Analytics",

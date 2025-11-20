@@ -2,8 +2,7 @@ export const sampleSessions = [
   {
     id: "SWE 353",
     totre: "By Mohamed alzhrane",
-    time:"6:00 pm"
-    ,
+    time:"6:00 pm",
      link:"/profile"
   },
   {
@@ -16,8 +15,7 @@ export const sampleSessions = [
   {
     id: "ICS 500",
     totre: "By hamad alharbi",
-    time:"6:30 pm"
-    ,
+    time:"6:30 pm",
      link:"/profile"
   },
   {
