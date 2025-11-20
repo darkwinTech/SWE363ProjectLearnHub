@@ -1,83 +1,73 @@
-# Project title and description.
-## Learn Hub
-# Setup and installation instructions.
-## write here 
-## Usage instructions and examples.
-## write here 
+# Learn Hub
+## Description:
+Learn Hub is a university-based initiative designed to enhance and modernize the peer 
+tutoring experience. The project aims to connect students who are capable of offering 
+academic support with those who need assistance in specific courses, creating a 
+structured and accessible system for learning.
+Instead of relying on informal or unstructured methods, the platform provides a unified space where learners can:
+- Find academic support.
+- Explore tutor profiles.
+- Schedule tutoring sessions that match their academic needs and availability.
+  
+Key Features:
+- Course-Based Search: Easily find tutors and sessions by course code or subject.
+- Tutor Ratings & Reviews: Evaluate tutor performance and choose the best fit.
+- Favorites: Save preferred tutors and courses for future sessions.
+- Interactive Tools: Tutors can share resources and organize study sessions efficiently.
+- Admin Dashboard: Administrators manage tutors, courses, and oversee all activities to maintain system quality.
+
+By centralizing these interactions, Learn Hub ensures a smoother, more reliable tutoring process that saves time and promotes academic success within the university community.
+
+# Setup and installation instructions
+Follow these steps to set up Learn Hub locally:
+1. Clone the repository (https://github.com/darkwinTech/SWE363ProjectLearnHub.git)
+2. Navigate to the project directory (cd learn-hub)
+3. Install dependencies (npm install)
+4. Start the development server (npm start)
+5. Open your browser and visit (http://localhost:3000)
+
+# Usage instructions and examples
+Once the server is running, there are three types of users in Learn Hub: Admin, Tutor, and Student.
+Each user type has its own credentials and access level within the system.
+1. Admin
+Login Credentials:
+- Email: admin@kfupm.edu.sa
+- Password: admin123
+  
+    Access:
+    - Approve and manage tutors
+    - Manage course listings
+    - Oversee all activities and ensure platform quality
+
+
+2. Tutor
+  Login Credentials:
+    - Email: tutor@kfupm.edu.sa
+    - Password: tutor123
+      
+    Access:
+    - Create and manage tutoring sessions
+    - Share learning materials and resources
+    - Interact with students and answer course-related questions
+  
+3. Student
+    Login Credentials:
+    - Email: student@kfupm.edu.sa
+    - Password: student123
+      
+    Access:
+    - Search for tutors by course
+    - Join tutoring sessions
+    - Rate and review tutors
+    - Add tutors and courses to favorites for future sessions
+
 ## Team member names and roles.
-- Aleen
-- Hayat 
-- Ghada
-- fatima 
+- Aleen Alqarni (Login page, )
+- Ghada alghamdi 
+- Hayat alghamdi
+- Fatima labban
 
 
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
