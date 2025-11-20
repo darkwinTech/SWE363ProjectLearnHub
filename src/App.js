@@ -1,3 +1,15 @@
+<<<<<<< HEAD
+import './Main_profiles.css';
+import Main from "./main.jsx";
+import Admin from "./Admin_Profile.jsx"
+import User from './User_Profile.jsx';
+import Totor from './Totar_Profile.jsx';
+import TotorFav from './Totor_favarite.jsx';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import ToolBar from "./components/ToolBar";
+import Notification from './components/Notification.jsx';
+=======
 import './App.css';
 import main from './pages/Main/main.jsx';
 import Admin from './pages/Profiles/Admin_Profile.jsx';
@@ -17,6 +29,7 @@ import Favorites from './pages/Favorites/Favorites.jsx';
 
 
 
+>>>>>>> Main
 
 
 
@@ -28,6 +41,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+<<<<<<< HEAD
+       <Route path="/" element={<Main />} />
+       <Route path="/profile" element={<Totor />} />
+       <Route path="/notifications" element={<Notification />} />
+=======
        <Route path="/" element={<Login />} />
        <Route path="/main" element={<Main />} />
        <Route path="/notifications" element={<Notification />} />
@@ -36,11 +54,15 @@ function App() {
        <Route path="/tutor/analytics" element={<TutorAnalyticsPage />} />
        <Route path="/courses" element={<Courses />} />
        <Route path="/favorites" element={<Favorites />} />
+<<<<<<< HEAD
 
        <Route path="/" element={<Login />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/tutor" element={<Tutor />} />
         <Route path="/student" element={<Student />} />
+=======
+>>>>>>> Main
+>>>>>>> Ghada
       </Routes>
     </BrowserRouter>
   );

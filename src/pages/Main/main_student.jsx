@@ -7,7 +7,7 @@ import ToolBar from "../../components/ToolBar";
 import "../../index.css";
 import "../../Main_profiles.css";
 import SearchIcon from '@mui/icons-material/Search';
-import {toolBarData} from "../../data/toolBarData"
+import {toolBarData} from "../../data/toolBarData_student"
 import { useNavigate } from "react-router-dom";
 
 
@@ -18,9 +18,8 @@ export default function Main() {
   const [sideBar,setsideBar]=useState(false)
 
 
-  const navigate = useNavigate();
-
-  const Edit = () => {
+const navigate = useNavigate();
+  const See_More = () => {
     navigate("/");
   };
   const clike_sideBr=()=>{
@@ -47,7 +46,7 @@ export default function Main() {
       <br></br>
       <div className="header-row">
       <h3>Recomended courses:</h3>
-      <button id="bt2" onClick={Edit}>Edit</button>
+      <button id="bt2" onClick={See_More}>See More</button>
       </div>
       <br></br>
       <section className="grid">
@@ -58,12 +57,11 @@ export default function Main() {
             index={idx}
           />
         ))}
-        
       </section>
       <br></br>
       <div className="header-row">
       <h3>Recomended Sessions:</h3>
-      <button id="bt1" onClick={Edit}>Edit</button>
+      <button id="bt1" onClick={See_More}>See More</button>
       </div>
       <br></br>
       <section className="sessions">

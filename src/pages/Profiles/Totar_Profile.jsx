@@ -1,4 +1,4 @@
-import "../../App.css"
+import  '../../Main_profiles.css';
 import ToolBar from "../../components/ToolBar";
 import { useState } from "react";
 import React from "react";
@@ -53,7 +53,7 @@ export default function Totor() {
               </div>
               </section>
               <div className="home">
-              <button className="homeBtn"><Link to="/"><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
+              <button className="homeBtn"><Link to="/main"><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
               </div>
               
     </main>    

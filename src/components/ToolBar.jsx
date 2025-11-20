@@ -1,12 +1,11 @@
 import React from "react";
-import {toolBarData} from "../data/toolBarData"
 import { useState } from "react";
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from "react-router-dom";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
 
-export default function ToolBar({openSideBar,sideBarState}) {
+export default function ToolBar({openSideBar,sideBarState,toolBarData}) {
     const [toolBar, settoolBars] = useState(toolBarData);
     return (
         <div>
@@ -27,6 +26,9 @@ export default function ToolBar({openSideBar,sideBarState}) {
                 </ul>
              </div>
              <div className={sideBarState?"pageShadow pageShadow--open":"pageShadow"}></div>
+             <div
+        className={sideBarState ? "pageShadow pageShadow--open" : "pageShadow"}
+        onClick={openSideBar}></div>
         </div>
     )
 

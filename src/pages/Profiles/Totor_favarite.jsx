@@ -1,4 +1,9 @@
-import "../../App.css"
+import '../../Main_profiles.css';
+import "../Favorites/Favorites.css";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useFavorites } from "../../data/state/useFavorites"; 
+import {totarData} from "../../data/totares.js"; 
 import ToolBar from "../../components/ToolBar";
 import { useState } from "react";
 import React from "react";
@@ -10,8 +15,17 @@ import { Link } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 
 export default function TotorFav() {
- 
-  
+  const [totarDataState, setTotarDataState] = useState(totarData);
+
+  const toggleFavorite = (index) => {
+    setTotarDataState((prev) =>
+      prev.map((toter, i) =>
+        i === index
+          ? { ...toter, Fav: !toter.Fav }
+          : toter
+      )
+    );
+  };
   return(
      <main className="wrap">
           
@@ -21,9 +35,20 @@ export default function TotorFav() {
               <Person2Icon style={{ fontSize: '60px', color: '#2a4d3d' }}/>
               </div>
               <div className="content">
-                <h4>Ahamad alghamdi</h4>
+                <h4>Mohamed alzhrane</h4>
                 <p>Student ID: 202045</p>
               </div>
+              <div>
+               {totarDataState.map((toter, idx) => {
+        if (toter.name === "Mohamed alzhrane") {
+          return (
+            <button key={idx} onClick={() => toggleFavorite(idx)} className={`heartBtn_toter ${toter.Fav  ? "heart--active" : ""}`}>
+              {toter.Fav ? <FavoriteIcon style={{ fontSize: '40px'}} /> : <FavoriteBorderIcon style={{ fontSize: '40px'}}/>}
+            </button>
+          );
+        } 
+      })}
+                </div>
               </section>
             </section>
              <section className="info">
@@ -38,7 +63,7 @@ export default function TotorFav() {
                  <p>FeedBacks</p>
                  <div className="info_box">
                   <span className="by"><PersonIcon/><p>Sarah</p></span>
-                 <h6>The seesion was varey helpful</h6>
+                 <h6>The seesion was varey helpful for me Thank you</h6>
               </div>
               <div className="info_box">
                   <span className="by"><PersonIcon/><p>Noor</p></span>
@@ -63,7 +88,7 @@ export default function TotorFav() {
               </div>
               </section>
               <div className="home">
-              <button className="homeBtn"><Link to="/"><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
+              <button className="homeBtn"><Link to="/main"><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
               </div>
               
     </main>    
