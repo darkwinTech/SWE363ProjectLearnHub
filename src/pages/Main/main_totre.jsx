@@ -36,7 +36,26 @@ export default function Main() {
 
   }
 
+  // Group courses by subject (e.g., combine all ICS courses into one)
+  const getUniqueSubjects = (coursesList) => {
+    const subjectMap = new Map();
+    coursesList.forEach(course => {
+      const subject = course.id.split(" ")[0]; // Extract subject (e.g., "ICS" from "ICS 104")
+      if (!subjectMap.has(subject)) {
+        // Use the first course of each subject as representative
+        subjectMap.set(subject, {
+          id: subject, // Use just the subject name as ID
+          title: course.title, // Use first course's title
+          icon: course.icon, // Use first course's icon
+          link: course.link
+        });
+      }
+    });
+    return Array.from(subjectMap.values());
+  };
+
   const Filterd_courses=get_Filterd_courses(qurey,courses)
+  const uniqueSubjects = getUniqueSubjects(Filterd_courses)
 
   return (
     <main className="wrap">
@@ -53,7 +72,7 @@ export default function Main() {
       </div>
       <br></br>
       <section className="grid">
-        {Filterd_courses.map((course, idx) => (
+        {uniqueSubjects.map((course, idx) => (
           <CourseCard
             key={course.id}
             course={course}
