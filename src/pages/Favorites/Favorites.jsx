@@ -1,14 +1,17 @@
 import React, { useMemo } from "react";
+import { Link } from "react-router-dom";
 import "./Favorites.css";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import HomeIcon from "@mui/icons-material/Home";
 
 import { courses } from "../../data/courses";
 import { useFavorites } from "../../data/state/useFavorites"; //
 import ToolBar from "../../components/ToolBar";
 import {toolBarData} from "../../data/toolBarData_student"
 import { useState } from "react";
+import { getHomeRoute } from "../../utils/getHomeRoute";
 
 
 
@@ -52,7 +55,9 @@ export default function Favorites() {
       <section className="fav-section">
         <div className="fav-rowhead">
           <h3>Favorite Courses</h3>
-          <button className="fav-link">see all</button>
+          <button className="fav-more">
+            <span className="fav-more-dots">•••</span> More
+          </button>
         </div>
 
         <div className="fav-grid">
@@ -111,6 +116,15 @@ export default function Favorites() {
           })}
         </div>
       </section>
+
+      {/* Home Icon at Bottom */}
+      <div className="unified-home-bottom-nav">
+        <button className="unified-home-btn">
+          <Link to={getHomeRoute()}>
+            <HomeIcon />
+          </Link>
+        </button>
+      </div>
     </main>
   );
 }
