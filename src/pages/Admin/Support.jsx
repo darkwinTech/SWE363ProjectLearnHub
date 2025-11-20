@@ -1,15 +1,22 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { sampleSupport } from "./data5.js";
 import "./App.css";
 import ToolBar from "./components/ToolBar";
 
 export default function Support() {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState(sampleSupport);
   const [sortBy, setSortBy] = useState("most-recent");
   const [sideBar, setSideBar] = useState(false);
 
   // Toggle sidebar
   const toggleSideBar = () => setSideBar(prev => !prev);
+
+  // Handle Reply button click
+  const handleReply = (message) => {
+    navigate("/admin/support/reply", { state: { message } });
+  };
 
   // Sorting Logic 
   const sortedMessages = [...messages].sort((a, b) => { 
@@ -58,7 +65,7 @@ export default function Support() {
               {/* Right section */}
               <div className="support-right">
                 <div className="issue-title">{msg.issue}</div>
-                <button className="reply-btn">Reply</button>
+                <button className="reply-btn" onClick={() => handleReply(msg)}>Reply</button>
               </div>
 
             </div>
