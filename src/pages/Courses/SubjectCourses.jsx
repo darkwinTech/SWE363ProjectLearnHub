@@ -75,7 +75,7 @@ export default function SubjectCourses() {
         </div>
         <div className="subject-courses-subject">
           <span className="subject-icon">{getSubjectIcon()}</span>
-          <span className="subject-name">{subject}</span>
+          <span className="subject-name">{subject?.toUpperCase()}</span>
         </div>
       </header>
 
