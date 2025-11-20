@@ -28,7 +28,7 @@ Follow these steps to set up Learn Hub locally:
 ## Usage instructions and examples.
 npm start
 
-## write here 
+
 ## Team member names and roles.
 - Aleen Alqarni 
 - Ghada alghamdi 
