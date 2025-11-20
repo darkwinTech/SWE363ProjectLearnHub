@@ -25,8 +25,21 @@ Follow these steps to set up Learn Hub locally:
 4. Start the development server (npm start)
 5. Open your browser and visit (http://localhost:3000)
 
-# Usage instructions and examples.
-npm start
+# Usage instructions and examples
+Once the server is running, there are three types of users in Learn Hub: Admin, Tutor, and Student.
+Each user type has its own credentials and access level within the system.
+- Admin
+  Login Credentials:
+    - Email: admin@kfupm.edu.sa
+    - Password: admin123
+- Tutor
+  Login Credentials:
+    - Email: tutor@kfupm.edu.sa
+    - Password: tutor123
+- Student
+    Login Credentials:
+    - Email: student@kfupm.edu.sa
+    - Password: student123
 
 
 ## Team member names and roles.
