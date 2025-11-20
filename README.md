@@ -25,7 +25,7 @@ Follow these steps to set up Learn Hub locally:
 4. Start the development server (npm start)
 5. Open your browser and visit (http://localhost:3000)
 
-## Usage instructions and examples.
+# Usage instructions and examples.
 npm start
 
 
