@@ -28,7 +28,7 @@ Follow these steps to set up Learn Hub locally:
 # Usage instructions and examples
 Once the server is running, there are three types of users in Learn Hub: Admin, Tutor, and Student.
 Each user type has its own credentials and access level within the system.
-- Admin
+1. Admin
   Login Credentials:
     - Email: admin@kfupm.edu.sa
     - Password: admin123
@@ -39,7 +39,7 @@ Access:
 - Oversee all activities and ensure platform quality
 
 
-- Tutor
+2. Tutor
   Login Credentials:
     - Email: tutor@kfupm.edu.sa
     - Password: tutor123
@@ -49,7 +49,7 @@ Access:
 - Share learning materials and resources
 - Interact with students and answer course-related questions
   
-- Student
+3. Student
     Login Credentials:
     - Email: student@kfupm.edu.sa
     - Password: student123
