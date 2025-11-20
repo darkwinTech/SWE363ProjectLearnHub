@@ -8,6 +8,7 @@ Instead of relying on informal or unstructured methods, the platform provides a 
 - Find academic support.
 - Explore tutor profiles.
 - Schedule tutoring sessions that match their academic needs and availability.
+  
 Key Features:
 - Course-Based Search: Easily find tutors and sessions by course code or subject.
 - Tutor Ratings & Reviews: Evaluate tutor performance and choose the best fit.
