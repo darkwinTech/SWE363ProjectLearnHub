@@ -20,3 +20,41 @@
 .notification-title {
   margin-left: 0.2rem;
 }
+
+.notification-bottom-nav {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.notification-home-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #70b476;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s;
+}
+
+.notification-home-btn:hover {
+  transform: scale(1.05);
+}
+
+.notification-home-btn a {
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.notification-home-btn svg {
+  font-size: 28px;
+}

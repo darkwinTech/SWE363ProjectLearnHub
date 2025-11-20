@@ -23,7 +23,7 @@ export const toolBarData = [
   {
    title: "Calendar",
     icon:<CalendarTodayIcon/>,
-    link:"/profile"
+    link:"/general-calendar"
   },
   {
    title: "Support",

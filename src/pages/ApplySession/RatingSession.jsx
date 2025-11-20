@@ -5,6 +5,7 @@ import { toolBarData } from "../../data/toolBarData";
 import HomeIcon from "@mui/icons-material/Home";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
+import { getHomeRoute } from "../../utils/getHomeRoute";
 import "../../index.css";
 import "../../Main_profiles.css";
 import "./RatingSession.css";
@@ -48,9 +49,9 @@ export default function RatingSession() {
   };
 
   const handleOkClick = () => {
-    // Close modal and navigate to main page
+    // Close modal and navigate to user's home page
     setShowSuccessModal(false);
-    navigate("/main");
+    navigate(getHomeRoute());
   };
 
   return (
@@ -118,9 +119,9 @@ export default function RatingSession() {
       </section>
 
       {/* Home Icon at Bottom */}
-      <section className="rating-session-bottom-nav">
-        <button className="rating-session-home-btn">
-          <Link to="/main">
+      <section className="unified-home-bottom-nav">
+        <button className="unified-home-btn">
+          <Link to={getHomeRoute()}>
             <HomeIcon />
           </Link>
         </button>

@@ -6,6 +6,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link } from "react-router-dom";
 import { toolBarData } from "../../data/toolBarData_student";
+import { getHomeRoute } from "../../utils/getHomeRoute";
 import "./TutorsList.css";
 
 // Sample tutors data with sessions - This should eventually come from a data file
@@ -85,6 +86,21 @@ export default function TutorsList() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleTutorSessionClick = (tutor) => {
+    // Transform tutor session data to match ApplySession expected format
+    const sessionData = {
+      id: tutor.courseCode,
+      courseCode: tutor.courseCode,
+      totre: `By ${tutor.tutorName}`,
+      tutorName: tutor.tutorName,
+      description: tutor.sessionDesc,
+      sessionDesc: tutor.sessionDesc,
+      time: tutor.time,
+      date: tutor.date
+    };
+    navigate("/apply-session", { state: { session: sessionData } });
+  };
+
   return (
     <main className="tutors-list-wrap">
       <ToolBar
@@ -118,7 +134,12 @@ export default function TutorsList() {
       <section className="tutors-list-content">
         {currentTutors.length > 0 ? (
           currentTutors.map((tutor) => (
-            <div key={tutor.id} className="tutors-list-card">
+            <div 
+              key={tutor.id} 
+              className="tutors-list-card"
+              onClick={() => handleTutorSessionClick(tutor)}
+              style={{ cursor: 'pointer' }}
+            >
               <div className="tutors-list-card-left">
                 <div className="tutors-list-avatar">
                   <PersonIcon className="tutors-list-avatar-icon" />
@@ -159,9 +180,9 @@ export default function TutorsList() {
       )}
 
       {/* Home Icon at Bottom */}
-      <div className="tutors-list-bottom-nav">
-        <button className="tutors-list-home-btn">
-          <Link to="/student">
+      <div className="unified-home-bottom-nav">
+        <button className="unified-home-btn">
+          <Link to={getHomeRoute()}>
             <HomeIcon />
           </Link>
         </button>

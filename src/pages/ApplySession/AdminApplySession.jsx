@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ToolBar from "../../components/ToolBar";
 import { toolBarData } from "../../data/toolBarData";
 import HomeIcon from "@mui/icons-material/Home";
+import { getHomeRoute } from "../../utils/getHomeRoute";
 import "../../index.css";
 import "../../Main_profiles.css";
 import "./AdminApplySession.css";
@@ -73,7 +74,7 @@ export default function AdminApplySession() {
     if (confirmDelete) {
       // Handle deletion
       alert("Session deleted successfully");
-      navigate("/main");
+      navigate(getHomeRoute());
     }
   };
 
@@ -120,9 +121,9 @@ export default function AdminApplySession() {
       </section>
 
       {/* Home Icon at Bottom */}
-      <section className="admin-apply-bottom-nav">
-        <button className="admin-apply-home-btn">
-          <Link to="/main">
+      <section className="unified-home-bottom-nav">
+        <button className="unified-home-btn">
+          <Link to={getHomeRoute()}>
             <HomeIcon />
           </Link>
         </button>

@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./Notification.css";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import NotificationsItem from "@mui/icons-material/Notifications";
 import StarsIcon from "@mui/icons-material/Stars";
+import HomeIcon from "@mui/icons-material/Home";
+import { getHomeRoute } from "../../utils/getHomeRoute";
+import ToolBar from "../../components/ToolBar";
+import { getToolBarData } from "../../utils/getToolBarData";
 
 export default function Notification() {
+    const [sideBar, setSideBar] = useState(false);
+    
+    const click_sideBar = () => {
+        setSideBar((prevState) => !prevState);
+    };
+    
     const notifications = [
         {
             id: 1,
@@ -23,6 +34,11 @@ export default function Notification() {
         },];
     return (
       <div className="notification-wrapper container py-5">
+      <ToolBar
+        openSideBar={click_sideBar}
+        sideBarState={sideBar}
+        toolBarData={getToolBarData()}
+      />
       <div className="notification-title d-flex align-items-center mb-4">
         <NotificationsItem className="me-2 fs-4 text-success" />
         <h3 className="fw-bold m-0">Notifications</h3>
@@ -44,6 +60,15 @@ export default function Notification() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Home Icon at Bottom */}
+      <div className="unified-home-bottom-nav">
+        <button className="unified-home-btn">
+          <Link to={getHomeRoute()}>
+            <HomeIcon />
+          </Link>
+        </button>
       </div>
     </div>
     );

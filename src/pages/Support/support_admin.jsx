@@ -32,7 +32,7 @@ const showAlert = () => {
                <section className="info_support">
                 <h8>Your Answer:</h8>
                 <textarea className="text_arrea" placeholder="Provide as much details as possible" rows="5" cols="40"></textarea>
-                <button className="Btn" onClick={showAlert}><Link className="toolLink" to="/main">Send</Link></button>
+                <button className="Btn" onClick={showAlert}><Link className="toolLink" to="/admin">Send</Link></button>
                </section>
     </main>    
   );

@@ -1,5 +1,4 @@
 import './Main_profiles.css';
-import main from './pages/Main/main.jsx';
 import Admin from './pages/Profiles/Admin_Profile.jsx';
 import User from './pages/Profiles/User_Profile.jsx';
 import Totar_Profile from './pages/Profiles/Totar_Profile.jsx';
@@ -12,10 +11,10 @@ import Notification from "./pages/Notifications/Notification.jsx";
 import AdminAnalyticsPage from "./pages/Analytics/AdminAnalyticsPage.jsx";
 import TutorAnalyticsPage from "./pages/Analytics/TutorAnalyticsPage.jsx";
 import Main from './pages/Main/main.jsx';
-import AdminMain from './pages/Admin/App.jsx';
 import Main_student from './pages/Main/main_student.jsx';
 import Main_totre from './pages/Main/main_totre.jsx';
 import Courses from './pages/Courses/Courses.jsx';
+import SubjectCourses from './pages/Courses/SubjectCourses.jsx';
 import Favorites from './pages/Favorites/Favorites.jsx';
 import ApplySession from './pages/ApplySession/ApplySession.jsx';
 import JoinSession from './pages/ApplySession/JoinSession.jsx';
@@ -25,8 +24,8 @@ import MakeAnnouncement from './pages/Admin/MakeAnnouncement.jsx';
 import Support from './pages/Admin/Support.jsx';
 import SupportReply from './pages/Support/support_admin.jsx';
 import ViewApplications from './pages/Admin/ViewApplications.jsx';
-import EditCourseWrapper from './pages/Admin/EditCourseWrapper.jsx';
 import TutorsList from './pages/Tutors/TutorsList.jsx';
+import GeneralCalendar from './pages/Calendar/GeneralCalendar.jsx';
  
  
  
@@ -39,8 +38,7 @@ function App() {
     <BrowserRouter>
       <Routes>
        <Route path="/" element={<Login />} />
-       <Route path="/admin" element={<AdminMain />} />
-       <Route path="/main" element={<Main />} />
+       <Route path="/admin" element={<Main />} />
        <Route path="/student" element={<Main_student />} />
        <Route path="/tutor" element={<Main_totre />} />
        <Route path="/notifications" element={<Notification />} />
@@ -51,6 +49,7 @@ function App() {
        <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
        <Route path="/tutor/analytics" element={<TutorAnalyticsPage />} />
        <Route path="/courses" element={<Courses />} />
+       <Route path="/courses/:subject" element={<SubjectCourses />} />
        <Route path="/favorites" element={<Favorites />} />
        <Route path="/apply-session" element={<ApplySession />} />
        <Route path="/join-session" element={<JoinSession />} />
@@ -60,8 +59,8 @@ function App() {
        <Route path="/admin/support" element={<Support />} />
        <Route path="/admin/support/reply" element={<SupportReply />} />
        <Route path="/admin/view-applications" element={<ViewApplications />} />
-       <Route path="/admin/edit-course/:id" element={<EditCourseWrapper />} />
        <Route path="/tutors-list" element={<TutorsList />} />
+       <Route path="/general-calendar" element={<GeneralCalendar />} />
       </Routes>
     </BrowserRouter>
   );

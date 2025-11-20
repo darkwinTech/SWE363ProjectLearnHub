@@ -5,6 +5,7 @@ import React from "react";
 import Person2Icon from '@mui/icons-material/Person2';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from "react-router-dom";
+import { getHomeRoute } from "../../utils/getHomeRoute";
 
 import {toolBarData} from "../../data/toolBarData"
 
@@ -46,7 +47,7 @@ const [sideBar,setsideBar]=useState(false)
               </div>
               </section>
               <div className="home">
-              <button className="homeBtn"><Link to="/main"><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
+              <button className="homeBtn"><Link to={getHomeRoute()}><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
               </div>
     </main>    
   );

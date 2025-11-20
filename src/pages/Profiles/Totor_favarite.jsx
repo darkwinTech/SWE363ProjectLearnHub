@@ -13,6 +13,7 @@ import StarIcon from '@mui/icons-material/Star';
 import FunctionsIcon from '@mui/icons-material/Functions';
 import { Link } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
+import { getHomeRoute } from "../../utils/getHomeRoute";
 
 export default function TotorFav() {
   const [totarDataState, setTotarDataState] = useState(totarData);
@@ -88,7 +89,7 @@ export default function TotorFav() {
               </div>
               </section>
               <div className="home">
-              <button className="homeBtn"><Link to="/main"><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
+              <button className="homeBtn"><Link to={getHomeRoute()}><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
               </div>
               
     </main>    

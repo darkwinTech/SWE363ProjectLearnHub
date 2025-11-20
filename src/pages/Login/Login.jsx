@@ -22,18 +22,20 @@ export default function Login() {
 
     const onBlur = (e) => setTouched((t) => ({ ...t, [e.target.name]: true }));
 
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
         setTouched({ username: true, password: true });
         if (Object.keys(errors).length) return;
-        await new Promise((r) => setTimeout(r, 800));
         const { username, password } = form;
 
     if (username === "admin@kfupm.edu.sa" && password === "admin123") {
+        localStorage.setItem('userType', 'admin');
         navigate("/admin");
       } else if (username === "tutor@kfupm.edu.sa" && password === "tutor123") {
+    localStorage.setItem('userType', 'tutor');
     navigate("/tutor");
     } else if (username === "student@kfupm.edu.sa" && password === "student123") {
+    localStorage.setItem('userType', 'student');
     navigate("/student");
   } else {
     alert("Invalid credentials");

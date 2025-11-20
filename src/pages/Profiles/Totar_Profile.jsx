@@ -7,6 +7,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import StarIcon from '@mui/icons-material/Star';
 import { Link } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
+import { getHomeRoute } from "../../utils/getHomeRoute";
 import {toolBarData} from "../../data/toolBarData_Totre"
 
 export default function Totor() {
@@ -61,7 +62,7 @@ export default function Totor() {
               </div>
               </section>
               <div className="home">
-              <button className="homeBtn"><Link to="/main"><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
+              <button className="homeBtn"><Link to={getHomeRoute()}><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
               </div>
               
     </main>    

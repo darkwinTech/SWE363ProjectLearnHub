@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./AnalyticsPage.css";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import HomeIcon from "@mui/icons-material/Home";
+import { getHomeRoute } from "../../utils/getHomeRoute";
+import ToolBar from "../../components/ToolBar";
+import { toolBarData } from "../../data/toolBarData";
 
 export default function AnalyticsPage() {
+  const [sideBar, setSideBar] = useState(false);
+  
+  const click_sideBar = () => {
+    setSideBar((prevState) => !prevState);
+  };
+  
   const stats = [
     { id: 1, label: "Total Sessions", value: 2, icon: <BarChartIcon /> },
     { id: 2, label: "Total Enrollments", value: 20, icon: <BarChartIcon /> },
@@ -20,6 +30,11 @@ export default function AnalyticsPage() {
 
   return (
     <div className="d-flex justify-content-center">
+      <ToolBar
+        openSideBar={click_sideBar}
+        sideBarState={sideBar}
+        toolBarData={toolBarData}
+      />
       <div className="analytics-shell">
         <div className="align-items-cente mb-3">
             <div className="text-center">
@@ -66,9 +81,11 @@ export default function AnalyticsPage() {
           </div>
 
         {/* Bottom home button */}
-        <div className="analytics-bottom-nav">
-          <button className="analytics-home-btn">
-            <HomeIcon />
+        <div className="unified-home-bottom-nav">
+          <button className="unified-home-btn">
+            <Link to={getHomeRoute()}>
+              <HomeIcon />
+            </Link>
           </button>
         </div>
       </div>

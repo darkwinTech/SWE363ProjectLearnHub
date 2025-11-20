@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ToolBar from "../../components/ToolBar";
 import { toolBarData } from "../../data/toolBarData";
 import HomeIcon from "@mui/icons-material/Home";
+import { getHomeRoute } from "../../utils/getHomeRoute";
 import "../../index.css";
 import "../../Main_profiles.css";
 import "./JoinSession.css";
@@ -61,9 +62,9 @@ export default function JoinSession() {
       </section>
 
       {/* Home Icon at Bottom */}
-      <section className="join-session-bottom-nav">
-        <button className="join-session-home-btn">
-          <Link to="/main">
+      <section className="unified-home-bottom-nav">
+        <button className="unified-home-btn">
+          <Link to={getHomeRoute()}>
             <HomeIcon />
           </Link>
         </button>

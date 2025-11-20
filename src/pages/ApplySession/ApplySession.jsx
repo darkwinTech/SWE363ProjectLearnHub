@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import ToolBar from "../../components/ToolBar";
 import { toolBarData } from "../../data/toolBarData";
 import HomeIcon from "@mui/icons-material/Home";
+import { getHomeRoute } from "../../utils/getHomeRoute";
 import "../../index.css";
 import "../../Main_profiles.css";
 import "./ApplySession.css";
@@ -14,9 +15,11 @@ export default function ApplySession() {
   
   // Get session data from navigation state, or use defaults
   const session = location.state?.session || null;
-  const courseCode = session?.id || "MATH101";
-  const tutorName = session?.totre?.replace("By ", "") || "Ahmad Alghamdi";
-  const description = session?.description || "Description";
+  // Handle both formats: from calendar (courseCode) or from sessions list (id)
+  const courseCode = session?.courseCode || session?.id || "MATH101";
+  // Handle both formats: from calendar (tutorName) or from sessions list (totre)
+  const tutorName = session?.tutorName || session?.totre?.replace("By ", "") || "Ahmad Alghamdi";
+  const description = session?.sessionDesc || session?.description || "Description";
 
   const click_sideBar = () => {
     setSideBar((prevState) => !prevState);
@@ -45,7 +48,7 @@ export default function ApplySession() {
       <section className="apply-session-info">
         <h1 className="apply-session-course-code">{courseCode}</h1>
         <h2 className="apply-session-tutor-name">{tutorName}</h2>
-        <Link to="/profile" className="apply-session-view-tutor">
+        <Link to="/tutor/favorite" className="apply-session-view-tutor">
           View Tutor
         </Link>
       </section>
@@ -65,9 +68,9 @@ export default function ApplySession() {
       </section>
 
       {/* Home Icon at Bottom */}
-      <section className="apply-session-bottom-nav">
-        <button className="apply-session-home-btn">
-          <Link to="/main">
+      <section className="unified-home-bottom-nav">
+        <button className="unified-home-btn">
+          <Link to={getHomeRoute()}>
             <HomeIcon />
           </Link>
         </button>

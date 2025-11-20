@@ -9,6 +9,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import HomeIcon from "@mui/icons-material/Home";
 import CalculateIcon from "@mui/icons-material/Calculate";
+import { getHomeRoute } from "../../utils/getHomeRoute";
 import "./SubjectCourses.css";
 
 export default function SubjectCourses() {
@@ -134,9 +135,9 @@ export default function SubjectCourses() {
         </section>
       )}
 
-      <section className="subject-courses-bottom-nav">
-        <button className="subject-home-btn">
-          <Link to="/main">
+      <section className="unified-home-bottom-nav">
+        <button className="unified-home-btn">
+          <Link to={getHomeRoute()}>
             <HomeIcon />
           </Link>
         </button>

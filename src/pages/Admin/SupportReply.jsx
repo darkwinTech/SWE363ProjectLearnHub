@@ -91,8 +91,8 @@ export default function SupportReply() {
       </div>
 
       {/* Home Icon at Bottom */}
-      <div className="support-reply-bottom-nav">
-        <button className="support-reply-home-btn">
+      <div className="unified-home-bottom-nav">
+        <button className="unified-home-btn">
           <Link to="/admin/support">
             <HomeIcon />
           </Link>
