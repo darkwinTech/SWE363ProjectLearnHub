@@ -17,8 +17,9 @@ Key Features:
 - Admin Dashboard: Administrators manage tutors, courses, and oversee all activities to maintain system quality.
 
 By centralizing these interactions, Learn Hub ensures a smoother, more reliable tutoring process that saves time and promotes academic success within the university community.
-# Setup and installation instructions.
-## write here 
+# Setup and installation instructions
+Follow these steps to set up Learn Hub locally:
+1. Clone the repository 
 ## Usage instructions and examples.
 npm start
 
