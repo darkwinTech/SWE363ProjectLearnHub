@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export default function ToturSesions({ session, onEdit, onDelete }) {
+export default function ToturSesions({ session, onEdit, onDelete, editMode = false }) {
     const navigate = useNavigate();
     const [showConfirm, setShowConfirm] = useState(false);
 
@@ -20,14 +20,18 @@ export default function ToturSesions({ session, onEdit, onDelete }) {
                 <h3 className="session-title">{session.id}</h3>
                 <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: "10px" }}>
                     <p className="session-time" style={{ margin: 0 }}>{session.time}</p>
-                    <EditIcon
-                        style={{ cursor: "pointer", color: "white" }}
-                        onClick={() => navigate(`/edit-session/${session.id}`)}
-                    />
-                    <DeleteIcon
-                        style={{ cursor: "pointer", color: "white" }}
-                        onClick={() => setShowConfirm(true)}
-                    />
+                    {editMode && (
+                      <>
+                        <EditIcon
+                            style={{ cursor: "pointer", color: "white" }}
+                            onClick={() => navigate(`/admin/edit-session/${session.id}`)}
+                        />
+                        <DeleteIcon
+                            style={{ cursor: "pointer", color: "white" }}
+                            onClick={() => setShowConfirm(true)}
+                        />
+                      </>
+                    )}
                 </div>
             </div>
 

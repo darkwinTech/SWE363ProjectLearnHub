@@ -20,8 +20,19 @@ export default function Main() {
 
   const navigate = useNavigate();
 
-  const Edit = () => {
-    navigate("/");
+  const See_More = () => {
+    navigate("/Courses");
+  };
+  const See_More2 = () => {
+    navigate("/tutors-list");
+  };
+  const Edit_Courses = () => {
+    // Navigate to course editing page or show edit functionality
+    alert("Edit courses functionality");
+  };
+  const Edit_Sessions = () => {
+    // Navigate to session editing page or show edit functionality
+    alert("Edit sessions functionality");
   };
   const clike_sideBr=()=>{
     setsideBar((prevState)=>!prevState)
@@ -47,7 +58,10 @@ export default function Main() {
       <br></br>
       <div className="header-row">
       <h3>Recomended courses:</h3>
-      <button id="bt2" onClick={Edit}>Edit</button>
+      <div style={{ display: "flex", gap: "8px" }}>
+        <button id="bt2" onClick={See_More}>See More</button>
+        <button id="bt2" onClick={Edit_Courses}>Edit</button>
+      </div>
       </div>
       <br></br>
       <section className="grid">
@@ -63,7 +77,10 @@ export default function Main() {
       <br></br>
       <div className="header-row">
       <h3>Recomended Sessions:</h3>
-      <button id="bt1" onClick={Edit}>Edit</button>
+      <div style={{ display: "flex", gap: "8px" }}>
+        <button id="bt1" onClick={See_More2}>See More</button>
+        <button id="bt1" onClick={Edit_Sessions}>Edit</button>
+      </div>
       </div>
       <br></br>
       <section className="sessions">

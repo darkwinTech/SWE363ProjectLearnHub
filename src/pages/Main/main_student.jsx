@@ -18,12 +18,12 @@ export default function Main() {
   const [sideBar,setsideBar]=useState(false)
 
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const See_More = () => {
     navigate("/Courses");
   };
   const See_More2 = () => {
-    navigate("/");
+    navigate("/tutors-list");
   };
   const clike_sideBr=()=>{
     setsideBar((prevState)=>!prevState)

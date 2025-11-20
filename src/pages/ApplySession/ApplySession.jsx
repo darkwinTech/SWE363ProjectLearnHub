@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import ToolBar from "../../components/ToolBar";
 import { toolBarData } from "../../data/toolBarData";
 import HomeIcon from "@mui/icons-material/Home";
@@ -10,15 +10,17 @@ import "./ApplySession.css";
 export default function ApplySession() {
   const [sideBar, setSideBar] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Get session data from navigation state, or use defaults
+  const session = location.state?.session || null;
+  const courseCode = session?.id || "MATH101";
+  const tutorName = session?.totre?.replace("By ", "") || "Ahmad Alghamdi";
+  const description = session?.description || "Description";
 
   const click_sideBar = () => {
     setSideBar((prevState) => !prevState);
   };
-
-  // Example data - these can be passed as props or fetched from state/API
-  const courseCode = "MATH101";
-  const tutorName = "Ahmad Alghamdi";
-  const description = "Description";
 
   const handleRegister = () => {
     // Navigate to Join Session page after registration
