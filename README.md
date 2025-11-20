@@ -62,7 +62,7 @@ Login Credentials:
     - Add tutors and courses to favorites for future sessions
 
 ## Team member names and roles.
-- Aleen Alqarni 
+- Aleen Alqarni (Login page, )
 - Ghada alghamdi 
 - Hayat alghamdi
 - Fatima labban
