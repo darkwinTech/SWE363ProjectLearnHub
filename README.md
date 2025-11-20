@@ -37,7 +37,8 @@ Access:
 - Approve and manage tutors
 - Manage course listings
 - Oversee all activities and ensure platform quality
-  
+
+
 - Tutor
   Login Credentials:
     - Email: tutor@kfupm.edu.sa
