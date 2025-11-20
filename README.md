@@ -19,7 +19,12 @@ Key Features:
 By centralizing these interactions, Learn Hub ensures a smoother, more reliable tutoring process that saves time and promotes academic success within the university community.
 # Setup and installation instructions
 Follow these steps to set up Learn Hub locally:
-1. Clone the repository 
+1. Clone the repository (https://github.com/darkwinTech/SWE363ProjectLearnHub.git)
+2. Navigate to the project directory (cd learn-hub)
+3. Install dependencies (npm install)
+4. Start the development server (npm start)
+5. Open your browser and visit (http://localhost:3000)
+
 ## Usage instructions and examples.
 npm start
 
