@@ -5,11 +5,21 @@ import React from "react";
 import Person2Icon from '@mui/icons-material/Person2';
 import { Link } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
+import {toolBarData} from "../../data/toolBarData_student"
 
 export default function User() {
-
+  const clike_sideBr=()=>{
+      setsideBar((prevState)=>!prevState)
+    }
+    const [sideBar,setsideBar]=useState(false)
   return(
+  
      <main className="wrap">
+       <ToolBar
+              openSideBar={clike_sideBr}
+              sideBarState={sideBar}
+              toolBarData={toolBarData}
+              />
             
             <section className="info">
               <section className="info_name">

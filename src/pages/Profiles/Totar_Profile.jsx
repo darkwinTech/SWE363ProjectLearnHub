@@ -7,12 +7,20 @@ import PersonIcon from '@mui/icons-material/Person';
 import StarIcon from '@mui/icons-material/Star';
 import { Link } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
+import {toolBarData} from "../../data/toolBarData_Totre"
 
 export default function Totor() {
-
+  const clike_sideBr=()=>{
+    setsideBar((prevState)=>!prevState)
+  }
+  const [sideBar,setsideBar]=useState(false)
   return(
      <main className="wrap">
-           
+           <ToolBar
+                   openSideBar={clike_sideBr}
+                   sideBarState={sideBar}
+                   toolBarData={toolBarData}
+                   />
             <section className="info">
               <section className="info_name">
               <div className="Main_profile">

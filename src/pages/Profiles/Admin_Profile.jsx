@@ -6,10 +6,20 @@ import Person2Icon from '@mui/icons-material/Person2';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from "react-router-dom";
 
+import {toolBarData} from "../../data/toolBarData"
+
 export default function Admin() {
+const clike_sideBr=()=>{
+    setsideBar((prevState)=>!prevState)}
+const [sideBar,setsideBar]=useState(false)
 
   return(
      <main className="wrap">
+      <ToolBar
+        openSideBar={clike_sideBr}
+        sideBarState={sideBar}
+        toolBarData={toolBarData}
+        />
             <section className="info">
               <section className="info_name">
               <div className="Main_profile">

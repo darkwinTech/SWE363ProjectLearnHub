@@ -20,6 +20,9 @@ export default function Main() {
 
 const navigate = useNavigate();
   const See_More = () => {
+    navigate("/Courses");
+  };
+  const See_More2 = () => {
     navigate("/");
   };
   const clike_sideBr=()=>{
@@ -61,7 +64,7 @@ const navigate = useNavigate();
       <br></br>
       <div className="header-row">
       <h3>Recomended Sessions:</h3>
-      <button id="bt1" onClick={See_More}>See More</button>
+      <button id="bt1" onClick={See_More2}>See More</button>
       </div>
       <br></br>
       <section className="sessions">

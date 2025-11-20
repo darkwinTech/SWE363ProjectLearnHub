@@ -9,8 +9,13 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import { courses } from "../../data/courses";
 import "./Courses.css";
-
+import ToolBar from "../../components/ToolBar";
+import {toolBarData} from "../../data/toolBarData_student"
 export default function Courses() {
+    const clike_sideBr=()=>{
+      setsideBar((prevState)=>!prevState)
+    }
+    const [sideBar,setsideBar]=useState(false)
   // ---- tags (alphabetical) ----
   const tags = useMemo(() => {
     const all = Array.from(new Set(courses.map((c) => c.id.split(" ")[0])));
@@ -38,9 +43,14 @@ export default function Courses() {
 
   return (
     <main className="coursesWrap">
+            <ToolBar
+              openSideBar={clike_sideBr}
+              sideBarState={sideBar}
+              toolBarData={toolBarData}
+              />
       <header className="coursesTop">
         <div />
-        <h2 className="greeting">Hi, User</h2>
+        <h2 className="greeting"></h2>
         <div />
       </header>
 
