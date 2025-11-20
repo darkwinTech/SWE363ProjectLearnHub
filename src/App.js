@@ -18,6 +18,8 @@ import Favorites from './pages/Favorites/Favorites.jsx';
 
 
 
+
+
 function App() {
   const [sideBar,setsideBar]=useState(false)
    const clike_sideBr=()=>{
