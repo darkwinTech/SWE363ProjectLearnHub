@@ -1,10 +1,5 @@
-<<<<<<< HEAD:src/Admin_Profile.jsx
-import './Main_profiles.css';
-import ToolBar from "./components/ToolBar";
-=======
-import "../../App.css"
+import '../../Main_profiles.css';
 import ToolBar from "../../components/ToolBar";
->>>>>>> Main:src/pages/Profiles/Admin_Profile.jsx
 import { useState } from "react";
 import React from "react";
 import Person2Icon from '@mui/icons-material/Person2';

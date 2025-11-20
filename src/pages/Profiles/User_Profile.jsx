@@ -1,10 +1,5 @@
-<<<<<<< HEAD:src/User_Profile.jsx
-import './Main_profiles.css';
-import ToolBar from "./components/ToolBar";
-=======
-import "../../App.css"
+import '../../Main_profiles.css';
 import ToolBar from "../../components/ToolBar";
->>>>>>> Main:src/pages/Profiles/User_Profile.jsx
 import { useState } from "react";
 import React from "react";
 import Person2Icon from '@mui/icons-material/Person2';
@@ -46,7 +41,7 @@ export default function User() {
               </div>
               </section>
               <div className="home">
-              <button className="homeBtn"><Link to="/"><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
+              <button className="homeBtn"><Link to="/main"><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
               </div>
     </main>    
   );

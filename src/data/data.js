@@ -4,21 +4,25 @@ export const sampleCourses = [
   {
     id: "SWE 353",
     title: "Web Engineering",
-    icon: <CalculateIcon/>
+    icon: <CalculateIcon/>,
+    link:"/h"
   },
   {
     id: "ICS 104",
     title: "Python",
-    icon: <TerminalIcon/>
+    icon: <TerminalIcon/>,
+    link:"/h"
   },
   {
     id: "ICS 500",
     title: "Methodology",
-    icon: <TerminalIcon/>
+    icon: <TerminalIcon/>,
+    link:"/h"
   },
   {
     id: "Math 201",
     title: "Calcaluis 3",
-    icon: <CalculateIcon/>
+    icon: <CalculateIcon/>,
+    link:"/h"
   },
 ];
