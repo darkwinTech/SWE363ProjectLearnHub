@@ -1,4 +1,5 @@
 import { useState } from "react";
+<<<<<<< HEAD:src/main.jsx
 import { sampleCourses } from "./data";
 import { sampleSessions} from "./data2";
 import CourseCard from "./components/CourseCard";
@@ -6,6 +7,15 @@ import ToturSesions from "./components/ToturSesions";
 import ToolBar from "./components/ToolBar";
 import "./index.css";
 import './Main_profiles.css';
+=======
+import { sampleCourses } from "../../data/data";
+import { sampleSessions} from "../../data/data2";
+import CourseCard from "../../components/CourseCard";
+import ToturSesions from "../Sessions/ToturSesions";
+import ToolBar from "../../components/ToolBar";
+import "../../index.css";
+import "../../App.css"
+>>>>>>> Main:src/pages/Main/main.jsx
 import SearchIcon from '@mui/icons-material/Search';
 
 
@@ -32,6 +42,10 @@ export default function Main() {
 
   return (
     <main className="wrap">
+      <ToolBar 
+        openSideBar={clike_sideBr}
+        sideBarState={sideBar}
+        />
       <input id="searchBar" type="text" placeholder="Search Course/Tutor" onChange={txt=>setQurey(txt.target.value)}></input>
       <br></br>
       <div className="header-row">

@@ -1,5 +1,10 @@
+<<<<<<< HEAD:src/Totor_favarite.jsx
 import './Main_profiles.css';
 import ToolBar from "./components/ToolBar";
+=======
+import "../../App.css"
+import ToolBar from "../../components/ToolBar";
+>>>>>>> Main:src/pages/Profiles/Totor_favarite.jsx
 import { useState } from "react";
 import React from "react";
 import Person2Icon from '@mui/icons-material/Person2';
