@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
-import "./Favorites.css";
+import "../Favorites/Favorites.css";
 
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -22,7 +22,7 @@ const tutors = [
   { id: "tutor_4", name: "Tutor 4" },
 ];
 
-export default function Favorites() {
+export default function StudentFavorites() {
   const clike_sideBr=()=>{
     setsideBar((prevState)=>!prevState)
   }
@@ -62,7 +62,7 @@ export default function Favorites() {
 
         <div className="fav-grid">
           {favoriteCourses.length === 0 && (
-            <div className="fav-empty">You haven’t added any favorite courses yet.</div>
+            <div className="fav-empty">You haven't added any favorite courses yet.</div>
           )}
 
           {favoriteCourses.map((course) => {
@@ -96,7 +96,7 @@ export default function Favorites() {
 
         <div className="fav-grid">
           {favoriteTutors.length === 0 && (
-            <div className="fav-empty">You haven’t added any favorite tutors yet.</div>
+            <div className="fav-empty">You haven't added any favorite tutors yet.</div>
           )}
 
           {favoriteTutors.map((tutor) => {
@@ -128,3 +128,4 @@ export default function Favorites() {
     </main>
   );
 }
+

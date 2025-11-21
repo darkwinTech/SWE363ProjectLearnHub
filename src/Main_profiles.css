@@ -26,10 +26,15 @@
   font-size: 20px;
   letter-spacing:.2px;
 }
+.wrap{
+  padding-top: 76px;
+  min-height: 100vh;
+}
+
 #searchBar{
   display:block;
   width: min(500px, 100%);
-  margin: 20px auto 10px;
+  margin: 24px auto 16px;
   padding: 14px 14px;
   background: var(--accent-2);
   color: #fff;
@@ -186,25 +191,36 @@
   justify-content:space-between;
   background: var(--surface);
   width:100%;
-  height: 44px;
+  height: 56px;
   padding: 0 14px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2500;
+  box-shadow: 0 2px 12px rgba(0,0,0,.08);
 }
 .menu{
   background: var(--surface);
   color:#4e5a53;
   border:none;
   width:52px; height:32px; border-radius:10px; cursor:pointer;
+  transition: background .2s ease;
+}
+.menu:hover{
+  background: rgba(11, 102, 35, 0.1);
 }
 .toolBar{
   position: fixed;                 
-  top: 0; left: 0;
+  top: 56px; left: 0;
   background: var(--surface);
-  height: 100vh;
+  height: calc(100vh - 56px);
   width: 280px;
   z-index: 2000;
   transform: translateX(-100%);
   transition: transform .35s ease;
   box-shadow: 0 0 0 1px #e7f7e8, 0 20px 60px rgba(0,0,0,.22);
+  overflow-y: auto;
+  padding: 16px 0 20px 0;
 }
 .toolBar--open{ transform: translateX(0%); }
 .pageShadow{
@@ -218,17 +234,50 @@
 .toolBar .toolRow{
   display:flex;
   align-items:center;
-  padding: 12px 18px;
+  padding: 14px 18px;
   color:#1e1e1e;
   font-size: 16px;
   border-radius: 12px;
-  margin: 6px 10px;
+  margin: 4px 10px;
+  transition: all .2s ease;
+  min-height: 48px;
 }
-.toolRow .icon{ width: 28px; display:grid; place-items:center; }
-.toolRow .title{ margin-left:12px; font-size: 14px; color:#999999; }
-.toolBar .toolRow:hover{ background:#054727; color:#fff; }
-.toolLink{ color:#5e6b64; text-decoration:none; font-weight:500; }
-.toolLink:hover{ color:#ffffff; }
+.toolRow .icon{ 
+  width: 28px; 
+  display:grid; 
+  place-items:center; 
+  font-size: 24px;
+  color: #1e1e1e;
+  flex-shrink: 0;
+}
+.toolRow .title{ 
+  margin-left:14px; 
+  font-size: 15px; 
+  color:#2d3e32; 
+  font-weight: 500;
+  flex: 1;
+}
+.toolBar .toolRow:hover{ 
+  background:#054727; 
+  color:#fff; 
+  transform: translateX(4px);
+}
+.toolBar .toolRow:hover .icon,
+.toolBar .toolRow:hover .title{
+  color: #fff;
+}
+.toolLink{ 
+  color:#2d3e32; 
+  text-decoration:none; 
+  font-weight:500; 
+  display: flex;
+  align-items: center;
+  width: 100%;
+  transition: color .2s ease;
+}
+.toolLink:hover{ 
+  color:#ffffff; 
+}
 
 
 .info {
@@ -404,7 +453,9 @@
 }
 
 @media (max-width: 992px){
-  main.wrap{ padding: 0 20px; }
+  .wrap{ 
+    padding: 76px 20px 0; 
+  }
   .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .sessions{ grid-template-columns: 1fr; }
 }

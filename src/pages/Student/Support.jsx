@@ -6,7 +6,7 @@ import { getHomeRoute } from "../../utils/getHomeRoute";
 import HomeIcon from "@mui/icons-material/Home";
 import "../../index.css";
 import "../../Main_profiles.css";
-import "./StudentSupport.css";
+import "../Support/StudentSupport.css";
 
 export default function StudentSupport() {
   const [sideBar, setSideBar] = useState(false);

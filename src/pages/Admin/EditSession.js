@@ -21,7 +21,6 @@ export default function EditSession({ sessions, setSessions }) {
 
   if (!sessionData) return <h1>Session Not Found</h1>;
 
-  // يمنع اختيار يوم قبل اليوم
   const today = new Date().toISOString().split("T")[0];
 
   const handleSubmit = () => {

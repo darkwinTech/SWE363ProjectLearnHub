@@ -1,66 +1,77 @@
 import './Main_profiles.css';
-import Admin from './pages/Profiles/Admin_Profile.jsx';
-import User from './pages/Profiles/User_Profile.jsx';
-import Totar_Profile from './pages/Profiles/Totar_Profile.jsx';
-import Totor_favarite from './pages/Profiles/Totor_favarite.jsx';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
-import ToolBar from './components/ToolBar';
+
+// Admin imports
+import AdminProfile from './pages/Admin/Profile.jsx';
+import AdminAnalytics from './pages/Admin/Analytics.jsx';
+import AdminHome from './pages/Admin/Home.jsx';
+import AdminApplySession from './pages/Admin/ApplySession.jsx';
+import MakeAnnouncement from './pages/Admin/MakeAnnouncement.jsx';
+import AdminSupport from './pages/Admin/Support.jsx';
+import SupportReply from './pages/Admin/SupportReply.jsx';
+import ViewApplications from './pages/Admin/ViewApplications.jsx';
+
+// Tutor imports
+import TutorProfile from './pages/Tutor/Profile.jsx';
+import TutorAnalytics from './pages/Tutor/Analytics.jsx';
+import TutorHome from './pages/Tutor/Home.jsx';
+import TutorApplySession from './pages/Tutor/ApplySession.jsx';
+import TutorFavorites from './pages/Tutor/Favorites.jsx';
+
+// Student imports
+import StudentProfile from './pages/Student/Profile.jsx';
+import StudentHome from './pages/Student/Home.jsx';
+import StudentJoinSession from './pages/Student/JoinSession.jsx';
+import StudentRatingSession from './pages/Student/RatingSession.jsx';
+import StudentFavorites from './pages/Student/Favorites.jsx';
+import StudentSupport from './pages/Student/Support.jsx';
+
+// Common pages
 import Login from './pages/Login/Login.jsx';
 import Notification from "./pages/Notifications/Notification.jsx";
-import AdminAnalyticsPage from "./pages/Analytics/AdminAnalyticsPage.jsx";
-import TutorAnalyticsPage from "./pages/Analytics/TutorAnalyticsPage.jsx";
-import Main from './pages/Main/main.jsx';
-import Main_student from './pages/Main/main_student.jsx';
-import Main_totre from './pages/Main/main_totre.jsx';
 import Courses from './pages/Courses/Courses.jsx';
 import SubjectCourses from './pages/Courses/SubjectCourses.jsx';
-import Favorites from './pages/Favorites/Favorites.jsx';
-import ApplySession from './pages/ApplySession/ApplySession.jsx';
-import JoinSession from './pages/ApplySession/JoinSession.jsx';
-import RatingSession from './pages/ApplySession/RatingSession.jsx';
-import AdminApplySession from './pages/ApplySession/AdminApplySession.jsx';
-import MakeAnnouncement from './pages/Admin/MakeAnnouncement.jsx';
-import Support from './pages/Admin/Support.jsx';
-import SupportReply from './pages/Admin/SupportReply.jsx';
-import StudentSupport from './pages/Support/StudentSupport.jsx';
-import ViewApplications from './pages/Admin/ViewApplications.jsx';
 import TutorsList from './pages/Tutors/TutorsList.jsx';
 import GeneralCalendar from './pages/Calendar/GeneralCalendar.jsx';
  
  
  
 function App() {
-  const [sideBar,setsideBar]=useState(false)
-   const clike_sideBr=()=>{
-    setsideBar((prevState)=>!prevState)
-  }
   return (
     <BrowserRouter>
       <Routes>
+       {/* Login */}
        <Route path="/" element={<Login />} />
-       <Route path="/admin" element={<Main />} />
-       <Route path="/student" element={<Main_student />} />
-       <Route path="/tutor" element={<Main_totre />} />
-       <Route path="/notifications" element={<Notification />} />
-       <Route path="/student/profile" element={<User />} />
-       <Route path="/admin/profile" element={<Admin />} />
-       <Route path="/tutor/profile" element={<Totar_Profile />} />
-       <Route path="/tutor/favorite" element={<Totor_favarite />} />
-       <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
-       <Route path="/tutor/analytics" element={<TutorAnalyticsPage />} />
-       <Route path="/courses" element={<Courses />} />
-       <Route path="/courses/:subject" element={<SubjectCourses />} />
-       <Route path="/favorites" element={<Favorites />} />
-       <Route path="/apply-session" element={<ApplySession />} />
-       <Route path="/join-session" element={<JoinSession />} />
-       <Route path="/rating-session" element={<RatingSession />} />
+       
+       {/* Admin Routes */}
+       <Route path="/admin" element={<AdminHome />} />
+       <Route path="/admin/profile" element={<AdminProfile />} />
+       <Route path="/admin/analytics" element={<AdminAnalytics />} />
        <Route path="/admin-apply-session" element={<AdminApplySession />} />
        <Route path="/admin/make-announcement" element={<MakeAnnouncement />} />
-       <Route path="/admin/support" element={<Support />} />
+       <Route path="/admin/support" element={<AdminSupport />} />
        <Route path="/admin/support/reply" element={<SupportReply />} />
-       <Route path="/support" element={<StudentSupport />} />
        <Route path="/admin/view-applications" element={<ViewApplications />} />
+       
+       {/* Tutor Routes */}
+       <Route path="/tutor" element={<TutorHome />} />
+       <Route path="/tutor/profile" element={<TutorProfile />} />
+       <Route path="/tutor/analytics" element={<TutorAnalytics />} />
+       <Route path="/tutor/favorite" element={<TutorFavorites />} />
+       <Route path="/apply-session" element={<TutorApplySession />} />
+       
+       {/* Student Routes */}
+       <Route path="/student" element={<StudentHome />} />
+       <Route path="/student/profile" element={<StudentProfile />} />
+       <Route path="/join-session" element={<StudentJoinSession />} />
+       <Route path="/student/rating-session" element={<StudentRatingSession />} />
+       <Route path="/favorites" element={<StudentFavorites />} />
+       <Route path="/support" element={<StudentSupport />} />
+       
+       {/* Common Routes */}
+       <Route path="/notifications" element={<Notification />} />
+       <Route path="/courses" element={<Courses />} />
+       <Route path="/courses/:subject" element={<SubjectCourses />} />
        <Route path="/tutors-list" element={<TutorsList />} />
        <Route path="/general-calendar" element={<GeneralCalendar />} />
       </Routes>

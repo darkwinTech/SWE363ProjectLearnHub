@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-export default function ToturSesions({ seesion, index, onMutateCourse }) {
+export default function TutorSessions({ seesion, index, onMutateCourse }) {
   const [totre, settotre] = useState("");
   const [date, setDate] = useState("");
   const navigate = useNavigate();
@@ -28,3 +28,4 @@ export default function ToturSesions({ seesion, index, onMutateCourse }) {
     </article>
   );
 }
+

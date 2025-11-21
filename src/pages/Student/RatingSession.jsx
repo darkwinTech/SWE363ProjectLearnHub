@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import ToolBar from "../../components/ToolBar";
 import { getToolBarData } from "../../utils/getToolBarData";
 import HomeIcon from "@mui/icons-material/Home";
@@ -8,23 +8,27 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import "../../index.css";
 import "../../Main_profiles.css";
-import "./RatingSession.css";
+import "../ApplySession/RatingSession.css";
 
-export default function RatingSession() {
+export default function StudentRatingSession() {
   const [sideBar, setSideBar] = useState(false);
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [comment, setComment] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const click_sideBar = () => {
     setSideBar((prevState) => !prevState);
   };
 
-  // Example data - these can be passed as props or fetched from state/API
-  const courseCode = "MATH101";
-  const tutorName = "Tutor1";
+  // Get session data from navigation state, or use defaults
+  const session = location.state?.session || null;
+  // Handle both formats: from calendar (courseCode) or from sessions list (id)
+  const courseCode = session?.courseCode || session?.id || "MATH101";
+  // Handle both formats: from calendar (tutorName) or from sessions list (totre)
+  const tutorName = session?.tutorName || session?.totre?.replace("By ", "") || "Tutor";
 
   const handleStarClick = (index) => {
     setRating(index);
@@ -65,7 +69,7 @@ export default function RatingSession() {
 
       {/* Page Title */}
       <header className="rating-session-title-section">
-        <h1 className="rating-session-title">Rating/Feedback</h1>
+        <h1 className="rating-session-title">Rating</h1>
       </header>
 
       {/* Course and Tutor Information */}

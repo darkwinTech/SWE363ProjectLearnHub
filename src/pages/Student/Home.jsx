@@ -2,7 +2,7 @@ import { useState } from "react";
 import { sampleCourses } from "../../data/data";
 import { sampleSessions} from "../../data/data2";
 import CourseCard from "../../components/CourseCard";
-import ToturSesions from "../Sessions/ToturSesions";
+import TutorSessions from "../Sessions/TutorSessions";
 import ToolBar from "../../components/ToolBar";
 import "../../index.css";
 import "../../Main_profiles.css";
@@ -11,7 +11,7 @@ import { getToolBarData } from "../../utils/getToolBarData";
 import { useNavigate } from "react-router-dom";
 
 
-export default function Main() {
+export default function StudentHome() {
   const [courses, setCourses] = useState(sampleCourses);
   const [sessions, setSession] = useState(sampleSessions);
   const [qurey,setQurey]=useState(" ")
@@ -46,8 +46,7 @@ export default function Main() {
         subjectMap.set(subject, {
           id: subject, // Use just the subject name as ID
           title: course.title, // Use first course's title
-          icon: course.icon, // Use first course's icon
-          link: course.link
+          icon: course.icon // Use first course's icon
         });
       }
     });
@@ -88,7 +87,7 @@ export default function Main() {
       <br></br>
       <section className="sessions">
         {sessions.map((seaion, idx) => (
-          <ToturSesions
+          <TutorSessions
             key={seaion.id}
             seesion={seaion}
             index={idx}
@@ -99,3 +98,4 @@ export default function Main() {
     </main>
   );
 }
+

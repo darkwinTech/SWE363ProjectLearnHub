@@ -1,28 +1,41 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import ToolBar from "../../components/ToolBar";
 import { getToolBarData } from "../../utils/getToolBarData";
 import HomeIcon from "@mui/icons-material/Home";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import "../../index.css";
 import "../../Main_profiles.css";
-import "./JoinSession.css";
+import "../ApplySession/JoinSession.css";
 
-export default function JoinSession() {
+export default function StudentJoinSession() {
   const [sideBar, setSideBar] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const click_sideBar = () => {
     setSideBar((prevState) => !prevState);
   };
 
-  // Example data - these can be passed as props or fetched from state/API
-  const courseName = "Course";
-  const description = "Description about the meeting";
+  // Get session data from navigation state, or use defaults
+  const session = location.state?.session || null;
+  // Handle both formats: from calendar (courseCode) or from sessions list (id)
+  const courseCode = session?.courseCode || session?.id || "Course";
+  // Handle both formats: from calendar (tutorName) or from sessions list (totre)
+  const tutorName = session?.tutorName || session?.totre?.replace("By ", "") || "Tutor";
+  const description = session?.sessionDesc || session?.description || "Description about the meeting";
 
   const handleJoin = () => {
-    // Navigate to Rating Session page after joining
-    navigate("/rating-session");
+    // Pass session data to Rating Session page
+    navigate("/student/rating-session", { 
+      state: { 
+        session: {
+          courseCode: courseCode,
+          tutorName: tutorName,
+          description: description
+        }
+      } 
+    });
   };
 
   return (
@@ -44,7 +57,7 @@ export default function JoinSession() {
         <div className="join-session-course-block">
           {/* Course Name at Top */}
           <div className="join-session-course-header">
-            <h3 className="join-session-course-name">{courseName}</h3>
+            <h3 className="join-session-course-name">{courseCode}</h3>
           </div>
 
           {/* Description Text */}

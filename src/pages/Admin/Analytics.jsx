@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./AnalyticsPage.css";
+import "../Analytics/AnalyticsPage.css";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import HomeIcon from "@mui/icons-material/Home";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import ToolBar from "../../components/ToolBar";
 import { getToolBarData } from "../../utils/getToolBarData";
 
-export default function AnalyticsPage() {
+export default function AdminAnalytics() {
   const [sideBar, setSideBar] = useState(false);
   
   const click_sideBar = () => {
@@ -92,3 +92,4 @@ export default function AnalyticsPage() {
     </div>
   );
 }
+

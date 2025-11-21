@@ -26,16 +26,19 @@
 .calendar-container {
   background: #ffffff;
   border-radius: 24px;
-  padding: 20px;
+  padding: 16px;
   margin-bottom: 24px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .calendar-nav-btn {
@@ -60,7 +63,7 @@
 }
 
 .calendar-month-year {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #000;
   margin: 0;
@@ -69,22 +72,22 @@
 .calendar-days-header {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 6px;
+  margin-bottom: 10px;
 }
 
 .calendar-day-name {
   text-align: center;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   color: #666;
-  padding: 8px 0;
+  padding: 6px 0;
 }
 
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
+  gap: 6px;
 }
 
 .calendar-day-empty {
@@ -96,7 +99,7 @@
   border: none;
   background: transparent;
   color: #000;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   border-radius: 50%;
@@ -104,6 +107,8 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
+  min-width: 36px;
+  min-height: 36px;
 }
 
 .calendar-day:hover {
@@ -225,7 +230,7 @@
 
 .calendar-more-btn {
   background: #0B6623;
-  border: 1px solid #b2e8bb;
+  border: none;
   border-radius: 999px;
   padding: 10px 16px;
   color: #ffffff;
@@ -236,13 +241,17 @@
   font-size: 14px;
   font-weight: 500;
   box-shadow: 0 10px 30px rgba(0,0,0,.12);
-  transition: transform .05s ease, box-shadow .15s ease, border-color .15s ease;
+  transition: transform .05s ease, box-shadow .15s ease;
 }
 
 .calendar-more-btn:hover {
-  border-color: #56a487;
   box-shadow: 0 8px 22px rgba(0,0,0,.18);
   transform: translateY(-1px);
+  background: #0a5a1f;
+}
+
+.calendar-more-btn:focus {
+  outline: none;
 }
 
 .calendar-more-btn svg {

@@ -21,10 +21,8 @@ export default function ViewApplications() {
     setApplications(prev => prev.filter(app => app.id !== id));
   };
 
-  // ترتيب التطبيقات حسب الاختيار
   const sortedApplications = [...applications].sort((a, b) => {
     if (sortBy === "most-recent") {
-      // افترضنا أن submittedAt بتنسيق يمكن تحويله لتاريخ
       return new Date(b.submittedAt) - new Date(a.submittedAt);
     } else if (sortBy === "names") {
       return a.name.localeCompare(b.name);
@@ -51,7 +49,6 @@ export default function ViewApplications() {
         </select>
       </div>
 
-      {/* قائمة التطبيقات */}
       <section className="applications-list">
         {sortedApplications.map(app => (
           <div key={app.id} className="application-card">

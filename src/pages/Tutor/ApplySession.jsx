@@ -6,9 +6,9 @@ import HomeIcon from "@mui/icons-material/Home";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import "../../index.css";
 import "../../Main_profiles.css";
-import "./ApplySession.css";
+import "../ApplySession/ApplySession.css";
 
-export default function ApplySession() {
+export default function TutorApplySession() {
   const [sideBar, setSideBar] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -26,8 +26,17 @@ export default function ApplySession() {
   };
 
   const handleRegister = () => {
-    // Navigate to Join Session page after registration
-    navigate("/join-session");
+    // Pass session data to Join Session page
+    navigate("/join-session", {
+      state: {
+        session: {
+          courseCode: courseCode,
+          tutorName: tutorName,
+          description: description,
+          sessionDesc: description
+        }
+      }
+    });
   };
 
   return (
@@ -48,9 +57,28 @@ export default function ApplySession() {
       <section className="apply-session-info">
         <h1 className="apply-session-course-code">{courseCode}</h1>
         <h2 className="apply-session-tutor-name">{tutorName}</h2>
-        <Link to="/tutor/favorite" className="apply-session-view-tutor">
+        <button
+          className="apply-session-view-tutor"
+          style={{ 
+            background: 'none', 
+            border: 'none', 
+            cursor: 'pointer', 
+            textDecoration: 'underline',
+            color: '#70b476',
+            fontSize: '12px',
+            fontWeight: '500'
+          }}
+          onClick={() => navigate("/tutor/favorite", {
+            state: {
+              tutor: {
+                name: tutorName,
+                courseCode: courseCode
+              }
+            }
+          })}
+        >
           View Tutor
-        </Link>
+        </button>
       </section>
 
       {/* Description Block */}

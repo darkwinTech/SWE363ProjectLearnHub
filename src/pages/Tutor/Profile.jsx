@@ -10,7 +10,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import {toolBarData} from "../../data/toolBarData_Tutor";
 
-export default function Totor() {
+export default function TutorProfile() {
   const clike_sideBr=()=>{
     setsideBar((prevState)=>!prevState)
   }
@@ -68,3 +68,4 @@ export default function Totor() {
     </main>    
   );
 }
+

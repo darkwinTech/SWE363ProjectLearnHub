@@ -6,7 +6,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import "../../index.css";
 import "../../Main_profiles.css";
-import "./AdminApplySession.css";
+import "../ApplySession/AdminApplySession.css";
 
 export default function AdminApplySession() {
   const [sideBar, setSideBar] = useState(false);

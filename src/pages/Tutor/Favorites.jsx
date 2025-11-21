@@ -3,7 +3,7 @@ import "../Favorites/Favorites.css";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useFavorites } from "../../data/state/useFavorites"; 
-import {totarData} from "../../data/totares.js"; 
+import {totarData} from "../../data/tutors.js"; 
 import ToolBar from "../../components/ToolBar";
 import { useState } from "react";
 import React from "react";
@@ -11,45 +11,67 @@ import Person2Icon from '@mui/icons-material/Person2';
 import PersonIcon from '@mui/icons-material/Person';
 import StarIcon from '@mui/icons-material/Star';
 import FunctionsIcon from '@mui/icons-material/Functions';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import { getHomeRoute } from "../../utils/getHomeRoute";
+import { toolBarData } from "../../data/toolBarData_Tutor";
 
-export default function TotorFav() {
+export default function TutorFavorites() {
+  const location = useLocation();
   const [totarDataState, setTotarDataState] = useState(totarData);
+  const [sideBar, setSideBar] = useState(false);
 
-  const toggleFavorite = (index) => {
-    setTotarDataState((prev) =>
-      prev.map((toter, i) =>
-        i === index
-          ? { ...toter, Fav: !toter.Fav }
-          : toter
-      )
-    );
+  const click_sideBar = () => {
+    setSideBar((prevState) => !prevState);
   };
+
+  // Get tutor data from navigation state, or use default
+  const tutorData = location.state?.tutor || null;
+  const tutorName = tutorData?.name || "Mohamed alzhrane";
+  
+  // Find the tutor in the data array
+  const tutorIndex = totarDataState.findIndex(toter => 
+    toter.name.toLowerCase() === tutorName.toLowerCase()
+  );
+  const currentTutor = tutorIndex !== -1 ? totarDataState[tutorIndex] : null;
+
+  const toggleFavorite = () => {
+    if (tutorIndex !== -1) {
+      setTotarDataState((prev) =>
+        prev.map((toter, i) =>
+          i === tutorIndex
+            ? { ...toter, Fav: !toter.Fav }
+            : toter
+        )
+      );
+    }
+  };
+  
   return(
      <main className="wrap">
-          
+      <ToolBar
+        openSideBar={click_sideBar}
+        sideBarState={sideBar}
+        toolBarData={toolBarData}
+      />
             <section className="info">
-              <section className="info_name">
-              <div className="Main_profile">
-              <Person2Icon style={{ fontSize: '60px', color: '#2a4d3d' }}/>
-              </div>
-              <div className="content">
-                <h4>Mohamed alzhrane</h4>
-                <p>Student ID: 202045</p>
-              </div>
-              <div>
-               {totarDataState.map((toter, idx) => {
-        if (toter.name === "Mohamed alzhrane") {
-          return (
-            <button key={idx} onClick={() => toggleFavorite(idx)} className={`heartBtn_toter ${toter.Fav  ? "heart--active" : ""}`}>
-              {toter.Fav ? <FavoriteIcon style={{ fontSize: '40px'}} /> : <FavoriteBorderIcon style={{ fontSize: '40px'}}/>}
-            </button>
-          );
-        } 
-      })}
+              <section className="info_name" style={{ justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flex: 1 }}>
+                <div className="Main_profile">
+                  <Person2Icon style={{ fontSize: '60px', color: '#2a4d3d' }}/>
                 </div>
+                <div className="content">
+                  <h4>{tutorName}</h4>
+                  <p>Student ID: 202045</p>
+                </div>
+              </div>
+              {currentTutor && (
+                <div style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
+                  <button onClick={toggleFavorite} className={`heartBtn_toter ${currentTutor.Fav  ? "heart--active" : ""}`}>
+                    {currentTutor.Fav ? <FavoriteIcon style={{ fontSize: '40px'}} /> : <FavoriteBorderIcon style={{ fontSize: '40px'}}/>}
+                  </button>
+                </div>
+              )}
               </section>
             </section>
              <section className="info">
@@ -95,3 +117,4 @@ export default function TotorFav() {
     </main>    
   );
 }
+

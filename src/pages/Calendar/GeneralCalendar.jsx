@@ -21,7 +21,7 @@ const sampleSessions = [
     tutorName: "Ahmad alghamdi",
     date: "19",
     month: 8, // September (0-indexed, so 8 = September)
-    year: 2021,
+    year: 2025,
     time: "8:00PM",
     courseCode: "Math 101",
     sessionDesc: "Session: ch 2.4"
@@ -31,7 +31,7 @@ const sampleSessions = [
     tutorName: "Ghada alghamdi",
     date: "19",
     month: 8,
-    year: 2021,
+    year: 2025,
     time: "9:00PM",
     courseCode: "ICS 108",
     sessionDesc: "Session: solving old exams"
@@ -41,7 +41,7 @@ const sampleSessions = [
     tutorName: "Mohamed alzhrane",
     date: "20",
     month: 8,
-    year: 2021,
+    year: 2025,
     time: "6:00PM",
     courseCode: "SWE 353",
     sessionDesc: "Session: Web Development"
@@ -51,7 +51,7 @@ const sampleSessions = [
     tutorName: "Norah alghamdi",
     date: "25",
     month: 8,
-    year: 2021,
+    year: 2025,
     time: "7:00PM",
     courseCode: "ICS 104",
     sessionDesc: "Session: Python Basics"
@@ -74,11 +74,43 @@ const availableTimes = [
 
 const STORAGE_KEY = "tutor_sessions";
 
+// Helper function to find the earliest session date
+const getEarliestSessionDate = (sessions) => {
+  if (!sessions || sessions.length === 0) {
+    return { date: new Date(2025, 0, 1), selected: 1 };
+  }
+
+  // Convert all sessions to comparable date objects and find the earliest
+  const sessionDates = sessions.map(session => ({
+    year: session.year,
+    month: session.month,
+    date: parseInt(session.date),
+    session: session
+  }));
+
+  // Sort by year, then month, then date
+  sessionDates.sort((a, b) => {
+    if (a.year !== b.year) return a.year - b.year;
+    if (a.month !== b.month) return a.month - b.month;
+    return a.date - b.date;
+  });
+
+  const earliest = sessionDates[0];
+  return {
+    date: new Date(earliest.year, earliest.month, earliest.date),
+    selected: earliest.date
+  };
+};
+
 export default function GeneralCalendar() {
   const [sideBar, setSideBar] = useState(false);
-  const [currentDate, setCurrentDate] = useState(new Date(2021, 8, 19)); // September 2021
-  const [selectedDate, setSelectedDate] = useState(19);
   const [allSessions, setAllSessions] = useState(sampleSessions);
+  
+  // Initialize with earliest session date
+  const earliestSession = getEarliestSessionDate(sampleSessions);
+  const [currentDate, setCurrentDate] = useState(earliestSession.date);
+  const [selectedDate, setSelectedDate] = useState(earliestSession.selected);
+  
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingSession, setEditingSession] = useState(null);
   const [formData, setFormData] = useState({
@@ -90,17 +122,25 @@ export default function GeneralCalendar() {
   const userType = localStorage.getItem('userType');
   const currentTutorName = "Ahmad alghamdi"; // Default tutor name, can be fetched from profile
 
-  // Load sessions from localStorage on mount
+  // Load sessions from localStorage on mount and update to earliest session date
   useEffect(() => {
     const savedSessions = localStorage.getItem(STORAGE_KEY);
+    let allLoadedSessions = [...sampleSessions];
+    
     if (savedSessions) {
       try {
         const parsed = JSON.parse(savedSessions);
-        setAllSessions([...sampleSessions, ...parsed]);
+        allLoadedSessions = [...sampleSessions, ...parsed];
+        setAllSessions(allLoadedSessions);
       } catch (e) {
         console.error("Error loading sessions:", e);
       }
     }
+    
+    // Update calendar to show earliest session date
+    const earliest = getEarliestSessionDate(allLoadedSessions);
+    setCurrentDate(earliest.date);
+    setSelectedDate(earliest.selected);
   }, []);
 
   // Save sessions to localStorage
@@ -272,9 +312,6 @@ export default function GeneralCalendar() {
 
       <header className="general-calendar-header">
         <h1 className="general-calendar-title">General Calendar</h1>
-        <div className="general-calendar-greeting">
-          <h2>Hi, User</h2>
-        </div>
       </header>
 
       <section className="calendar-container">

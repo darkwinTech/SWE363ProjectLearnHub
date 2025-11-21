@@ -1,5 +1,5 @@
 import { toolBarData as toolBarData_admin } from "../data/toolBarData_Admin";
-import { toolBarData as toolBarData_student } from "../data/toolBarData_Student";
+import { toolBarData as toolBarData_student } from "../data/toolBarData_student";
 import { toolBarData as toolBarData_tutor } from "../data/toolBarData_Tutor";
 
 /**
