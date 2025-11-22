@@ -62,10 +62,10 @@ Login Credentials:
     - Add tutors and courses to favorites for future sessions
 
 ## Team member names and roles.
-- Aleen Alqarni (Login page, )
-- Ghada Alghamdi 
-- Hayat Alghamdi
-- Fatima labban
+- Aleen Alqarni (Login, Notification, Courses Subject, Tutor List, General Calendar, Favorite courses and tutors, Support)
+- Ghada Alghamdi (Admin main, student main, profile(all users), Menu(all users) )
+- Hayat Alghamdi (Analytics (admin and tutor), Rating & feedback, Booking sessions, student Calendar(addtion & deletion))
+- Fatima labban (Admin main(delete and edit), announcement page, view application, admin supprot review, edit session)
 
 
 
