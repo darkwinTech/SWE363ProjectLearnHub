@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { sampleSupport } from "./data5.js";
+import { sampleSupport } from "../../data/data5";
 import "./App.css";
 import ToolBar from "../../components/ToolBar";
 import { getToolBarData } from "../../utils/getToolBarData";

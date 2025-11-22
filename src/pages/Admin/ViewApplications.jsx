@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { sampleApplications } from "./data4";
+import { sampleApplications } from "../../data/data4";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import ToolBar from "../../components/ToolBar";

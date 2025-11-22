@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { sampleCourses } from "../../data/data";
 import { sampleSessions} from "../../data/data2";
@@ -85,10 +86,10 @@ export default function TutorHome() {
       </div>
       <br></br>
       <section className="sessions">
-        {sessions.map((seaion, idx) => (
+        {sessions.map((session, idx) => (
           <TutorSessions
-            key={seaion.id}
-            seesion={seaion}
+            key={session.id}
+            seesion={session}
             index={idx}
           />
         ))}
