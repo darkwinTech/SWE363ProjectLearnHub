@@ -7,13 +7,11 @@ export default function CourseCard({ course, index, onMutateCourse, isEditMode }
   const navigate = useNavigate();
 
   const handleCourseClick = () => {
-    if (isEditMode) return; // Don't navigate in edit mode
-    // Extract subject from course ID (e.g., "SWE 353" -> "SWE")
+    if (isEditMode) return; 
     const subject = course.id.split(" ")[0];
     navigate(`/courses/${subject}`);
   };
 
-  // Extract subject name (e.g., "SWE 353" -> "SWE", "MATH 201" -> "MATH")
   const subjectName = course.id.split(" ")[0];
 
   return (

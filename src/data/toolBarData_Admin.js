@@ -8,39 +8,11 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 export const toolBarData = [
-  {
-    title: "My profile",
-    icon:<AccountCircleIcon/>,
-    link:"/admin/profile"
-  },
-  {
-    title: "Announcements",
-    icon:<AssignmentAddIcon/>,
-    link:"/admin/make-announcement"
-  },
-  {
-    title: "Analytics",
-    icon:<AssessmentIcon/>,
-    link:"/admin/analytics"
-  },
-  {
-    title: "Support",
-    icon:<ContactSupportIcon/>,
-    link:"/admin/support"
-  },
-  {
-    title: "Calendar",
-    icon:<CalendarTodayIcon/>,
-    link:"/general-calendar"
-  },
-  {
-    title: "View Application",
-    icon:<AssignmentIcon/>,
-    link:"/admin/view-applications"
-  },
-  {
-    title: "Log out",
-    icon:<LogoutIcon/>,
-    link:"logout"
-  },
+  {title: "My profile", icon:<AccountCircleIcon/>, link:"/admin/profile"},
+  {title: "Announcements", icon:<AssignmentAddIcon/>, link:"/admin/make-announcement"},
+  {title: "Analytics", icon:<AssessmentIcon/>,link:"/admin/analytics"},
+  {title: "Support", icon:<ContactSupportIcon/>, link:"/admin/support"},
+  {title: "Calendar", icon:<CalendarTodayIcon/>, link:"/general-calendar"},
+  {title: "View Application", icon:<AssignmentIcon/>, link:"/admin/view-applications"},
+  {title: "Log out", icon:<LogoutIcon/>, link:"logout"},
 ];

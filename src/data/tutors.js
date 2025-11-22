@@ -1,21 +1,6 @@
 export const totarData = [
-  {
-    Fav: false,
-    name: "Mohamed alzhrane",
-    time:"6:00 pm"
-  },
-  {
-    Fav: true,
-    name: "Norah alghamdi",
-
-  },
-  {
-    Fav: true,
-    name: "hamad alharbi",
-    time:"6:30 pm"
-  },
-  {
-    Fav: false,
-    name: "Ghada alghamdi",
-  },
+  { fav: false, name: "Mohamed Alzhrane", time: "6:00 PM" },
+  { fav: true, name: "Norah Alghamdi" },
+  { fav: true, name: "Hamad Alharbi", time: "6:30 PM" },
+  { fav: false, name: "Ghada Alghamdi" },
 ];
