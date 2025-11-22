@@ -14,29 +14,30 @@ code {
 
 /* Unified Home Button Styles */
 .unified-home-btn {
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   border: none;
   background: #0B6623;
   color: #ffffff;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-size: 24px;
+  transition: all 0.2s ease;
   position: relative;
 }
 
 .unified-home-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 6px 12px rgba(0, 0, 0, 0.3);
-  background: #0a5a1f;
+  background: #56B46F;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
 }
 
 .unified-home-btn:active {
-  transform: scale(0.98);
+  transform: translateY(0);
 }
 
 .unified-home-btn a {
@@ -50,10 +51,13 @@ code {
 }
 
 .unified-home-btn svg {
-  font-size: 28px;
+  font-size: 24px;
 }
 
 .unified-home-bottom-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   bottom: 24px;
   left: 50%;

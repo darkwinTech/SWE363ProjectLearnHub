@@ -2,8 +2,12 @@ import { useState } from "react";
 import { sampleApplications } from "./data4";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import ToolBar from "./components/ToolBar";
+import ToolBar from "../../components/ToolBar";
+import { getToolBarData } from "../../utils/getToolBarData";
 import "./App.css";
+import { Link } from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
+import { getHomeRoute } from "../../utils/getHomeRoute";
 
 export default function ViewApplications() {
   const [applications, setApplications] = useState(sampleApplications);
@@ -32,7 +36,7 @@ export default function ViewApplications() {
 
   return (
     <main className="applications-page">
-    <ToolBar openSideBar={() => setSideBar(!sideBar)} sideBarState={sideBar} />
+    <ToolBar openSideBar={() => setSideBar(!sideBar)} sideBarState={sideBar} toolBarData={getToolBarData()} />
 
 
       <h2 className="page-title">View Applications</h2>
@@ -74,6 +78,15 @@ export default function ViewApplications() {
 
           </div>
         ))}
+      </section>
+
+      {/* Home Icon at Bottom */}
+      <section className="unified-home-bottom-nav">
+        <button className="unified-home-btn">
+          <Link to={getHomeRoute()}>
+            <HomeIcon />
+          </Link>
+        </button>
       </section>
     </main>
   );

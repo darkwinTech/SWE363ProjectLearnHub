@@ -110,10 +110,13 @@ export default function TutorFavorites() {
                  </div>
               </div>
               </section>
-              <div className="home">
-              <button className="homeBtn"><Link to={getHomeRoute()}><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
-              </div>
-              
+              <section className="unified-home-bottom-nav">
+                <button className="unified-home-btn">
+                  <Link to={getHomeRoute()}>
+                    <HomeIcon />
+                  </Link>
+                </button>
+              </section>
     </main>    
   );
 }

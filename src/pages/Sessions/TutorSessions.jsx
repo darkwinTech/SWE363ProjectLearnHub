@@ -4,17 +4,23 @@ import { useNavigate } from "react-router-dom";
 
 
 
-export default function TutorSessions({ seesion, index, onMutateCourse }) {
+export default function TutorSessions({ seesion, index, onMutateCourse, isEditMode }) {
   const [totre, settotre] = useState("");
   const [date, setDate] = useState("");
   const navigate = useNavigate();
 
   const handleSessionClick = () => {
+    if (isEditMode) return; // Don't navigate in edit mode
     navigate("/apply-session", { state: { session: seesion } });
   };
 
   return (
-    <article className="Session-card" onClick={handleSessionClick} style={{ cursor: 'pointer' }}>
+    <article 
+      className="Session-card" 
+      onClick={handleSessionClick} 
+      style={{ cursor: 'pointer' }}
+      data-edit-mode={isEditMode ? "true" : "false"}
+    >
       <div className="cards_link_s">
       <header className="cardHeader-session">
         <h2 className="session-title">{seesion.id}</h2>

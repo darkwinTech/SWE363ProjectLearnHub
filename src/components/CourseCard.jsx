@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function CourseCard({ course, index, onMutateCourse }) {
+export default function CourseCard({ course, index, onMutateCourse, isEditMode }) {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const navigate = useNavigate();
 
   const handleCourseClick = () => {
+    if (isEditMode) return; // Don't navigate in edit mode
     // Extract subject from course ID (e.g., "SWE 353" -> "SWE")
     const subject = course.id.split(" ")[0];
     navigate(`/courses/${subject}`);

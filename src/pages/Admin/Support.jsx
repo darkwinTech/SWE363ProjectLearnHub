@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { sampleSupport } from "./data5.js";
 import "./App.css";
-import ToolBar from "./components/ToolBar";
+import ToolBar from "../../components/ToolBar";
+import { getToolBarData } from "../../utils/getToolBarData";
+import HomeIcon from '@mui/icons-material/Home';
+import { getHomeRoute } from "../../utils/getHomeRoute";
 
 export default function Support() {
   const navigate = useNavigate();
@@ -30,7 +33,7 @@ export default function Support() {
   return (
     <main className="wrap">
       {/* Toolbar */}
-      <ToolBar openSideBar={toggleSideBar} sideBarState={sideBar} />
+      <ToolBar openSideBar={toggleSideBar} sideBarState={sideBar} toolBarData={getToolBarData()} />
 
       <div className="support-page">
         <h2 className="support-title">Support</h2>
@@ -72,6 +75,15 @@ export default function Support() {
           ))}
         </section>
       </div>
+
+      {/* Home Icon at Bottom */}
+      <section className="unified-home-bottom-nav">
+        <button className="unified-home-btn">
+          <Link to={getHomeRoute()}>
+            <HomeIcon />
+          </Link>
+        </button>
+      </section>
     </main>
   );
 }

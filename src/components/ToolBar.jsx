@@ -1,21 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
 
 export default function ToolBar({openSideBar,sideBarState,toolBarData}) {
     const [toolBar, settoolBars] = useState(toolBarData);
-    const navigate = useNavigate();
-
-    const handleLinkClick = (link, title) => {
-        if (title === "Log out" || link === "logout") {
-            // Clear localStorage and navigate to login
-            localStorage.removeItem('userType');
-            navigate("/");
-        }
-    };
 
     return (
         <div>
@@ -26,16 +17,43 @@ export default function ToolBar({openSideBar,sideBarState,toolBarData}) {
             <div className={sideBarState?"toolBar toolBar--open":"toolBar"}>   
                 <ul>    
                 {toolBar.map((val,key)=>{
-                 if (val.title === "Log out" || val.link === "logout") {
+                 // Check if this is a logout item (case-insensitive)
+                 const isLogout = (val.title && val.title.toLowerCase() === "log out") || 
+                                  (val.link && val.link.toLowerCase() === "logout");
+                 
+                 if (isLogout) {
                     return <li key={key} className="toolRow">
-                        <div onClick={() => handleLinkClick(val.link, val.title)} className="toolLink" style={{cursor: 'pointer', display: 'flex', alignItems: 'center'}}>
+                        <button 
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                // Clear localStorage
+                                localStorage.removeItem('userType');
+                                // Force navigation to root URL with full page reload
+                                // Using absolute path to ensure we always go to login page
+                                const origin = window.location.origin;
+                                window.location.replace(origin + '/');
+                            }}
+                            className="toolLink" 
+                            style={{
+                                cursor: 'pointer', 
+                                display: 'flex', 
+                                alignItems: 'center',
+                                background: 'none',
+                                border: 'none',
+                                padding: 0,
+                                width: '100%',
+                                textAlign: 'left'
+                            }}
+                            type="button"
+                        >
                             <span className="icon">{val.icon}</span>
                             <span className="title">{val.title}</span>
-                        </div>
+                        </button>
                     </li>
                  }
                  return <li key={key} className="toolRow">
-                    <Link to={val.link} className="toolLink">
+                    <Link to={val.link && val.link.startsWith('/') ? val.link : `/${val.link}`} className="toolLink">
                      <span className="icon">{val.icon}</span>
                      <span className="title">{val.title}</span>
                      </Link>

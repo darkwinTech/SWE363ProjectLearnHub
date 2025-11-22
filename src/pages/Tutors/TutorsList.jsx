@@ -110,9 +110,6 @@ export default function TutorsList() {
       />
 
       <div className="tutors-list-header">
-        <div className="tutors-list-greeting">
-          <h3 className="tutors-list-greeting-text">Hi, User</h3>
-        </div>
         <div className="tutors-list-title-row">
           <h2 className="tutors-list-title">Tutors</h2>
           <div className="tutors-list-search-container">

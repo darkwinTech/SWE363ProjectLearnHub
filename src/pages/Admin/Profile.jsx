@@ -7,6 +7,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import { Link } from "react-router-dom";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import { getToolBarData } from "../../utils/getToolBarData";
+import "../ApplySession/ApplySession.css";
 
 export default function Admin() {
 const clike_sideBr=()=>{
@@ -45,9 +46,13 @@ const [sideBar,setsideBar]=useState(false)
                 <p>s20664@kfupm.edu.sa</p>
               </div>
               </section>
-              <div className="home">
-              <button className="homeBtn"><Link to={getHomeRoute()}><HomeIcon  style={{ fontSize: '30px', color: 'white' }}/></Link></button>
-              </div>
+              <section className="apply-session-bottom-nav">
+                <button className="apply-session-home-btn">
+                  <Link to={getHomeRoute()}>
+                    <HomeIcon />
+                  </Link>
+                </button>
+              </section>
     </main>    
   );
 }

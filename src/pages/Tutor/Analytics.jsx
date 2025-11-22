@@ -36,13 +36,6 @@ export default function TutorAnalytics() {
         toolBarData={toolBarData_tutor}
       />
       <div className="analytics-shell">
-        <div className="align-items-cente mb-3">
-            <div className="text-center">
-              <div className="analytics-greeting-name">Hi,</div>
-              <div className="analytics-greeting-name fw-semibold">User</div>
-            </div>
-        </div>
-
         {/* Content */}
           <div className="d-flex justify-content-center mb-3">
             <BarChartIcon className="me-2 text-success" />

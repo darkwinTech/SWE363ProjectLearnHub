@@ -113,6 +113,7 @@ export default function GeneralCalendar() {
   
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingSession, setEditingSession] = useState(null);
+  const [deletingSession, setDeletingSession] = useState(null);
   const [formData, setFormData] = useState({
     time: "",
     courseCode: "",
@@ -220,13 +221,23 @@ export default function GeneralCalendar() {
   };
 
   // Handle delete session
-  const handleDeleteSession = (sessionId, e) => {
+  const handleDeleteSession = (session, e) => {
     e.stopPropagation();
-    if (window.confirm("Are you sure you want to delete this session?")) {
-      const updatedSessions = allSessions.filter(s => s.id !== sessionId);
+    setDeletingSession(session);
+  };
+
+  const handleConfirmDeleteSession = () => {
+    if (deletingSession) {
+      const updatedSessions = allSessions.filter(s => s.id !== deletingSession.id);
       setAllSessions(updatedSessions);
       saveSessions(updatedSessions);
+      setDeletingSession(null);
+      alert("Session deleted successfully");
     }
+  };
+
+  const handleCancelDeleteSession = () => {
+    setDeletingSession(null);
   };
 
   // Handle form submit
@@ -382,7 +393,7 @@ export default function GeneralCalendar() {
                 <p className="calendar-session-course">{session.courseCode}</p>
                 <p className="calendar-session-desc">{session.sessionDesc}</p>
               </div>
-              {userType === 'tutor' && isTutorSession(session) && (
+              {(userType === 'admin' || (userType === 'tutor' && isTutorSession(session))) && (
                 <div className="calendar-session-actions" onClick={(e) => e.stopPropagation()}>
                   <button 
                     className="calendar-edit-btn"
@@ -393,7 +404,7 @@ export default function GeneralCalendar() {
                   </button>
                   <button 
                     className="calendar-delete-btn"
-                    onClick={(e) => handleDeleteSession(session.id, e)}
+                    onClick={(e) => handleDeleteSession(session, e)}
                     title="Delete session"
                   >
                     <DeleteIcon />
@@ -408,6 +419,29 @@ export default function GeneralCalendar() {
           </div>
         )}
       </section>
+
+      {/* Delete Confirmation Modal */}
+      {deletingSession && (
+        <div className="calendar-delete-modal-overlay" onClick={handleCancelDeleteSession}>
+          <div className="calendar-delete-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="calendar-delete-modal-content">
+              <h2 className="calendar-delete-modal-title">Delete Session</h2>
+              <p className="calendar-delete-modal-message">
+                Are you sure you want to delete "{deletingSession.courseCode}" session?
+              </p>
+              
+              <div className="calendar-delete-modal-buttons">
+                <button className="calendar-delete-modal-cancel-btn" onClick={handleCancelDeleteSession}>
+                  Cancel
+                </button>
+                <button className="calendar-delete-modal-confirm-btn" onClick={handleConfirmDeleteSession}>
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Add/Edit Session Modal */}
       {showAddModal && (

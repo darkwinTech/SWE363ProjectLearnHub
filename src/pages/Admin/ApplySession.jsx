@@ -1,22 +1,31 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import ToolBar from "../../components/ToolBar";
 import { getToolBarData } from "../../utils/getToolBarData";
 import HomeIcon from "@mui/icons-material/Home";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import "../../index.css";
 import "../../Main_profiles.css";
-import "../ApplySession/AdminApplySession.css";
+import "./AdminApplySession.css";
 
 export default function AdminApplySession() {
   const [sideBar, setSideBar] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
+  // Get session data from navigation state, or use defaults
+  const session = location.state?.session || null;
+  // Handle both formats: from calendar (courseCode) or from sessions list (id)
+  const courseCode = session?.courseCode || session?.id || "MATH101";
+  // Handle both formats: from calendar (tutorName) or from sessions list (totre)
+  const tutorName = session?.tutorName || session?.totre?.replace("By ", "") || "Tutor1";
+  const description = session?.sessionDesc || session?.description || "Description";
+  
   // Editable state - these can be passed as props or fetched from state/API
-  const [courseCode, setCourseCode] = useState("MATH101");
-  const [tutorName, setTutorName] = useState("Tutor1");
-  const [description, setDescription] = useState("Description");
+  const [sessionCourseCode, setSessionCourseCode] = useState(courseCode);
+  const [sessionTutorName, setSessionTutorName] = useState(tutorName);
+  const [sessionDescription, setSessionDescription] = useState(description);
 
   // Form state for editing
   const [editForm, setEditForm] = useState({
@@ -29,12 +38,26 @@ export default function AdminApplySession() {
     setSideBar((prevState) => !prevState);
   };
 
+  const handleRegister = () => {
+    // Pass session data to Join Session page (for admin, this might be different)
+    navigate("/join-session", {
+      state: {
+        session: {
+          courseCode: sessionCourseCode,
+          tutorName: sessionTutorName,
+          description: sessionDescription,
+          sessionDesc: sessionDescription
+        }
+      }
+    });
+  };
+
   const handleEdit = () => {
     // Set form values to current values
     setEditForm({
-      courseCode: courseCode,
-      tutorName: tutorName,
-      description: description,
+      courseCode: sessionCourseCode,
+      tutorName: sessionTutorName,
+      description: sessionDescription,
     });
     // Open edit modal
     setShowEditModal(true);
@@ -47,9 +70,9 @@ export default function AdminApplySession() {
       return;
     }
     // Update the state with new values
-    setCourseCode(editForm.courseCode);
-    setTutorName(editForm.tutorName);
-    setDescription(editForm.description);
+    setSessionCourseCode(editForm.courseCode);
+    setSessionTutorName(editForm.tutorName);
+    setSessionDescription(editForm.description);
     // Close modal
     setShowEditModal(false);
     // Here you would typically save to API
@@ -94,9 +117,9 @@ export default function AdminApplySession() {
 
       {/* Course and Tutor Information */}
       <section className="admin-apply-info">
-        <h1 className="admin-apply-course-code">{courseCode}</h1>
-        <h2 className="admin-apply-tutor-name">{tutorName}</h2>
-        <Link to="/profile" className="admin-apply-view-tutor">
+        <h1 className="admin-apply-course-code">{sessionCourseCode}</h1>
+        <h2 className="admin-apply-tutor-name">{sessionTutorName}</h2>
+        <Link to="/admin/profile" className="admin-apply-view-tutor">
           View Tutor
         </Link>
       </section>
@@ -104,8 +127,15 @@ export default function AdminApplySession() {
       {/* Description Block */}
       <section className="admin-apply-description-container">
         <div className="admin-apply-description-box">
-          <p className="admin-apply-description-text">{description}</p>
+          <p className="admin-apply-description-text">{sessionDescription}</p>
         </div>
+      </section>
+
+      {/* Register Button */}
+      <section className="admin-apply-register-container">
+        <button className="admin-apply-register-btn" onClick={handleRegister}>
+          Register
+        </button>
       </section>
 
       {/* Edit and Delete Buttons */}
@@ -121,8 +151,8 @@ export default function AdminApplySession() {
       </section>
 
       {/* Home Icon at Bottom */}
-      <section className="unified-home-bottom-nav">
-        <button className="unified-home-btn">
+      <section className="admin-apply-bottom-nav">
+        <button className="admin-apply-home-btn">
           <Link to={getHomeRoute()}>
             <HomeIcon />
           </Link>
