@@ -8,6 +8,7 @@ import "../../index.css";
 import "../../Main_profiles.css";
 import "../Student/JoinSession.css";
 
+
 export default function StudentJoinSession() {
   const [sideBar, setSideBar] = useState(false);
   const navigate = useNavigate();
@@ -85,4 +86,3 @@ export default function StudentJoinSession() {
     </main>
   );
 }
-
