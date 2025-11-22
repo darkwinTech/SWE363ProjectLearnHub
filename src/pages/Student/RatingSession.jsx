@@ -8,7 +8,7 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import "../../index.css";
 import "../../Main_profiles.css";
-import "../ApplySession/RatingSession.css";
+import "../Student/RatingSession.css";
 
 export default function StudentRatingSession() {
   const [sideBar, setSideBar] = useState(false);

@@ -1,4 +1,5 @@
-import { announcementCourses, announcementLevels } from "./data3";
+import { announcementCourses, announcementLevels } from "../../data/data3";
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ToolBar from "../../components/ToolBar";

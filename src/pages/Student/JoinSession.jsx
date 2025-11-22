@@ -6,7 +6,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import "../../index.css";
 import "../../Main_profiles.css";
-import "../ApplySession/JoinSession.css";
+import "../Student/JoinSession.css";
 
 export default function StudentJoinSession() {
   const [sideBar, setSideBar] = useState(false);
