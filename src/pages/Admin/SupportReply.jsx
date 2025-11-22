@@ -33,7 +33,6 @@ export default function SupportReply() {
       return;
     }
     
-    // Here you would typically send the reply to the backend
     console.log("Reply sent:", { messageId: message.id, answer });
     
     // Show success message

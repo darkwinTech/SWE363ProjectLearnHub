@@ -31,7 +31,6 @@ export default function MakeAnnouncement() {
       return;
     }
     
-    // Here you would typically send the announcement to the backend
     console.log("Announcement sent:", { 
       course: selectedCourse, 
       level: selectedLevel, 

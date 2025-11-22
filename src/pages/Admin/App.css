@@ -13,9 +13,7 @@
   --radius-lg: 20px;
 }
 
-/* =========================
-   Main + Course Cards
-========================= */
+/* Main + Course Cards */
 .header-row{
   display:flex;
   align-items:center;
@@ -85,9 +83,7 @@
   border-color:#4a8f65;
 }
 
-/* =========================
-   Sessions
-========================= */
+/* Sessions */
 .sessions{
   display: grid;
   grid-template-columns: repeat(2, minmax(420px, 1fr));
@@ -144,9 +140,7 @@
   padding: 6px 10px;
 }
 
-/* =========================
-   Toolbar (سلوك Main page لكل الصفحات)
-========================= */
+/* Toolbar */
 .menu_icon{
   display:flex;
   align-items:center;
@@ -232,9 +226,7 @@
   color:#ffffff; 
 }
 
-/* =========================
-   View Applications
-========================= */
+/* View Applications */
 .applications-page {
   margin: 30px auto 0;
   max-width: 1000px;
@@ -276,9 +268,7 @@
 .app-center p{ margin:2px 0; }
 .app-right .icon{ cursor:pointer; font-size:28px; margin-left:8px; }
 
-/* =========================
-   Make Announcement
-========================= */
+/* Make Announcement */
 .mic-announcement{
   width: 100%;
   max-width: 1000px;
@@ -315,9 +305,7 @@
 }
 .mic-announcement .main-btn:hover{ transform: translateY(-1px); box-shadow: var(--shadow-md); }
 
-/* =========================
-   Support Page
-========================= */
+/* Support Page */
 
 .support-page {
   margin:30px auto 0;
@@ -427,9 +415,7 @@
 }
 
 
-/* =========================
-   Responsive
-========================= */
+/* Responsive */
 @media (max-width:1200px){ .grid{ grid-template-columns: repeat(3, 1fr); } }
 @media (max-width:992px){
   main.wrap, .applications-page, .mic-announcement, .support-page{ padding:0 20px; }
