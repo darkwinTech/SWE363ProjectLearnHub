@@ -29,8 +29,6 @@ export default function ToolBar({openSideBar,sideBarState,toolBarData}) {
                                 e.stopPropagation();
                                 // Clear localStorage
                                 localStorage.removeItem('userType');
-                                // Force navigation to root URL with full page reload
-                                // Using absolute path to ensure we always go to login page
                                 const origin = window.location.origin;
                                 window.location.replace(origin + '/');
                             }}

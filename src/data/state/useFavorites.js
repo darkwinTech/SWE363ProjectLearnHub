@@ -1,4 +1,3 @@
-// src/state/useFavorites.js
 import { useEffect, useMemo, useState } from "react";
 
 const KEYS = {
@@ -20,11 +19,10 @@ function write(key, set) {
 }
 
 export function useFavorites(kind) {
-  const storageKey = KEYS[kind]; // "courses" | "tutors"
+  const storageKey = KEYS[kind]; 
   const [favSet, setFavSet] = useState(() => read(storageKey));
 
   useEffect(() => {
-    // keep in sync across tabs/pages
     const onStorage = (e) => {
       if (e.key === storageKey) setFavSet(read(storageKey));
     };
