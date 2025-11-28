@@ -2,9 +2,9 @@ import '../../Main_profiles.css';
 import "../Favorites/Favorites.css";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useFavorites } from "../../data/state/useFavorites"; 
+import { useFavorites } from "../../data/state/useFavorites.js"; 
 import {totarData} from "../../data/tutors.js"; 
-import ToolBar from "../../components/ToolBar";
+import ToolBar from "../../components/ToolBar.jsx";
 import { useState } from "react";
 import React from "react";
 import Person2Icon from '@mui/icons-material/Person2';
@@ -13,8 +13,8 @@ import StarIcon from '@mui/icons-material/Star';
 import FunctionsIcon from '@mui/icons-material/Functions';
 import { Link, useLocation } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
-import { getHomeRoute } from "../../utils/getHomeRoute";
-import { toolBarData } from "../../data/toolBarData_Tutor";
+import { getHomeRoute } from "../../utils/getHomeRoute.js";
+import { toolBarData } from "../../data/toolBarData_Tutor.js";
 
 export default function TutorFavorites() {
   const location = useLocation();
