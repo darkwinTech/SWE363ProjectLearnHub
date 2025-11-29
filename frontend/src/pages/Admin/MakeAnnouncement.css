@@ -1,0 +1,214 @@
+/* Make Announcement Wrap */
+.mic-announcement {
+  width: 100%;
+  padding: 100px 18px 26px;
+  min-height: 100vh;
+  background: #ffffff;
+  position: relative;
+  color: #1e1e1e;
+}
+
+/* Page Title Section */
+.mic-announcement .pageTitle {
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+  padding: 14px 12px 16px;
+  margin: 0 -18px;
+  background: #ffffff;
+  color: #1e1e1e;
+}
+
+/* Form Section Container */
+.mic-announcement .form-section {
+  padding: 14px 12px 16px;
+  margin: 0 -18px;
+  margin-top: 16px;
+}
+
+/* Form Block */
+.mic-announcement-form-block {
+  background: #d7f1db;
+  border-radius: 22px;
+  padding: 18px 16px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Form Group */
+.mic-announcement-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Label */
+.mic-announcement label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e1e1e;
+  margin: 0;
+}
+
+/* Select and Textarea */
+.mic-announcement select,
+.mic-announcement textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #e5e7eb;
+  border-radius: 18px;
+  font-size: 16px;
+  font-family: inherit;
+  background: #ffffff;
+  color: #1e1e1e;
+  outline: none;
+  resize: vertical;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.mic-announcement select:focus,
+.mic-announcement textarea:focus {
+  border-color: #56B46F;
+}
+
+.mic-announcement textarea {
+  min-height: 120px;
+}
+
+.mic-announcement textarea::placeholder {
+  color: #9ca3af;
+}
+
+/* Send Button */
+.mic-announcement .main-btn {
+  width: 100%;
+  height: 52px;
+  background: #0B6623;
+  color: #ffffff;
+  border: none;
+  border-radius: 18px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+.mic-announcement .main-btn:hover {
+  background: #56B46F;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.mic-announcement .main-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+}
+
+/* Success Modal */
+.success-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.success-modal {
+  background: #d7f1db;
+  border-radius: 22px;
+  padding: 32px 28px;
+  max-width: 320px;
+  width: 90%;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.success-modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.success-modal-message {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000000;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.success-modal-ok-btn {
+  background: #0B6623;
+  color: #ffffff;
+  border: none;
+  border-radius: 18px;
+  padding: 12px 48px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+.success-modal-ok-btn:hover {
+  background: #56B46F;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.success-modal-ok-btn:active {
+  transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .mic-announcement {
+    padding: 100px 14px 26px;
+  }
+
+  .mic-announcement .pageTitle {
+    font-size: 20px;
+  }
+
+  .mic-announcement label {
+    font-size: 13px;
+  }
+
+  .mic-announcement select,
+  .mic-announcement textarea {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .mic-announcement .main-btn {
+    height: 48px;
+    font-size: 16px;
+  }
+
+  .success-modal {
+    padding: 28px 24px;
+    max-width: 280px;
+  }
+
+  .success-modal-message {
+    font-size: 14px;
+  }
+
+  .success-modal-ok-btn {
+    padding: 10px 40px;
+    font-size: 14px;
+  }
+}
+

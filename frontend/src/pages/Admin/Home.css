@@ -1,0 +1,318 @@
+/* Edit and Delete Action Buttons */
+.admin-edit-actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+/* Shift session time when edit buttons are shown */
+.sessions .Session-card[data-edit-mode="true"] .cardHeader-session .session-time {
+  padding-right: 80px;
+  transition: padding-right 0.2s ease;
+}
+
+.admin-edit-btn,
+.admin-delete-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.admin-edit-btn {
+  background: #0B6623;
+  color: #ffffff;
+}
+
+.admin-edit-btn:hover {
+  background: #56B46F;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.admin-delete-btn {
+  background: #8B1538;
+  color: #ffffff;
+}
+
+.admin-delete-btn:hover {
+  background: #a01d44;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.admin-edit-btn:active,
+.admin-delete-btn:active {
+  transform: translateY(0);
+}
+
+.admin-edit-btn svg,
+.admin-delete-btn svg {
+  font-size: 18px;
+}
+
+/* Edit Modal */
+.admin-edit-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+}
+
+.admin-edit-modal {
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 24px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.admin-edit-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-edit-modal-title {
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+  color: #1e1e1e;
+}
+
+.admin-edit-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-edit-form-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e1e1e;
+}
+
+.admin-edit-form-input {
+  width: 100%;
+  height: 48px;
+  padding: 12px 14px;
+  border: 2px solid #e5e7eb;
+  border-radius: 18px;
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s ease;
+  background: #ffffff;
+  color: #1e1e1e;
+  box-sizing: border-box;
+}
+
+.admin-edit-form-input:focus {
+  border-color: #56B46F;
+}
+
+.admin-edit-form-input::placeholder {
+  color: #9ca3af;
+}
+
+.admin-edit-modal-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.admin-edit-modal-cancel-btn {
+  flex: 1;
+  height: 48px;
+  background: #e5e7eb;
+  color: #1e1e1e;
+  border: none;
+  border-radius: 18px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-edit-modal-cancel-btn:hover {
+  background: #d1d5db;
+  transform: translateY(-2px);
+}
+
+.admin-edit-modal-cancel-btn:active {
+  transform: translateY(0);
+}
+
+.admin-edit-modal-edit-btn {
+  flex: 1;
+  height: 48px;
+  background: #0B6623;
+  color: #ffffff;
+  border: none;
+  border-radius: 18px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+  transition: all 0.2s ease;
+}
+
+.admin-edit-modal-edit-btn:hover {
+  background: #56B46F;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.admin-edit-modal-edit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+}
+
+/* Delete Confirmation Modal */
+.admin-delete-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+}
+
+.admin-delete-modal {
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 32px 28px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.admin-delete-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+
+.admin-delete-modal-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  color: #1e1e1e;
+}
+
+.admin-delete-modal-message {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1e1e1e;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.admin-delete-modal-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.admin-delete-modal-cancel-btn {
+  flex: 1;
+  height: 48px;
+  background: #e5e7eb;
+  color: #1e1e1e;
+  border: none;
+  border-radius: 18px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-delete-modal-cancel-btn:hover {
+  background: #d1d5db;
+  transform: translateY(-2px);
+}
+
+.admin-delete-modal-cancel-btn:active {
+  transform: translateY(0);
+}
+
+.admin-delete-modal-confirm-btn {
+  flex: 1;
+  height: 48px;
+  background: #8B1538;
+  color: #ffffff;
+  border: none;
+  border-radius: 18px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+  transition: all 0.2s ease;
+}
+
+.admin-delete-modal-confirm-btn:hover {
+  background: #a01d44;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.admin-delete-modal-confirm-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .admin-edit-modal {
+    padding: 20px;
+    max-width: 100%;
+  }
+
+  .admin-edit-modal-title {
+    font-size: 20px;
+  }
+
+  .admin-edit-form-input {
+    font-size: 14px;
+  }
+
+  .admin-delete-modal {
+    padding: 24px 20px;
+    max-width: 100%;
+  }
+
+  .admin-delete-modal-title {
+    font-size: 20px;
+  }
+
+  .admin-delete-modal-message {
+    font-size: 14px;
+  }
+}
+
