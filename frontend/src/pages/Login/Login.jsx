@@ -3,7 +3,7 @@ import "./Login.css"
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-    const [form, setForm] = useState({username: "", password: ""});
+    const [form, setForm] = useState({email: "", password: ""});
     const [touched, setTouched] = useState({});
     const navigate = useNavigate(); 
 
@@ -14,7 +14,7 @@ export default function Login() {
 
     const validate = () => {
         const errors = {};
-        if (!form.username.trim()) errors.username = "Username is required";
+        if (!form.email.trim()) errors.email = "Email is required";
         if (!form.password) errors.password = "Password is required";
         return errors;
     };
@@ -22,25 +22,52 @@ export default function Login() {
 
     const onBlur = (e) => setTouched((t) => ({ ...t, [e.target.name]: true }));
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-        setTouched({ username: true, password: true });
-        if (Object.keys(errors).length) return;
-        const { username, password } = form;
+	// onSubmit calls backend
+	const onSubmit = async (e) => {
+		e.preventDefault();
+		setTouched({ email: true, password: true });
+		if (Object.keys(errors).length) return;
 
-    if (username === "admin@kfupm.edu.sa" && password === "admin123") {
-        localStorage.setItem('userType', 'admin');
-        navigate("/admin");
-      } else if (username === "tutor@kfupm.edu.sa" && password === "tutor123") {
-    localStorage.setItem('userType', 'tutor');
-    navigate("/tutor");
-    } else if (username === "student@kfupm.edu.sa" && password === "student123") {
-    localStorage.setItem('userType', 'student');
-    navigate("/student");
-  } else {
-    alert("Invalid credentials");
-  }
-    };
+		const { email, password } = form;
+
+		try {
+			const res = await fetch("http://localhost:5000/api/auth/login", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					email, 
+					password,
+				}),
+			});
+
+			const data = await res.json();
+
+			if (!res.ok) {
+				alert(data.message || "Invalid credentials");
+				return;
+			}
+
+			// Save token and role from backend
+			localStorage.setItem("token", data.token);
+			localStorage.setItem("userType", data.user.role);
+			localStorage.setItem("userId", data.user.id);
+
+			// Redirect based on role
+			if (data.user.role === "admin") {
+				navigate("/admin");
+			} else if (data.user.role === "tutor") {
+				navigate("/tutor");
+			} else {
+				// student
+				navigate("/student");
+			}
+		} catch (err) {
+			console.error(err);
+			alert("Server error. Please try again.");
+		}
+	};
     return (
         <div className="login-page">
             <div className="card login-card shadow-sm rounded-4 overflow-hidden">
@@ -64,24 +91,24 @@ export default function Login() {
 
                     <form onSubmit={onSubmit} noValidate>
                         <div className="mb-3">
-                            <label htmlFor="username" className="form-label fw-medium">
-                                Username
+                            <label htmlFor="email" className="form-label fw-medium">
+                                Email
                             </label>
                             <input
-                                id="username"
-                                name="username"
+                                id="email"
+                                name="email"
                                 type="email"
                                 inputMode="email"
                                 placeholder="email"
                                 className={`form-control ${
-                                    touched.username && errors.username ? "is-invalid" : ""
+                                    touched.email && errors.email ? "is-invalid" : ""
                                 }`}
-                                value={form.username}
+                                value={form.email}
                                 onChange={onChange}
                                 onBlur={onBlur}
-                                autoComplete="username"
+                                autoComplete="email"
                             />
-                            <div className="invalid-feedback">{errors.username}</div>
+                            <div className="invalid-feedback">{errors.email}</div>
                         </div>
 
                         <div className="mb-3">
