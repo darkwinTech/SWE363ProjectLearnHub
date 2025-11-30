@@ -1,7 +1,7 @@
 const mongoose= require("mongoose");
 const Session = require("../models/Session");
 const Tutor = require("../models/TutorProfile");
-const Course = require("../models/Course");
+
 
 /**
  * @param {Request} req 
@@ -60,10 +60,7 @@ async function updateSession(req, res){
     if (!mongoose.Types.ObjectId.isValid(req.body.tutorId)) {
         return [400, { "message": "tutor id is not valid." }, null];}
     try {
-            const session = await Session.findOne({
-                courseId: req.body.courseId,
-                tutorId: req.body.tutorId,
-                });
+            const session = await Session.find(req.body._id);
             if(session.tutorId!=req.body.tutorId){
                 const touterOld = await Tutor.findById(session.tutorId);
                 touter.coursesTaught = touter.coursesTaught.filter(id => id.toString() !== req.body.courseId);
@@ -87,3 +84,29 @@ async function updateSession(req, res){
         return [500, null, null];
     }
 };
+/**
+ * @param {Request} req 
+ * @param {Response} res 
+ * @returns
+ */
+async function deleteSession(req, res){
+    if (!mongoose.Types.ObjectId.isValid(req.params._id)) {
+        return [400, { "message": " session is not valid." }, null];}
+    try {
+        const session = await Session.findById(req.params._id);
+        if (!session){
+             return [204, { "message": "No matched session found." }, null];}
+        const deleted_session= await session.deleteOne(req.params._id);
+        const tutor = await Tutor.findById(deleted_session.tutorId);
+        tutor.coursesTaught = tutor.coursesTaught.filter(id => id.toString() !== deleted_session.courseId);
+        const related_tutor = await tutor.save();
+        console.log("Session Deleted");
+        return [200, { deleted_session, related_tutor }, null];
+    } catch (err) {
+        console.log(err);
+        return [500, null, null];
+    }
+};
+module.exports = { 
+    deleteSession,updateSession,readSession,createSession
+ };
