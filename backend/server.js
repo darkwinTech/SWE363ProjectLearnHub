@@ -15,6 +15,9 @@ app.use(express.json());
 const authRoutes = require("./route/authRoutes");  
 app.use("/api/auth", authRoutes); 
 
+// support routes
+app.use('/api/support', require('./route/supportRoute'));
+
 // test route
 app.get("/", (req, res) => {
 	res.json({ message: "backend is running well!" });
@@ -22,3 +25,4 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
