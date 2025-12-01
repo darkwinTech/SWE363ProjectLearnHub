@@ -23,7 +23,6 @@ const userSchema = new mongoose.Schema({
   employeeId: {
     type: String,
     unique: true,
-    sparse: true, // Allows null values but enforces uniqueness for non-null values
   },
   department: {
     type: String,
@@ -35,7 +34,7 @@ const userSchema = new mongoose.Schema({
   studentId: {
     type: String,
     unique: true,
-    sparse: true, // Allows null values but enforces uniqueness for non-null values
+
   },
   college: {
     type: String,
