@@ -18,6 +18,9 @@ app.use("/api/auth", authRoutes);
 // support routes
 app.use('/api/support', require('./route/supportRoute'));
 
+// notification routes
+app.use("/api/notifications", require("./route/notificationRoute"));
+
 // test route
 app.get("/", (req, res) => {
 	res.json({ message: "backend is running well!" });
