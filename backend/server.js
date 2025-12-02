@@ -24,6 +24,15 @@ app.use("/api/notifications", require("./route/notificationRoute"));
 // course routes
 app.use("/api/courses", require("./route/courseRoutes"));
 
+
+// Booking routes
+const bookingRoutes = require("./route/bookingRoute");
+app.use("/api/bookings", bookingRoutes);
+
+// Application routes
+const applicationRoutes = require("./route/applicationRoute"); 
+app.use("/api/applications", applicationRoutes);
+
 // test route
 app.get("/", (req, res) => {
 	res.json({ message: "backend is running well!" });
