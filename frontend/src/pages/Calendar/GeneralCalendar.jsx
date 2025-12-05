@@ -13,6 +13,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CloseIcon from "@mui/icons-material/Close";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import "./GeneralCalendar.css";
+import { dropDown} from "../../data/data3";
 
 
 const monthNames = [
@@ -67,11 +68,13 @@ export default function GeneralCalendar() {
   const [formData, setFormData] = useState({
     time: "",
     courseCode: "",
-    sessionDesc: ""
+    sessionDesc: "",
+    course:""
   });
   const navigate = useNavigate();
   const userType = localStorage.getItem('userType');
-  const currentTutorName = "Fatima Al-Rashid";
+  const currentTutorName = localStorage.getItem('userName');
+  const currentTutorID = localStorage.getItem('userId');
 
 useEffect(() => {
   const readSessions = async () => {
@@ -181,7 +184,7 @@ useEffect(() => {
   // Handle add session
   const handleAddSession = () => {
     setEditingSession(null);
-    setFormData({ time: "", courseCode: "", sessionDesc: "" });
+    setFormData({ time: "", courseCode: "", sessionDesc: "",course:""});
     setShowAddModal(true);
   };
 
@@ -192,7 +195,8 @@ useEffect(() => {
     setFormData({
       time: session.time,
       courseCode: session.courseCode,
-      sessionDesc: session.sessionDesc
+      sessionDesc: session.sessionDesc,
+      course:session.course
     });
     setShowAddModal(true);
   };
@@ -230,7 +234,7 @@ useEffect(() => {
     setDeletingSession(null);
   };
   //a function to reassaimble the time
-const buildDateTime = (year, month, day, timeStr) => {
+  const buildDateTime = (year, month, day, timeStr) => {
   let hour, minute;
   const time = timeStr.trim().toUpperCase();
   //here we are converting AM and PM
@@ -248,13 +252,12 @@ const buildDateTime = (year, month, day, timeStr) => {
   date.setMinutes(minute);
   date.setSeconds(0);
   date.setMilliseconds(0);
-
   return date.toISOString();
 };
   // Handle form submit
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.time || !formData.courseCode || !formData.sessionDesc) {
+    if (!formData.time || !formData.courseCode || !formData.sessionDesc ||!formData.course) {
       alert("Please fill in all fields");
       return;
     }
@@ -264,7 +267,7 @@ const buildDateTime = (year, month, day, timeStr) => {
     const res = await fetch("http://localhost:5000/api/session/totur-edit-session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      //here i reformated the data that was loded to the front end
+      //here i reformated the data that was loded to the frontend
       //when we loadded them we had to splite the DateTime object and here we are reassampling it
       body: JSON.stringify({ _id: editingSession._id,
         courseId:editingSession.courseId,
@@ -287,24 +290,33 @@ const buildDateTime = (year, month, day, timeStr) => {
       }
     } else {
       // Add new session
-      const newSession = {
-        id: Date.now(),
-        tutorName: currentTutorName,
-        date: selectedDate.toString(),
-        month: currentDate.getMonth(),
-        year: currentDate.getFullYear(),
-        time: formData.time,
-        courseCode: formData.courseCode,
-        sessionDesc: formData.sessionDesc,
-        createdBy: currentTutorName
-      };
-      const updatedSessions = [...allSessions, newSession];
-      setAllSessions(updatedSessions);
-      saveSessions(updatedSessions);
+     try{
+    const res = await fetch("http://localhost:5000/api/session/totur-create-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ 
+        courseId:formData.course,
+        tutorId:currentTutorID,
+        tutorName:currentTutorName,
+        title:formData.courseCode,
+        description:formData.sessionDesc,
+        dateTime:buildDateTime(currentDate.year,currentDate.month,currentDate.date,formData.time),
+        teamsLink:"",
+        status:"scheduled"//the defulte for the status
+      }),
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || "Failed to add session.");
+    }
+    }
+      catch(err){
+      console.error("Error adding sessions:", err);
+      }
     }
 
     setShowAddModal(false);
-    setFormData({ time: "", courseCode: "", sessionDesc: "" });
+    setFormData({ time: "", courseCode: "", sessionDesc: "", course:"" });
     setEditingSession(null);
   };
 
@@ -513,6 +525,20 @@ const buildDateTime = (year, month, day, timeStr) => {
                   required
                 />
               </div>
+               <div className="calendar-modal-field">
+               <label>Course *</label>
+            <select
+              value={formData.course}
+              onChange={(e) => setFormData({...formData, course: e.target.value})}
+            >
+              <option value="">Select Course</option>
+              {dropDown.map((course) => (
+                <option key={course.id} value={course.id}>
+                  {course.title}
+                </option>
+              ))}
+            </select>
+            </div>
               <div className="calendar-modal-field">
                 <label>Session Title/Description *</label>
                 <textarea
