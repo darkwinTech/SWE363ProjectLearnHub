@@ -219,10 +219,6 @@ useEffect(() => {
       const text = await res.text();
       throw new Error(text || "Failed to delete session.");
     }
-    //the old UI delete way i will delete it after i load the data (do not forget)
-      const updatedSessions = allSessions.filter(s => s.id !== deletingSession.id);
-      setAllSessions(updatedSessions);
-      saveSessions(updatedSessions);
       setDeletingSession(null);
       alert("Session deleted successfully");
       }
@@ -300,8 +296,8 @@ useEffect(() => {
         tutorName:currentTutorName,
         title:formData.courseCode,
         description:formData.sessionDesc,
-        dateTime:buildDateTime(currentDate.year,currentDate.month,currentDate.date,formData.time),
-        teamsLink:"",
+        dateTime:buildDateTime(currentDate.getFullYear(),currentDate.getMonth(),selectedDate,formData.time),
+        teamsLink:"https://teams.microsoft.com/l/meetup-join/19:meeting_6932e8e386fe056b2e9d64a4_6932e8e386fe056b2e9d64ad_0@thread.tacv2",
         status:"scheduled"//the defulte for the status
       }),
     });

@@ -11,6 +11,10 @@ const sessionSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
+  tutorName: {
+      type: String,         
+      required: true,        
+    },
   title: {
     type: String,
     required: true,
