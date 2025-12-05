@@ -14,49 +14,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import "./GeneralCalendar.css";
 
-const sampleSessions = [
-  {
-    _id: "6931b22eb2e9d2826fa344de",
-    id:1,
-    tutorName: "Ahmad alghamdi",
-    date: "19",
-    month: 8, 
-    year: 2025,
-    time: "8:00PM",
-    courseCode: "Math 101",
-    sessionDesc: "Session: ch 2.4"
-  },
-  {
-    id: 2,
-    tutorName: "Ghada alghamdi",
-    date: "19",
-    month: 8,
-    year: 2025,
-    time: "9:00PM",
-    courseCode: "ICS 108",
-    sessionDesc: "Session: solving old exams"
-  },
-  {
-    id: 3,
-    tutorName: "Mohamed alzhrane",
-    date: "20",
-    month: 8,
-    year: 2025,
-    time: "6:00PM",
-    courseCode: "SWE 353",
-    sessionDesc: "Session: Web Development"
-  },
-  {
-    id: 4,
-    tutorName: "Norah alghamdi",
-    date: "25",
-    month: 8,
-    year: 2025,
-    time: "7:00PM",
-    courseCode: "ICS 104",
-    sessionDesc: "Session: Python Basics"
-  }
-];
 
 const monthNames = [
   "January", "February", "March", "April", "May", "June",
@@ -101,12 +58,9 @@ const getEarliestSessionDate = (sessions) => {
 
 export default function GeneralCalendar() {
   const [sideBar, setSideBar] = useState(false);
-  const [allSessions, setAllSessions] = useState(sampleSessions);
-  
-  const earliestSession = getEarliestSessionDate(sampleSessions);
-  const [currentDate, setCurrentDate] = useState(earliestSession.date);
-  const [selectedDate, setSelectedDate] = useState(earliestSession.selected);
-  
+  const [allSessions, setAllSessions] = useState([]);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date().getDate());
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingSession, setEditingSession] = useState(null);
   const [deletingSession, setDeletingSession] = useState(null);
@@ -117,26 +71,55 @@ export default function GeneralCalendar() {
   });
   const navigate = useNavigate();
   const userType = localStorage.getItem('userType');
-  const currentTutorName = "Ahmad alghamdi";
+  const currentTutorName = "Fatima Al-Rashid";
 
-  useEffect(() => {
-    const savedSessions = localStorage.getItem(STORAGE_KEY);
-    let allLoadedSessions = [...sampleSessions];
-    
-    if (savedSessions) {
-      try {
-        const parsed = JSON.parse(savedSessions);
-        allLoadedSessions = [...sampleSessions, ...parsed];
-        setAllSessions(allLoadedSessions);
-      } catch (e) {
-        console.error("Error loading sessions:", e);
+useEffect(() => {
+  const readSessions = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/session/read-session", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!res.ok) {
+        console.error("Failed to load sessions, status:", res.status);
+        return;
       }
+      const data = await res.json();
+      const sessionsArray = Array.isArray(data) ? data : data.sessions || data.data || [];
+      // here i am changing how my data is orderd in the backend to match the calander format
+      //i am also splitting the dateTime object to allow my orgainal frontend calander to gropy by date
+      const mapped = sessionsArray.map((s) => {
+        const dt = new Date(s.dateTime);
+        return {
+          _id: s._id,
+          tutorName: s.tutorName,
+          date: String(dt.getDate()),
+          month: dt.getMonth(),
+          year: dt.getFullYear(),
+          time: dt.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          }),
+          courseCode: s.title, 
+          sessionDesc: s.description,
+        };
+      });
+      setAllSessions(mapped);
+      // the same old code used gropy the sessions but now i linked it to my real date (backend)
+      if (mapped.length > 0) {
+        const earliest = getEarliestSessionDate(mapped);
+        setCurrentDate(earliest.date);
+        setSelectedDate(earliest.selected);
+      }
+    } catch (err) {
+      console.error("Error loading sessions:", err);
     }
-    
-    const earliest = getEarliestSessionDate(allLoadedSessions);
-    setCurrentDate(earliest.date);
-    setSelectedDate(earliest.selected);
-  }, []);
+  };
+  readSessions();
+}, []);
+
 
   const saveSessions = (sessions) => {
     const tutorSessions = sessions.filter(s => s.createdBy === currentTutorName);
