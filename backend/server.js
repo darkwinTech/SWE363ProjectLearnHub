@@ -24,6 +24,14 @@ app.use("/api/notifications", require("./route/notificationRoute"));
 // course routes
 app.use("/api/courses", require("./route/courseRoutes"));
 
+// session routers
+const sessionRoutes = require("./route/sessionRoute");
+app.use("/api/session", sessionRoutes);
+
+// announcement routers
+const announcementRoutes = require("./route/announsmentRoute")
+app.use("/api/announcement", announcementRoutes);
+
 // test route
 app.get("/", (req, res) => {
 	res.json({ message: "backend is running well!" });

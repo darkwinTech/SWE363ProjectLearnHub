@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { sampleCourses } from "../../data/data";
 import { sampleSessions} from "../../data/data2";
 import CourseCard from "../../components/CourseCard";
@@ -14,9 +14,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import "./Home.css";
 
 
+
 export default function AdminHome() {
   const [courses, setCourses] = useState(sampleCourses);
-  const [sessions, setSession] = useState(sampleSessions);
+  const [sessions, setSession] = useState([]);
   const [qurey,setQurey]=useState(" ")
   const [sideBar,setsideBar]=useState(false)
   const [isEditCourses, setIsEditCourses] = useState(false);
@@ -32,6 +33,29 @@ export default function AdminHome() {
     time: "",
     totre: ""
   });
+
+  useEffect(() => {
+    const readSessions = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/session/read-session", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!res.ok) {
+          console.error("Failed to load sessions, status:", res.status);
+          return;
+        }
+        const data = await res.json();
+        const sessionsArray = Array.isArray(data) ? data : data.sessions || data.data || [];
+  
+        setSession(sessionsArray);
+      } catch (err) {
+        console.error("Error loading sessions:", err);
+      }
+    };
+  
+    readSessions();
+  }, []);
 
   const navigate = useNavigate();
 
@@ -122,33 +146,73 @@ export default function AdminHome() {
       totre: session.totre
     });
   };
-
   const handleDeleteSession = (session, e) => {
     e.stopPropagation();
     setDeletingSession(session);
   };
+  //becase the admin can only edit the time we need to combine it with the same date object
+  const buildDateTime = (oldDate, newtime) => {
+  const date = new Date(oldDate);
+  const [hours, minutes] = newtime.split(":");
+  date.setHours(Number(hours));
+  date.setMinutes(Number(minutes));
+  date.setSeconds(0);
+  date.setMilliseconds(0);
+  return date.toISOString();
+};
 
-  const handleSaveSessionEdit = () => {
-    if (!editForm.id.trim() || !editForm.time.trim() || !editForm.totre.trim()) {
+  const handleSaveSessionEdit = async () => {
+    try{
+    if (!editForm.title.trim() || !editForm.time.trim() || !editForm.totre.trim()) {
       alert("Please fill in all required fields.");
       return;
     }
-    setSession(sessions.map(s => 
-      s.id === editingSession.id 
-        ? { ...s, id: editForm.id, time: editForm.time, totre: editForm.totre }
-        : s
-    ));
+    const res = await fetch("http://localhost:5000/api/session/admin-edit-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ _id: editingSession._id,
+        courseId:editingSession.courseId,
+        tutorId:editingSession.tutorId,
+        tutorName:editForm.totre,
+        title:editForm.title,
+        description:editingSession.description,
+        dateTime:buildDateTime(editingSession.dateTime, editForm.time),
+        teamsLink:editingSession.teamsLink,
+        status:editingSession.status
+      }),
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || "Failed to edit session.");
+    }
     setEditingSession(null);
     setEditForm({ id: "", title: "", icon: null, time: "", totre: "" });
     alert("Session updated successfully");
+    }
+      catch(err){
+      console.error("Error edditing sessions:", err);
+      }
   };
-
-  const handleConfirmDeleteSession = () => {
-    setSession(sessions.filter(s => s.id !== deletingSession.id));
-    setDeletingSession(null);
-    alert("Session deleted successfully");
+  const handleConfirmDeleteSession = async () => {
+    if(!deletingSession) return;
+    try {
+    const res = await fetch("http://localhost:5000/api/session/admin-delete-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ _id: deletingSession._id }),
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || "Failed to delete session.");
+    }
+      setDeletingSession(null);
+      alert("Session deleted successfully");
+      }
+      catch(err){
+      console.error("Error deleting sessions:", err);
+      }
   };
-
+  
   const handleCancelSessionEdit = () => {
     setEditingSession(null);
     setEditForm({ id: "", title: "", icon: null, time: "", totre: "" });
@@ -242,10 +306,11 @@ export default function AdminHome() {
       </div>
       <br></br>
       <section className="sessions">
-        {sessions.map((seaion, idx) => (
+        {sessions.slice(0,4).map((seaion, idx) => (
           <div key={seaion.id} style={{ position: 'relative' }}>
             <div onClick={(e) => isEditSessions && e.stopPropagation()}>
               <TutorSessions
+                key={seaion._id}
                 seesion={seaion}
                 index={idx}
                 isEditMode={isEditSessions}
@@ -340,14 +405,14 @@ export default function AdminHome() {
               <h2 className="admin-edit-modal-title">Edit Session</h2>
               
               <div className="admin-edit-form-group">
-                <label className="admin-edit-form-label">Course Code</label>
+                <label className="admin-edit-form-label">Titel</label>
                 <input
                   type="text"
-                  name="id"
+                  name="title"
                   className="admin-edit-form-input"
-                  value={editForm.id}
+                  value={editForm.title}
                   onChange={handleInputChange}
-                  placeholder="e.g., SWE 353"
+                  placeholder="e.g., Software Engenering"
                 />
               </div>
 
@@ -371,7 +436,7 @@ export default function AdminHome() {
                   className="admin-edit-form-input"
                   value={editForm.totre}
                   onChange={handleInputChange}
-                  placeholder="e.g., By Mohamed alzhrane"
+                  placeholder="e.g., Mohamed alzhrane"
                 />
               </div>
 
@@ -395,7 +460,7 @@ export default function AdminHome() {
             <div className="admin-delete-modal-content">
               <h2 className="admin-delete-modal-title">Delete Session</h2>
               <p className="admin-delete-modal-message">
-                Are you sure you want to delete "{deletingSession.id}" session?
+                Are you sure you want to delete "{deletingSession.title}" session?
               </p>
               
               <div className="admin-delete-modal-buttons">
@@ -410,8 +475,8 @@ export default function AdminHome() {
           </div>
         </div>
       )}
-
     </main>
   );
+  
 }
 

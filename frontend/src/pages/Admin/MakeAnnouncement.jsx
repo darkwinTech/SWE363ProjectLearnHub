@@ -17,7 +17,7 @@ export default function MakeAnnouncement() {
   const [sideBar, setSideBar] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  const handleSend = () => {
+  const handleSend = async (payload) => {
     // Validate form fields
     if (!selectedCourse.trim()) {
       alert("Please select a course.");
@@ -31,6 +31,29 @@ export default function MakeAnnouncement() {
       alert("Please write an announcement.");
       return;
     }
+  const adminId = "692f3526489e1c3c56fa22df";
+
+  const res = await fetch(
+    "http://localhost:5000/api/announcement/admin/make-announcement",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+      adminId: adminId,
+      courseId: selectedCourse,
+      title: "New Announcement",
+      content: announcement,
+      targetLevel: selectedLevel,
+  }),
+    }
+  );
+
+  if (!res.ok) {
+    alert("Failed to send announcement.");
+    return;
+  }
+
+  if (!res.ok) throw new Error("Failed to create announcement");
     
     console.log("Announcement sent:", { 
       course: selectedCourse, 
@@ -66,7 +89,7 @@ export default function MakeAnnouncement() {
               <option value="">Select Course</option>
               {announcementCourses.map((course) => (
                 <option key={course.id} value={course.id}>
-                  {course.id}
+                  {course.title}
                 </option>
               ))}
             </select>

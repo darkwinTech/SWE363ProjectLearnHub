@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { sampleCourses } from "../../data/data";
 import { sampleSessions} from "../../data/data2";
 import CourseCard from "../../components/CourseCard";
@@ -14,9 +14,32 @@ import { useNavigate } from "react-router-dom";
 
 export default function TutorHome() {
   const [courses, setCourses] = useState(sampleCourses);
-  const [sessions, setSession] = useState(sampleSessions);
+  const [sessions, setSession] = useState([]);
   const [qurey,setQurey]=useState(" ")
   const [sideBar,setsideBar]=useState(false)
+
+    useEffect(() => {
+    const readSessions = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/session/read-session", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!res.ok) {
+          console.error("Failed to load sessions, status:", res.status);
+          return;
+        }
+        const data = await res.json();
+        const sessionsArray = Array.isArray(data) ? data : data.sessions || data.data || [];
+  
+        setSession(sessionsArray);
+      } catch (err) {
+        console.error("Error loading sessions:", err);
+      }
+    };
+  
+    readSessions();
+  }, []);
 
   const navigate = useNavigate();
   const See_More = () => {
@@ -86,9 +109,9 @@ export default function TutorHome() {
       </div>
       <br></br>
       <section className="sessions">
-        {sessions.map((session, idx) => (
+        {sessions.slice(0, 4).map((session, idx) => (
           <TutorSessions
-            key={session.id}
+            key={session._id}
             seesion={session}
             index={idx}
           />

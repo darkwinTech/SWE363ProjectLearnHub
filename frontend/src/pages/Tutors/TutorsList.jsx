@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ToolBar from "../../components/ToolBar";
 import HomeIcon from '@mui/icons-material/Home';
@@ -9,20 +9,45 @@ import { getToolBarData } from "../../utils/getToolBarData";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 import "./TutorsList.css";
 
-const sampleTutorSessions = [
-  { id: 1, tutorName: "Ahmad Alqarni", date: "19 Sep", time: "8:00PM", courseCode: "Math 201", sessionDesc: "Session: ch 2.4" },
-  { id: 2, tutorName: "Lama Alghamdi", date: "19 Sep", time: "9:00PM", courseCode: "ICS 108", sessionDesc: "Session: Solving old exams" },
-  { id: 3, tutorName: "Norh Alharbie", date: "20 Sep", time: "3:00PM", courseCode: "ICS 321", sessionDesc: "Session: ch 4" },
-  { id: 4, tutorName: "Hayat Alghamdi", date: "6 Oct", time: "7:00PM", courseCode: "CHEM 101", sessionDesc: "Session: ch 3.2" },
-  { id: 5, tutorName: "Abdulaziz Alnufaie", date: "10 Oct", time: "8:00PM", courseCode: "Math 201", sessionDesc: "Session: ch 2.5" },
-];
 
 export default function TutorsList() {
   const navigate = useNavigate();
   const [sideBar, setSideBar] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [sessions, setSession] = useState([]);
   const itemsPerPage = 5;
+
+    useEffect(() => {
+    const readSessions = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/session/read-session", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!res.ok) {
+          console.error("Failed to load sessions, status:", res.status);
+          return;
+        }
+        const data = await res.json();
+        const sessionsArray = Array.isArray(data) ? data : data.sessions || data.data || [];
+  
+        setSession(sessionsArray);
+      } catch (err) {
+        console.error("Error loading sessions:", err);
+      }
+    };
+  
+    readSessions();
+  }, []);
+
+  const formatTime = (dateTime) => {
+  return new Date(dateTime).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+};
 
   const toggleSideBar = () => setSideBar(prev => !prev);
 
@@ -32,11 +57,11 @@ export default function TutorsList() {
     }
     return tutors.filter(tutor =>
       tutor.tutorName.toLowerCase().includes(query.toLowerCase()) ||
-      tutor.courseCode.toLowerCase().includes(query.toLowerCase())
+      tutor.title.toLowerCase().includes(query.toLowerCase())
     );
   };
 
-  const filteredTutors = getFilteredTutors(searchQuery, sampleTutorSessions);
+  const filteredTutors = getFilteredTutors(searchQuery, sessions);
 
   const totalPages = Math.ceil(filteredTutors.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -50,14 +75,13 @@ export default function TutorsList() {
 
   const handleTutorSessionClick = (tutor) => {
     const sessionData = {
-      id: tutor.courseCode,
-      courseCode: tutor.courseCode,
+      _id: tutor._id,
+      title: tutor.title,
       totre: `By ${tutor.tutorName}`,
       tutorName: tutor.tutorName,
-      description: tutor.sessionDesc,
-      sessionDesc: tutor.sessionDesc,
-      time: tutor.time,
-      date: tutor.date
+      description: tutor.description,
+      sessionDesc: tutor.description,
+      time: tutor.dateTime,
     };
     navigate("/apply-session", { state: { session: sessionData } });
   };
@@ -91,25 +115,25 @@ export default function TutorsList() {
 
       <section className="tutors-list-content">
         {currentTutors.length > 0 ? (
-          currentTutors.map((tutor) => (
+          currentTutors.map((sessions) => (
             <div 
-              key={tutor.id} 
+              key={sessions._id} 
               className="tutors-list-card"
-              onClick={() => handleTutorSessionClick(tutor)}
+              onClick={() => handleTutorSessionClick(sessions)}
               style={{ cursor: 'pointer' }}
             >
               <div className="tutors-list-card-left">
                 <div className="tutors-list-avatar">
                   <PersonIcon className="tutors-list-avatar-icon" />
                 </div>
-                <p className="tutors-list-tutor-name">{tutor.tutorName}</p>
+                <p className="tutors-list-tutor-name">{sessions.tutorName}</p>
               </div>
               <div className="tutors-list-card-right">
                 <p className="tutors-list-session-time">
-                  {tutor.date} at {tutor.time}
+                  at {formatTime(sessions.dateTime)}
                 </p>
-                <p className="tutors-list-course-code">{tutor.courseCode}</p>
-                <p className="tutors-list-session-desc">{tutor.sessionDesc}</p>
+                <p className="tutors-list-course-code">{sessions.title}</p>
+                <p className="tutors-list-session-desc">{sessions.description}</p>
               </div>
             </div>
           ))
