@@ -39,10 +39,10 @@ export default function AdminApplySession() {
   };
 
   const handleRegister = () => {
-    // Pass session data to Join Session page (for admin, this might be different)
     navigate("/join-session", {
       state: {
         session: {
+          sessionId: session?._id,
           courseCode: sessionCourseCode,
           tutorName: sessionTutorName,
           description: sessionDescription,
@@ -51,6 +51,7 @@ export default function AdminApplySession() {
       }
     });
   };
+
 
   const handleEdit = () => {
     // Set form values to current values
