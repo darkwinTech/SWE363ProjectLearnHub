@@ -1,15 +1,18 @@
-const BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
-async function apiGetApplications() {
+export async function apiGetApplications() {
   const res = await fetch(`${BASE}/api/applications`, {
     headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
   });
-  if (!res.ok) throw new Error(`Failed to load: ${res.status}`);
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.message || `Failed to load: ${res.status}`);
+  }
   const data = await res.json();
-  return data.applications;
+  return data.applications || [];
 }
 
-async function apiUpdateApplicationStatus(id, status) {
+export async function apiUpdateApplicationStatus(id, status) {
   const res = await fetch(`${BASE}/api/applications/status/${id}`, {
     method: "PUT",
     headers: { 

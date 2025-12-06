@@ -19,47 +19,63 @@ export default function StudentJoinSession() {
 
   // Get session data from navigation state, or use defaults
   const session = location.state?.session || null;
-  // Extract course code
   const courseCode = session?.courseId?.courseId || session?.courseCode || session?.id || "Course";
-  // Handle both formats
   const tutorName = session?.tutorName || session?.totre?.replace("By ", "") || "Tutor";
   const description = session?.sessionDesc || session?.description || "Description about the meeting";
-  // Get session ID
   const sessionId = session?._id || session?.id || null;
+  const teamsLink = session?.teamsLink || null;
 
 
-  const handleJoin = () => {
-    navigate("/student/rating-session", { 
-      state: { 
-        session: {
-          sessionId: sessionId,
-          courseCode: courseCode,
-          courseId: session?.courseId,
-          tutorName: tutorName,
-          description: description,
-          _id: sessionId
-        }
-      } 
-  });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      alert(data.message || "Failed to book session");
+  const handleJoin = async () => {
+    if (!sessionId) {
+      alert("Session ID is missing");
       return;
     }
 
-    alert("Booking created successfully!");
+    if (!teamsLink) {
+      alert("Teams link is missing");
+      return;
+    }
 
-    navigate("/student/rating-session", {
-      state: { session }
-    });
+    try {
+      const BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
+      const res = await fetch(`${BASE}/api/bookings/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+        body: JSON.stringify({ sessionId })
+      });
 
-  } catch (err) {
-    console.error(err);
-    alert("Server error");
-  }
-};
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.message || "Failed to book session");
+        return;
+      }
+
+      window.open(teamsLink, '_blank');
+
+      navigate("/student/rating-session", { 
+        state: { 
+          session: {
+            sessionId: sessionId,
+            courseCode: courseCode,
+            courseId: session?.courseId,
+            tutorName: tutorName,
+            description: description,
+            _id: sessionId,
+            teamsLink: teamsLink
+          }
+        } 
+      });
+
+    } catch (err) {
+      console.error(err);
+      alert("Server error");
+    }
+  };
 
 
   return (

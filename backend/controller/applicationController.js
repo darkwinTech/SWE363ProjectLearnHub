@@ -1,48 +1,119 @@
 const Application = require("../model/Applications");
 
-// viwe application for Admin 
+// View applications for Admin 
 exports.getAllApplications = async (req, res) => {
   try {
-    const applications = await Application.find()
-      .populate("userId", "name")  
-      .populate("courseId", "name")      
+    // Find only pending applications from MongoDB and populate related fields
+    const applications = await Application.find({ status: "pending" })
+      .populate("userId", "name email")  
+      .populate("courseId", "courseId title department")      
       .sort({ createdAt: -1 });
+    
+    const result = applications.map(app => {
+      const userId = app.userId || {};
+      const courseId = app.courseId || {};
       
-    const result = applications.map(app => ({
-      id: app._id,
-      studentName: app.userId.name,
-      courseName: app.courseId.name,
-      grade: app.grade,
-      status: app.status,
-      appliedAt: app.createdAt,
-    }));
+      return {
+        id: app._id.toString(),
+        studentName: userId.name || "Unknown Student",
+        courseName: courseId.title || courseId.courseId || "Unknown Course",
+        courseCode: courseId.courseId || "",
+        department: courseId.department || "",
+        grade: app.grade || "N/A",
+        status: app.status || "pending",
+        appliedAt: app.createdAt || app.updatedAt,
+      };
+    });
 
-    return res.json({ applications : result });
+    // Return success response with applications array
+    return res.status(200).json({ 
+      success: true,
+      applications: result || []
+    });
 
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: "Server error" });
+    console.error("Error fetching applications:", err);
+    return res.status(500).json({ 
+      success: false,
+      message: "Server error while fetching applications",
+      error: err.message,
+      applications: []
+    });
   }
 };
 
-// Aprroved or Rejected
+// Approve or Reject application
 exports.updateApplicationStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body; 
 
-    const application = await Application.findById(id);
-    if (!application) {
-      return res.status(404).json({ message: "Application not found" });
+    // Validate that status is provided
+    if (!status) {
+      return res.status(400).json({ 
+        success: false,
+        message: "Status is required" 
+      });
     }
 
+    // Validate status value
+    const validStatuses = ['pending', 'approved', 'rejected'];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ 
+        success: false,
+        message: "Invalid status. Must be one of: pending, approved, rejected" 
+      });
+    }
+
+    // Find application by ID from MongoDB
+    const application = await Application.findById(id)
+      .populate("userId", "name email")
+      .populate("courseId", "courseId title");
+      
+    if (!application) {
+      return res.status(404).json({ 
+        success: false,
+        message: "Application not found" 
+      });
+    }
+
+    // Update status and save to MongoDB
     application.status = status;
     await application.save();
 
-    return res.json({ message: "Application updated", application });
+    // Prepare response with populated fields
+    const userId = application.userId || {};
+    const courseId = application.courseId || {};
+
+    return res.status(200).json({ 
+      success: true,
+      message: "Application status updated successfully",
+      application: {
+        id: application._id.toString(),
+        studentName: userId.name || "Unknown Student",
+        courseName: courseId.title || courseId.courseId || "Unknown Course",
+        courseCode: courseId.courseId || "",
+        grade: application.grade || "N/A",
+        status: application.status,
+        appliedAt: application.createdAt,
+      }
+    });
 
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: "Server error" });
+    console.error("Error updating application status:", err);
+    
+    // Handle invalid ObjectId format
+    if (err.name === 'CastError' || err.kind === 'ObjectId') {
+      return res.status(400).json({ 
+        success: false,
+        message: "Invalid application ID format" 
+      });
+    }
+    
+    return res.status(500).json({ 
+      success: false,
+      message: "Server error while updating application",
+      error: err.message 
+    });
   }
 };

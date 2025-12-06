@@ -1,34 +1,82 @@
 const Notification = require('../model/Notification');
+const mongoose = require('mongoose');
 
-// send notification (used by other controllers)
-exports.sendNotification = async (data) => {
+/**
+ * Send notification (used by other controllers)
+ * @param {Object} data
+ * @returns
+ */
+const sendNotification = async (data) => {
   try {
     return await Notification.create(data);
   } catch (err) {
     console.error("Notification error:", err.message);
+    return null;
   }
 };
 
-// get logged in user notifications
-exports.getMyNotifications = async (req, res) => {
+/**
+ * Get logged in user's notifications
+ * @param {Request} req
+ * @param {Response} res 
+ * @returns
+ */
+const getMyNotifications = async (req, res) => {
   try {
-    const list = await Notification.find({ userId: req.user.id }).sort({ createdAt: -1 });
-    res.json(list);
+    if (!req?.user?.id) {
+      return [400, { "message": "User ID is required." }, null];
+    }
+    if (!mongoose.Types.ObjectId.isValid(req.user.id)) {
+      return [400, { "message": "User ID is not valid." }, null];
+    }
+
+    const list = await Notification.find({ userId: req.user.id })
+      .sort({ createdAt: -1 });
+    
+    return [200, list, null];
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error(err);
+    return [500, { "message": "Server error" }, null];
   }
 };
 
-// mark as read
-exports.markAsRead = async (req, res) => {
+/**
+ * Mark a notification as read
+ * @param {Request} req
+ * @param {Response} res 
+ * @returns
+ */
+const markAsRead = async (req, res) => {
   try {
+    const { id } = req.params;
+
+    if (!id) {
+      return [400, { "message": "Notification ID is required." }, null];
+    }
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return [400, { "message": "Notification ID is not valid." }, null];
+    }
+
     const notif = await Notification.findByIdAndUpdate(
-      req.params.id,
+      id,
       { isRead: true },
       { new: true }
     );
-    res.json(notif);
+
+    if (!notif) {
+      return [404, { "message": "Notification not found." }, null];
+    }
+
+    console.log("Notification marked as read");
+    return [200, notif, null];
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error(err);
+    return [500, { "message": "Server error" }, null];
   }
+};
+
+module.exports = {
+  sendNotification,
+  getMyNotifications,
+  markAsRead
 };

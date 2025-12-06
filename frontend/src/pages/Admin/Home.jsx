@@ -133,16 +133,61 @@ export default function AdminHome() {
     alert("Course updated successfully");
   };
 
-  const handleConfirmDeleteCourse = () => {
-    // Delete all courses that start with the subject prefix
-    const subjectPrefix = deletingCourse.courseId || "";
-    setCourses(courses.filter(c => {
-      const courseId = c.courseId || "";
-      const courseSubject = courseId.split(" ")[0];
-      return courseSubject !== subjectPrefix;
-    }));
-    setDeletingCourse(null);
-    alert("Course deleted successfully");
+  const handleConfirmDeleteCourse = async () => {
+    if (!deletingCourse) return;
+    
+    try {
+      const token = localStorage.getItem("token");
+
+      
+      const subjectPrefix = (deletingCourse.courseId || "").toUpperCase();
+      
+      // Find all courses that match this subject prefix 
+      const coursesToDelete = courses.filter(c => {
+        const courseId = c.courseId || "";
+        const match = courseId.match(/^([A-Za-z]+)/);
+        const courseSubject = match ? match[1].toUpperCase() : "";
+        return courseSubject === subjectPrefix;
+      });
+
+      if (coursesToDelete.length === 0) {
+        alert("No courses found to delete.");
+        setDeletingCourse(null);
+        return;
+      }
+
+      // Delete each course via API
+      const deletePromises = coursesToDelete.map(async (course) => {
+        const encodedCourseId = encodeURIComponent(course.courseId);
+        const res = await fetch(`${API_BASE_URL}/courses/${encodedCourseId}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(text || `Failed to delete course ${course.courseId}`);
+        }
+        return res.json();
+      });
+
+      await Promise.all(deletePromises);
+
+      // Refresh the courses list from the backend
+      const res = await fetch(`${API_BASE_URL}/courses`);
+      const data = await res.json();
+      setCourses(data || []);
+
+      setDeletingCourse(null);
+      alert(`Successfully deleted ${coursesToDelete.length} course(s).`);
+    } catch (err) {
+      console.error("Error deleting courses:", err);
+      alert(`Error deleting courses: ${err.message}`);
+      setDeletingCourse(null);
+    }
   };
 
   const handleCancelCourseEdit = () => {

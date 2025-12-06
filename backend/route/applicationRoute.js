@@ -4,10 +4,10 @@ const { getAllApplications, updateApplicationStatus } = require("../controller/a
 const auth = require("../middleware/auth");
 const { allowRoles } = require("../middleware/roles");
 
-// Get all aplications 
+// Get all applications
 router.get("/", auth, allowRoles("admin"), getAllApplications);
 
-// Updated 
+// Update application status 
 router.put("/status/:id", auth, allowRoles("admin"), updateApplicationStatus);
 
 module.exports = router;

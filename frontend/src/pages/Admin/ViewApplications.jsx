@@ -20,7 +20,9 @@ export default function ViewApplications() {
     setLoading(true);
     try {
       const data = await apiGetApplications();
-      setApplications(data);
+      // Filter to only show pending applications
+      const pendingApps = data.filter(app => app.status === "pending");
+      setApplications(pendingApps);
     } catch (err) {
       console.error(err);
       alert("Failed to load applications");
@@ -34,7 +36,8 @@ export default function ViewApplications() {
   const handleApprove = async (id) => { 
     try {
       await apiUpdateApplicationStatus(id, "approved");
-      setApplications(prev => prev.map(app => app.id === id ? {...app, status: "approved"} : app));
+      // Remove the application card from the list
+      setApplications(prev => prev.filter(app => app.id !== id));
     } catch (err) {
       console.error(err);
       alert("Failed to approve");
@@ -44,7 +47,8 @@ export default function ViewApplications() {
   const handleReject = async (id) => {
     try {
       await apiUpdateApplicationStatus(id, "rejected");
-      setApplications(prev => prev.map(app => app.id === id ? {...app, status: "rejected"} : app));
+      // Remove the application card from the list
+      setApplications(prev => prev.filter(app => app.id !== id));
     } catch (err) {
       console.error(err);
       alert("Failed to reject");
@@ -74,25 +78,42 @@ export default function ViewApplications() {
       </div>
 
       <section className="applications-list">
-        {loading ? <p>Loading...</p> :
-        sortedApplications.map(app => (
-          <div key={app.id} className="application-card">
-            <div className="app-left">
-              <div className="avatar-placeholder"></div>
-              <p className="student-name">{app.studentName}</p>
+        {loading ? (
+          <p>Loading...</p>
+        ) : sortedApplications.length === 0 ? (
+          <p style={{ textAlign: "center", padding: "20px", color: "#666" }}>
+            No pending applications found.
+          </p>
+        ) : (
+          sortedApplications.map(app => (
+            <div key={app.id} className="application-card">
+              <div className="app-left">
+                <div className="avatar-placeholder"></div>
+                <p className="student-name">{app.studentName}</p>
+              </div>
+              <div className="app-center">
+                <p className="submitted-at">{new Date(app.appliedAt).toLocaleString()}</p>
+                <p className="course">{app.courseName}</p>
+                <p className="grade">Grade: {app.grade}</p>
+                <p className="status">Status: Pending</p>
+              </div>
+              <div className="app-right">
+                <CheckIcon 
+                  className="icon approve" 
+                  onClick={() => handleApprove(app.id)}
+                  title="Approve application"
+                  style={{ cursor: "pointer" }}
+                />
+                <CloseIcon 
+                  className="icon reject" 
+                  onClick={() => handleReject(app.id)}
+                  title="Reject application"
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
             </div>
-            <div className="app-center">
-              <p className="submitted-at">{new Date(app.appliedAt).toLocaleString()}</p>
-              <p className="course">{app.courseName}</p>
-              <p className="grade">Grade: {app.grade}</p>
-              <p className="status">Status: {app.status}</p>
-            </div>
-            <div className="app-right">
-              <CheckIcon className="icon approve" onClick={() => handleApprove(app.id)} />
-              <CloseIcon className="icon reject" onClick={() => handleReject(app.id)} />
-            </div>
-          </div>
-        ))}
+          ))
+        )}
       </section>
 
       <section className="unified-home-bottom-nav">

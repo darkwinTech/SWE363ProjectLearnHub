@@ -13,6 +13,8 @@ import ToolBar from "../../components/ToolBar";
 import { getToolBarData } from "../../utils/getToolBarData";
 import { getHomeRoute } from "../../utils/getHomeRoute";
 
+const BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 // Convert timestamp → "2 hours ago"
 const timeAgo = (date) => {
   const now = new Date();
@@ -56,11 +58,17 @@ export default function NotificationPage() {
       if (!token) return;
 
       try {
-        const res = await fetch("http://localhost:4000/api/notifications", {
+        const res = await fetch(`${BASE}/api/notifications`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         const data = await res.json();
+
+        if (!res.ok) {
+          console.error("Error loading notifications:", data.message);
+          return;
+        }
+
         setNotifications(data);
       } catch (error) {
         console.error("Error fetching notifications:", error);
@@ -73,12 +81,20 @@ export default function NotificationPage() {
   // Mark a notification as read and remove it from UI
   async function markAsRead(id) {
     const token = localStorage.getItem("token");
+    if (!token) return;
 
     try {
-      await fetch(`http://localhost:4000/api/notifications/${id}`, {
+      const res = await fetch(`${BASE}/api/notifications/${id}`, {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
       });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        console.error("Error marking as read:", data.message);
+        return;
+      }
 
       // Remove it from UI
       setNotifications((prev) => prev.filter((n) => n._id !== id));

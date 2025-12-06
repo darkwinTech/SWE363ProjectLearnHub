@@ -170,7 +170,8 @@ useEffect(() => {
       date: session.date,
       month: session.month,
       year: session.year,
-      title: session.title
+      title: session.title,
+      teamsLink: session.teamsLink
     };
     navigate("/apply-session", { state: { session: sessionData } });
   };

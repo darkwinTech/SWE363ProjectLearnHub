@@ -95,6 +95,8 @@ import { getToolBarData } from "../../utils/getToolBarData";
 import HomeIcon from '@mui/icons-material/Home';
 import { getHomeRoute } from "../../utils/getHomeRoute";
 
+const BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 export default function Support() {
   const navigate = useNavigate();
   const [tickets, setTickets] = useState([]);
@@ -107,13 +109,24 @@ export default function Support() {
   useEffect(() => {
     async function loadTickets() {
       const token = localStorage.getItem("token");
+      if (!token) return;
 
-      const res = await fetch("http://localhost:4000/api/support", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      try {
+        const res = await fetch(`${BASE}/api/support`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
 
-      const data = await res.json();
-      setTickets(data);
+        const data = await res.json();
+
+        if (!res.ok) {
+          console.error("Error loading tickets:", data.message);
+          return;
+        }
+
+        setTickets(data);
+      } catch (err) {
+        console.error("Error fetching tickets:", err);
+      }
     }
 
     loadTickets();

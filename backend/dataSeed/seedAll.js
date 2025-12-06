@@ -260,7 +260,7 @@ async function seedAll() {
 							title: `${insertedCourses.find(c => c._id.toString() === courseId.toString())?.title} - Session ${i + 1}`,
 							description: `Join this tutoring session to get help with ${insertedCourses.find(c => c._id.toString() === courseId.toString())?.title}. We'll cover key concepts and answer your questions.`,
 							dateTime: sessionDate,
-							teamsLink: `https://teams.microsoft.com/l/meetup-join/19:meeting_${tutor._id}_${courseId}_${i}@thread.tacv2`,
+							teamsLink: `https://teams.microsoft.com/meet/3921900698584?p=0EUoYHBwD5nwpZK672`,
 							status: i === 0 && tutorIndex === 0 ? "completed" : "scheduled",
 						});
 					}

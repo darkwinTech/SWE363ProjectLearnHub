@@ -136,6 +136,8 @@ import { getHomeRoute } from "../../utils/getHomeRoute";
 import { getToolBarData } from "../../utils/getToolBarData";
 import "./SupportReply.css";
 
+const BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 export default function SupportReply() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -153,21 +155,42 @@ export default function SupportReply() {
       return;
     }
 
+    if (!ticket || !ticket._id) {
+      alert("Invalid ticket information.");
+      return;
+    }
+
     const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please log in to reply to tickets.");
+      return;
+    }
 
-    await fetch(`http://localhost:4000/api/support/${ticket._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        response: answer,
-        status: "resolved"
-      })
-    });
+    try {
+      const res = await fetch(`${BASE}/api/support/${ticket._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          response: answer,
+          status: "resolved"
+        })
+      });
 
-    setShowSuccessModal(true);
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.message || "Failed to send reply");
+        return;
+      }
+
+      setShowSuccessModal(true);
+    } catch (err) {
+      console.error("Error sending reply:", err);
+      alert("Server error. Please try again later.");
+    }
   }
 
   const handleOkClick = () => {

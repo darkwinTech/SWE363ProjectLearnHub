@@ -41,13 +41,13 @@ export default function AdminApplySession() {
     navigate("/join-session", {
       state: {
         session: {
-
           _id: session?._id || session?.id,
           courseCode: sessionCourseCode,
           courseId: session?.courseId, // Include courseId if available
           tutorName: sessionTutorName,
           description: sessionDescription,
-          sessionDesc: sessionDescription
+          sessionDesc: sessionDescription,
+          teamsLink: session?.teamsLink // Include Teams link
         }
       }
     });

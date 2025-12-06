@@ -8,6 +8,8 @@ import "../../index.css";
 import "../../Main_profiles.css";
 import "../Support/StudentSupport.css";
 
+const BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 export default function StudentSupport() {
   const [sideBar, setSideBar] = useState(false);
   const [subject, setSubject] = useState("");
@@ -19,17 +21,46 @@ export default function StudentSupport() {
     setSideBar((prevState) => !prevState);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!subject.trim() || !message.trim()) {
       alert("Please fill in both subject and message fields.");
       return;
     }
-    setShowSuccessModal(true);
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please log in to submit a support ticket.");
+      return;
+    }
+
+    try {
+      const res = await fetch(`${BASE}/api/support`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          issue: `${subject}: ${message}`
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.message || "Failed to submit support ticket");
+        return;
+      }
+
+      setShowSuccessModal(true);
+    } catch (err) {
+      console.error("Error submitting support ticket:", err);
+      alert("Server error. Please try again later.");
+    }
   };
 
   const handleOkClick = () => {
-    // Close modal and navigate to user's home page
     setShowSuccessModal(false);
     // Clear form
     setSubject("");
