@@ -13,7 +13,7 @@ router.post("/submit", auth,allowRoles("student", "tutor", "admin"), validateRev
 router.get("/tutor/:tutorId",auth,allowRoles("student", "tutor", "admin"), convertingResponse(reviewController.getTutorReviews));
 
 // /api/reviews/session/:sessionId
-router.get("/session/:sessionId",auth,allowRoles("student", "tutor", "admin"), onvertingResponse(reviewController.getSessionReview));
+router.get("/session/:sessionId",auth,allowRoles("student", "tutor", "admin"), convertingResponse(reviewController.getSessionReview));
 
 module.exports = router;
 
