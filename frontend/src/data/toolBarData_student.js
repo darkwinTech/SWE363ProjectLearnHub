@@ -7,7 +7,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 export const toolBarData = [
   { title: "My Profile", icon: <AccountCircleIcon />, link: "/student/profile" },
-  { title: "Favorites", icon: <FavoriteBorderIcon />, link: "/favorites" },
+  { title: "Favorites", icon: <FavoriteBorderIcon />, link: "/student/favorites" },
   { title: "Calendar", icon: <CalendarTodayIcon />, link: "/general-calendar" },
   { title: "Support", icon: <ContactSupportIcon />, link: "/support" },
   { title: "Log Out", icon: <LogoutIcon />, link: "logout" },

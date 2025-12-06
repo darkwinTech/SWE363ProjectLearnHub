@@ -16,13 +16,12 @@ export default function AdminApplySession() {
 
   // Get session data from navigation state, or use defaults
   const session = location.state?.session || null;
-  // Handle both formats: from calendar (courseCode) or from sessions list (id)
-  const courseCode = session?.courseCode || session?.id || "MATH101";
-  // Handle both formats: from calendar (tutorName) or from sessions list (totre)
-  const tutorName = session?.tutorName || session?.totre?.replace("By ", "") || "Tutor1";
-  const description = session?.sessionDesc || session?.description || "Description";
+  // Extract course code
+  const courseCode = session?.courseId?.courseId || session?.courseCode || session?.id || "Course";
+  // Handle both formats
+  const tutorName = session?.tutorName || session?.totre?.replace("By ", "") || "Tutor";
+  const description = session?.sessionDesc || session?.description || session?.description || "Description";
   
-  // Editable state - these can be passed as props or fetched from state/API
   const [sessionCourseCode, setSessionCourseCode] = useState(courseCode);
   const [sessionTutorName, setSessionTutorName] = useState(tutorName);
   const [sessionDescription, setSessionDescription] = useState(description);
@@ -39,11 +38,13 @@ export default function AdminApplySession() {
   };
 
   const handleRegister = () => {
-    // Pass session data to Join Session page (for admin, this might be different)
     navigate("/join-session", {
       state: {
         session: {
+
+          _id: session?._id || session?.id,
           courseCode: sessionCourseCode,
+          courseId: session?.courseId, // Include courseId if available
           tutorName: sessionTutorName,
           description: sessionDescription,
           sessionDesc: sessionDescription
@@ -51,6 +52,7 @@ export default function AdminApplySession() {
       }
     });
   };
+
 
   const handleEdit = () => {
     // Set form values to current values
@@ -101,6 +103,29 @@ export default function AdminApplySession() {
     }
   };
 
+  // navigate to appropriate tutor profile route
+  const handleViewTutor = () => {
+    const userType = localStorage.getItem('userType');
+    let route = '/student/tutorProfile';
+    
+    if (userType === 'admin') {
+      route = '/admin/tutorProfile';
+    } else if (userType === 'tutor') {
+      route = '/tutor/tutorProfile';
+    } else if (userType === 'student') {
+      route = '/student/tutorProfile';
+    }
+    
+    navigate(route, {
+      state: {
+        tutor: {
+          name: sessionTutorName,
+          courseCode: sessionCourseCode
+        }
+      }
+    });
+  };
+
   return (
     <main className="admin-apply-wrap">
       {/* ToolBar with hamburger menu and notification */}
@@ -119,9 +144,22 @@ export default function AdminApplySession() {
       <section className="admin-apply-info">
         <h1 className="admin-apply-course-code">{sessionCourseCode}</h1>
         <h2 className="admin-apply-tutor-name">{sessionTutorName}</h2>
-        <Link to="/admin/profile" className="admin-apply-view-tutor">
+        <button
+          onClick={handleViewTutor}
+          className="admin-apply-view-tutor"
+          style={{ 
+            background: 'none', 
+            border: 'none', 
+            cursor: 'pointer', 
+            textDecoration: 'underline',
+            color: '#70b476',
+            fontSize: '12px',
+            fontWeight: '500',
+            padding: 0
+          }}
+        >
           View Tutor
-        </Link>
+        </button>
       </section>
 
       {/* Description Block */}

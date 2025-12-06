@@ -14,26 +14,54 @@ export default function TutorApplySession() {
   const location = useLocation();
   
   const session = location.state?.session || null;
-  const courseCode = session?.courseCode || session?.id || "MATH101";
-  const tutorName = session?.tutorName || session?.totre?.replace("By ", "") || "Ahmad Alghamdi";
+  // Extract course code
+  const courseCode = session?.courseId?.courseId || session?.courseCode || session?.id || "Course";
+  const tutorName = session?.tutorName || session?.totre?.replace("By ", "") || "Tutor";
   const description = session?.sessionDesc || session?.description || "Description";
 
   const click_sideBar = () => {
     setSideBar((prevState) => !prevState);
   };
 
+ 
+  // Get user role and navigate to appropriate tutor profile route
+  const handleViewTutor = () => {
+    const userType = localStorage.getItem('userType');
+    let route = '/student/tutorProfile';
+    
+    if (userType === 'admin') {
+      route = '/admin/tutorProfile';
+    } else if (userType === 'tutor') {
+      route = '/tutor/tutorProfile';
+    } else if (userType === 'student') {
+      route = '/student/tutorProfile';
+    }
+    
+    navigate(route, {
+      state: {
+        tutor: {
+          name: tutorName,
+          courseCode: courseCode
+        }
+      }
+    });
+  };
+
   const handleRegister = () => {
     navigate("/join-session", {
       state: {
         session: {
+          _id: session?._id || session?.id,
           courseCode: courseCode,
+          courseId: session?.courseId, // Include courseId if available
           tutorName: tutorName,
           description: description,
           sessionDesc: description
         }
       }
-    });
+    })
   };
+
 
   return (
     <main className="apply-session-wrap">
@@ -64,14 +92,7 @@ export default function TutorApplySession() {
             fontSize: '12px',
             fontWeight: '500'
           }}
-          onClick={() => navigate("/tutor/favorite", {
-            state: {
-              tutor: {
-                name: tutorName,
-                courseCode: courseCode
-              }
-            }
-          })}
+          onClick={handleViewTutor}
         >
           View Tutor
         </button>

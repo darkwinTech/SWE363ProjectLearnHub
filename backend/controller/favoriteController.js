@@ -1,46 +1,73 @@
+const mongoose = require("mongoose");
 const Favorite = require("../model/Favorite");
 const Course = require("../model/Course");
 const User = require("../model/User");
 
-exports.getFavorites = async (req, res) => {
+/**
+ * Get all favorites for the authenticated user
+ * @param {Request} req - Request object with user id from auth middleware
+ * @param {Response} res 
+ * @returns favorite courses and tutors for the user
+ */
+const getFavorites = async (req, res) => {
   try {
-    const userId = req.user.id;
+    if (!req?.user?.id) {
+      return [400, { "message": "User ID is required." }, null];
+    }
+    if (!mongoose.Types.ObjectId.isValid(req.user.id)) {
+      return [400, { "message": "User ID is not valid." }, null];
+    }
 
-    const favorite = await Favorite.findOne({ studentId: userId })
+    const favorite = await Favorite.findOne({ studentId: req.user.id })
       .populate("favoriteCourses", "courseId title description department")
       .populate("favoriteTutors", "name email studentId major college");
 
     if (!favorite) {
-      return res.json({
+      return [200, {
         favoriteCourses: [],
         favoriteTutors: [],
-      });
+      }, null];
     }
 
-    return res.json({
+    return [200, {
       favoriteCourses: favorite.favoriteCourses,
       favoriteTutors: favorite.favoriteTutors,
-    });
+    }, null];
   } catch (err) {
-    console.error("getFavorites error:", err);
-    return res.status(500).json({ message: "Server error" });
+    console.log(err);
+    return [500, null, null];
   }
 };
 
-exports.addFavoriteCourse = async (req, res) => {
+/**
+ * Add a course to favorites
+ * @param {Request} req - Request object with courseId in params and user id from auth middleware
+ * @param {Response} res 
+ * @returns updated favorite courses list
+ */
+const addFavoriteCourse = async (req, res) => {
   try {
-    const userId = req.user.id;
+    if (!req?.user?.id) {
+      return [400, { "message": "User ID is required." }, null];
+    }
+    if (!mongoose.Types.ObjectId.isValid(req.user.id)) {
+      return [400, { "message": "User ID is not valid." }, null];
+    }
+
     const { courseId } = req.params;
+    if (!courseId) {
+      return [400, { "message": "Course ID is required." }, null];
+    }
 
     const course = await Course.findOne({ courseId });
     if (!course) {
-      return res.status(404).json({ message: "Course not found" });
+      return [204, { "message": "Course not found." }, null];
     }
 
-    let favorite = await Favorite.findOne({ studentId: userId });
+    let favorite = await Favorite.findOne({ studentId: req.user.id });
     if (!favorite) {
-      favorite = new Favorite({
-        studentId: userId,
+      favorite = await Favorite.create({
+        studentId: req.user.id,
         favoriteTutors: [],
         favoriteCourses: [],
       });
@@ -52,29 +79,45 @@ exports.addFavoriteCourse = async (req, res) => {
     }
 
     await favorite.populate("favoriteCourses", "courseId title description department");
-    return res.json({
+    console.log("Course added to favorites");
+    return [200, {
       message: "Course added to favorites",
       favoriteCourses: favorite.favoriteCourses,
-    });
+    }, null];
   } catch (err) {
-    console.error("addFavoriteCourse error:", err);
-    return res.status(500).json({ message: "Server error" });
+    console.log(err);
+    return [500, null, null];
   }
 };
 
-exports.removeFavoriteCourse = async (req, res) => {
+/**
+ * Remove a course from favorites
+ * @param {Request} req - Request object with courseId in params and user id from auth middleware
+ * @param {Response} res 
+ * @returns updated favorite courses list
+ */
+const removeFavoriteCourse = async (req, res) => {
   try {
-    const userId = req.user.id;
+    if (!req?.user?.id) {
+      return [400, { "message": "User ID is required." }, null];
+    }
+    if (!mongoose.Types.ObjectId.isValid(req.user.id)) {
+      return [400, { "message": "User ID is not valid." }, null];
+    }
+
     const { courseId } = req.params;
+    if (!courseId) {
+      return [400, { "message": "Course ID is required." }, null];
+    }
 
     const course = await Course.findOne({ courseId });
     if (!course) {
-      return res.status(404).json({ message: "Course not found" });
+      return [204, { "message": "Course not found." }, null];
     }
 
-    const favorite = await Favorite.findOne({ studentId: userId });
+    const favorite = await Favorite.findOne({ studentId: req.user.id });
     if (!favorite) {
-      return res.status(404).json({ message: "No favorites found" });
+      return [204, { "message": "No favorites found." }, null];
     }
 
     favorite.favoriteCourses = favorite.favoriteCourses.filter(
@@ -83,30 +126,46 @@ exports.removeFavoriteCourse = async (req, res) => {
     await favorite.save();
 
     await favorite.populate("favoriteCourses", "courseId title description department");
-    return res.json({
+    console.log("Course removed from favorites");
+    return [200, {
       message: "Course removed from favorites",
       favoriteCourses: favorite.favoriteCourses,
-    });
+    }, null];
   } catch (err) {
-    console.error("removeFavoriteCourse error:", err);
-    return res.status(500).json({ message: "Server error" });
+    console.log(err);
+    return [500, null, null];
   }
 };
 
-exports.addFavoriteTutor = async (req, res) => {
+/**
+ * Add a tutor to favorites
+ * @param {Request} req - Request object with studentId in params and user id from auth middleware
+ * @param {Response} res 
+ * @returns updated favorite tutors list
+ */
+const addFavoriteTutor = async (req, res) => {
   try {
-    const userId = req.user.id;
+    if (!req?.user?.id) {
+      return [400, { "message": "User ID is required." }, null];
+    }
+    if (!mongoose.Types.ObjectId.isValid(req.user.id)) {
+      return [400, { "message": "User ID is not valid." }, null];
+    }
+
     const { studentId } = req.params;
+    if (!studentId) {
+      return [400, { "message": "Tutor student ID is required." }, null];
+    }
 
     const tutor = await User.findOne({ studentId, role: "tutor" });
     if (!tutor) {
-      return res.status(404).json({ message: "Tutor not found" });
+      return [204, { "message": "Tutor not found." }, null];
     }
 
-    let favorite = await Favorite.findOne({ studentId: userId });
+    let favorite = await Favorite.findOne({ studentId: req.user.id });
     if (!favorite) {
-      favorite = new Favorite({
-        studentId: userId,
+      favorite = await Favorite.create({
+        studentId: req.user.id,
         favoriteTutors: [],
         favoriteCourses: [],
       });
@@ -118,29 +177,45 @@ exports.addFavoriteTutor = async (req, res) => {
     }
 
     await favorite.populate("favoriteTutors", "name email studentId major college");
-    return res.json({
+    console.log("Tutor added to favorites");
+    return [200, {
       message: "Tutor added to favorites",
       favoriteTutors: favorite.favoriteTutors,
-    });
+    }, null];
   } catch (err) {
-    console.error("addFavoriteTutor error:", err);
-    return res.status(500).json({ message: "Server error" });
+    console.log(err);
+    return [500, null, null];
   }
 };
 
-exports.removeFavoriteTutor = async (req, res) => {
+/**
+ * Remove a tutor from favorites
+ * @param {Request} req - Request object with studentId in params and user id from auth middleware
+ * @param {Response} res 
+ * @returns updated favorite tutors list
+ */
+const removeFavoriteTutor = async (req, res) => {
   try {
-    const userId = req.user.id;
+    if (!req?.user?.id) {
+      return [400, { "message": "User ID is required." }, null];
+    }
+    if (!mongoose.Types.ObjectId.isValid(req.user.id)) {
+      return [400, { "message": "User ID is not valid." }, null];
+    }
+
     const { studentId } = req.params;
+    if (!studentId) {
+      return [400, { "message": "Tutor student ID is required." }, null];
+    }
 
     const tutor = await User.findOne({ studentId, role: "tutor" });
     if (!tutor) {
-      return res.status(404).json({ message: "Tutor not found" });
+      return [204, { "message": "Tutor not found." }, null];
     }
 
-    const favorite = await Favorite.findOne({ studentId: userId });
+    const favorite = await Favorite.findOne({ studentId: req.user.id });
     if (!favorite) {
-      return res.status(404).json({ message: "No favorites found" });
+      return [204, { "message": "No favorites found." }, null];
     }
 
     favorite.favoriteTutors = favorite.favoriteTutors.filter(
@@ -149,12 +224,21 @@ exports.removeFavoriteTutor = async (req, res) => {
     await favorite.save();
 
     await favorite.populate("favoriteTutors", "name email studentId major college");
-    return res.json({
+    console.log("Tutor removed from favorites");
+    return [200, {
       message: "Tutor removed from favorites",
       favoriteTutors: favorite.favoriteTutors,
-    });
+    }, null];
   } catch (err) {
-    console.error("removeFavoriteTutor error:", err);
-    return res.status(500).json({ message: "Server error" });
+    console.log(err);
+    return [500, null, null];
   }
+};
+
+module.exports = {
+  getFavorites,
+  addFavoriteCourse,
+  removeFavoriteCourse,
+  addFavoriteTutor,
+  removeFavoriteTutor
 };

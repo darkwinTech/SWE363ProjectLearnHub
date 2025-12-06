@@ -3,24 +3,25 @@ const router = express.Router();
 const courseController = require("../controller/courseController");
 const auth = require("../middleware/auth");
 const { allowRoles } = require("../middleware/roles");
+const convertingResponse = require("../middleware/convertingResponse");
 
 // GET /api/courses 
-router.get("/", courseController.getAllCourses);
+router.get("/", convertingResponse(courseController.getAllCourses));
 
 // GET /api/courses/courseId/:courseId
-router.get("/courseId/:courseId", auth, allowRoles("student", "tutor", "admin"), courseController.getCourseByCourseId);
+router.get("/courseId/:courseId", auth, allowRoles("student", "tutor", "admin"), convertingResponse(courseController.getCourseByCourseId));
 
 // POST /api/courses
-router.post("/", auth, allowRoles("admin"), courseController.createCourse);
+router.post("/", auth, allowRoles("admin"), convertingResponse(courseController.createCourse));
 
 // PUT /api/courses/:id
-router.put("/:id", auth, allowRoles("admin"), courseController.updateCourse);
+router.put("/:id", auth, allowRoles("admin"), convertingResponse(courseController.updateCourse));
 
 // DELETE /api/courses/:id
-router.delete("/:id", auth, allowRoles("admin"), courseController.deleteCourse);
+router.delete("/:id", auth, allowRoles("admin"), convertingResponse(courseController.deleteCourse));
 
 // GET /api/courses/department/:department
-router.get("/department/:department", courseController.getCoursesByDepartment);
+router.get("/department/:department", convertingResponse(courseController.getCoursesByDepartment));
 
 module.exports = router;
 

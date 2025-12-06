@@ -16,6 +16,8 @@ export default function StudentRatingSession() {
   const [hoverRating, setHoverRating] = useState(0);
   const [comment, setComment] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -25,10 +27,12 @@ export default function StudentRatingSession() {
 
   // Get session data from navigation state, or use defaults
   const session = location.state?.session || null;
-  // Handle both formats: from calendar (courseCode) or from sessions list (id)
-  const courseCode = session?.courseCode || session?.id || "MATH101";
-  // Handle both formats: from calendar (tutorName) or from sessions list (totre)
+  // Extract course code
+  const courseCode = session?.courseId?.courseId || session?.courseCode || session?.id || "Course";
+  // Handle both formats
   const tutorName = session?.tutorName || session?.totre?.replace("By ", "") || "Tutor";
+  // Get session ID for submitting review
+  const sessionId = session?.sessionId || session?._id || session?.id || null;
 
   const handleStarClick = (index) => {
     setRating(index);
@@ -42,14 +46,56 @@ export default function StudentRatingSession() {
     setHoverRating(0);
   };
 
-  const handleSubmit = () => {
-    // Handle submit logic here
+  const handleSubmit = async () => {
+    // Validate rating
     if (rating === 0) {
-      alert("Please select a rating");
+      setErrorMessage("Please select a rating");
       return;
     }
-    // Show success modal
-    setShowSuccessModal(true);
+
+    // Validate session ID
+    if (!sessionId) {
+      setErrorMessage("Session information is missing. Please try again.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrorMessage("");
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setErrorMessage("You must be logged in to submit a review.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      const response = await fetch("http://localhost:5000/api/reviews/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          sessionId: sessionId,
+          rating: rating,
+          comment: comment.trim() || "",
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to submit review");
+      }
+
+      setShowSuccessModal(true);
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      setErrorMessage(error.message || "An error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleOkClick = () => {
@@ -115,10 +161,21 @@ export default function StudentRatingSession() {
         />
       </section>
 
+      {/* Error Message */}
+      {errorMessage && (
+        <section className="rating-session-error-container">
+          <p className="rating-session-error-message">{errorMessage}</p>
+        </section>
+      )}
+
       {/* Submit Button */}
       <section className="rating-session-button-container">
-        <button className="rating-session-submit-btn" onClick={handleSubmit}>
-          Submit
+        <button 
+          className="rating-session-submit-btn" 
+          onClick={handleSubmit}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Submitting..." : "Submit"}
         </button>
       </section>
 

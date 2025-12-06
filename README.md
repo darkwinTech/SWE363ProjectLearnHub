@@ -22,9 +22,17 @@ By centralizing these interactions, Learn Hub ensures a smoother, more reliable 
 Follow these steps to set up Learn Hub locally:
 1. Clone the repository (https://github.com/darkwinTech/SWE363ProjectLearnHub.git)
 2. Navigate to the project directory (cd SWE363ProjectLearnHub)
-3. Install dependencies (npm install)
-4. Start the development server (npm start)
-5. Open your browser and visit (http://localhost:3000)
+## Backend Setup
+1. Navigate to the Project Directory (cd backend)
+2. Install dependencies (npm install)
+3. Start the Backend Server (node server.js)
+4. Backend will run at (http://localhost:5000)
+
+## Frontend Setup
+1. Navigate to the Project Directory (cd frontend)
+2. Install dependencies (npm install)
+3. Start the Frontend Development Server (npm start)
+4. Frontend will run at (http://localhost:3000)
 
 # Usage instructions and examples
 Once the server is running, there are three types of users in Learn Hub: Admin, Tutor, and Student.
@@ -33,7 +41,7 @@ Each user type has its own credentials and access level within the system.
 Login Credentials:
 - Email: admin@kfupm.edu.sa
 - Password: admin123
-  
+
     Access:
     - Approve and manage tutors
     - Manage course listings
@@ -62,10 +70,23 @@ Login Credentials:
     - Add tutors and courses to favorites for future sessions
 
 ## Team member names and roles.
-- Aleen Alqarni (Login, Notification, Courses Subject, Tutor List, General Calendar, Favorite courses and tutors, Support)
-- Ghada Alghamdi (Admin main, student main, profile(all users), Menu(all users) )
-- Hayat Alghamdi (Analytics (admin and tutor), Rating & feedback, Booking sessions, student Calendar(addtion & deletion))
-- Fatima labban (Admin main(delete and edit), announcement page, view application, admin supprot review, edit session)
+- Aleen Alqarni  
+  - Notifications controllers, Notifications routes, Notifications middleware, integration and linking Notifications to Frontend  
+  - Support controllers, Support routes, Support middleware, integration and linking Support to Frontend  
+
+- Ghada Alghamdi  
+  - Sessions controllers, Sessions routes, Sessions middleware, integration and linking Sessions to Frontend  
+  - Announcements controllers, Announcements routes, Announcements middleware, integration and linking Announcements to Frontend  
+
+- Hayat Alghamdi  
+  - Course controllers, Course routes, Course middleware, integration and linking Course to Frontend  
+  - Favorite controllers, Favorite routes, Favorite middleware, integration and linking Favorite to Frontend  
+  - Review controllers, Review routes, Review middleware, integration and linking Review to Frontend  
+
+- Fatima Labban  
+  - Booking controllers, Booking routes, Booking middleware, integration and linking Booking to Frontend  
+  - Applications controllers, Applications routes, Applications middleware, integration and linking Applications to Frontend  
+
 
 
 

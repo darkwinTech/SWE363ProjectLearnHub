@@ -1,11 +1,11 @@
 export const announcementCourses = [
-  { id: "MATH101"},
-  { id: "MATH102"},
-  { id: "ICS104"},
-  { id: "ICS201"},
-  { id: "ICS240"},
-  { id: "ALL"}
+  { id: "692df08d4c3de5f4098d794c", title: "MATH101" },
+  { id: "692df08d4c3de5f4098d794b", title: "MATH102" },
+  { id: "692df08d4c3de5f4098d794a", title: "ICS104" },
+  { id: "692df08d4c3de5f4098d7949", title: "SWE363" },
+  {id:"692df08d4c3de5f4098d794e", title:"All"}
 ];
+
 
 export const announcementLevels = [
   { id: "Freshman", title: "Freshman" },
