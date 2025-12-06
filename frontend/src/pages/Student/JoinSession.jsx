@@ -27,6 +27,7 @@ export default function StudentJoinSession() {
   // Get session ID
   const sessionId = session?._id || session?.id || null;
 
+
   const handleJoin = () => {
     navigate("/student/rating-session", { 
       state: { 
@@ -39,8 +40,27 @@ export default function StudentJoinSession() {
           _id: sessionId
         }
       } 
+  });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Failed to book session");
+      return;
+    }
+
+    alert("Booking created successfully!");
+
+    navigate("/student/rating-session", {
+      state: { session }
     });
-  };
+
+  } catch (err) {
+    console.error(err);
+    alert("Server error");
+  }
+};
+
 
   return (
     <main className="join-session-wrap">
