@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "mongodb": "^7.0.0"
+    "debug": "^4.3.4",
+    "mongodb": "^7.0.0",
+    "mquery": "^5.0.0"
   }
 }
